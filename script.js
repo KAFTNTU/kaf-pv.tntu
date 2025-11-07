@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- 1. Логіка визначення платформи --
-    // (Ми додали це для демонстрації)
+    // --- 1. Логіка визначення платформи ---
     const platformDemo = document.getElementById('platform-demo');
     if (platformDemo) {
         let os = 'Unknown OS';
@@ -15,8 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (os) {
             document.documentElement.classList.add(`platform-${os.toLowerCase().split(' ')[0].split('(')[0]}`);
         }
-        platformDemo.textContent = `Визначена платформа: ${os}`;
-    }
+        
+        // --- 10. НОВА ЛОГІКА ДЛЯ ДРОПДАУНІВ (Випадаюче меню) ---
+        // (Цей код залишається БЕЗ ЗМІН)
+        document.addEventListener('click', (e) => {
 
     // --- 2. Мобільне меню ---
     const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -104,7 +105,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!modal) return;
         
         // Закриваємо попереднє вікно, якщо воно є
-        if (activeModal) {
+        if (activeModal && activeModal.id !== modalId) {
+             // Це виправлення "блимання"!
+             // Ми не закриваємо, якщо це вже відкрите вікно (напр. клік на "читати далі")
             closeModal(activeModal);
         }
 
@@ -126,8 +129,16 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.classList.add('hidden');
         }, 300); // 300ms - час transition в CSS
         
-        htmlEl.classList.remove('modal-open'); // Повертаємо прокрутку
-        activeModal = null;
+        // Закриваємо ТІЛЬКИ ЯКЩО це було останнє вікно
+        // Це виправляє баг, коли фон розблоковується при відкритті "читати далі"
+        const anyModalOpen = document.querySelector('.modal-base.modal-visible');
+        if (!anyModalOpen || anyModalOpen.id === modal.id) {
+             htmlEl.classList.remove('modal-open'); // Повертаємо прокрутку
+        }
+        
+        if (activeModal && activeModal.id === modal.id) {
+            activeModal = null; // Очищуємо активне вікно
+        }
     }
 
     // Обробник для закриття (кнопки .modal-close)
@@ -149,11 +160,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- 7. Логіка для ВЕЛИКИХ вікон (секцій) + НЕОН заголовків ---
+    // (Виправлено логіку, щоб не було "блимання")
     document.querySelectorAll('a.nav-link[data-modal-id]').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const modalId = link.dataset.modalId;
             const targetTitleId = link.dataset.targetId;
+            
+            // Виправлення: якщо вікно ВЖЕ відкрите, не відкривати його знову
+            if (activeModal && activeModal.id === modalId) {
+                // Якщо вікно вже відкрите, просто підсвітимо заголовок
+                 const targetTitle = document.getElementById(targetTitleId);
+                 if (targetTitle) {
+                     targetTitle.classList.add('section-title-active');
+                     setTimeout(() => {
+                         targetTitle.classList.remove('section-title-active');
+                     }, 1500);
+                 }
+                return; 
+            }
             
             // Відкриваємо модальне вікно
             openModal(modalId);
@@ -172,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Логіка для звичайних посилань (якорів) + НЕОН
     document.querySelectorAll('a.nav-link[href^="#"]').forEach(link => {
         link.addEventListener('click', (e) => {
+            // e.preventDefault(); // НЕ розкоментовувати, нам потрібна прокрутка
             const targetId = link.dataset.targetId;
             if (!targetId) return; // Пропускаємо, якщо це не наша логіка
 
@@ -201,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.open-small-modal-btn').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation(); // Зупиняємо "спливання" кліку
                 
                 // Отримуємо дані з кнопки
                 const title = this.dataset.title;
@@ -212,89 +239,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (modalTitle) modalTitle.textContent = title;
                 if (modalText) modalText.textContent = text;
                 
-                // Відкриваємо
+                // Відкриваємо (воно стане activeModal)
                 openModal('small-news-modal');
             });
         });
     }
     
-    // --- 9. Логіка СЛАЙДЕРА НОВИН (з "горошинками") ---
-    const sliderContainer = document.getElementById('news-slider-container');
-    const dotsContainer = document.getElementById('news-dots-container');
-    
-    if (sliderContainer && dotsContainer) {
-        // Рахуємо кількість новин (на мобільних 1, на ПК 2)
-        const isMobile = () => window.innerWidth < 768;
-        const slidesPerView = () => isMobile() ? 1 : 2;
-        
-        // Рахуємо загальну к-сть "сторінок" слайдера
-        const slides = Array.from(sliderContainer.children);
-        const slideCount = slides.length;
-        let totalPages = isMobile() ? slideCount : Math.ceil(slideCount / 2);
+    // --- 11. НОВА ЛОГІКА ДЛЯ ВНУТРІШНІХ ВКЛАДОК (Tabs) ---
+    // Цей код поки що лише візуально перемикає клас 'active'
+    // і відкриває модалку "Персонал"
+    document.querySelectorAll('.modal-tabs-container').forEach(tabsContainer => {
+        tabsContainer.addEventListener('click', e => {
+            const targetLink = e.target.closest('.modal-tab-link');
+            if (!targetLink) return;
 
-        // Створюємо "горошинки"
-        function createDots() {
-            dotsContainer.innerHTML = ''; // Очищуємо
-            totalPages = isMobile() ? slideCount : Math.ceil(slideCount / 2);
-            
-            for (let i = 0; i < totalPages; i++) {
-                const dot = document.createElement('button');
-                dot.className = 'news-dot';
-                dot.dataset.index = i;
+            // Якщо це НЕ посилання на іншу модалку,
+            // просто перемикаємо вигляд
+            if (!targetLink.dataset.modalId) {
+                e.preventDefault();
                 
-                // Клік по "горошинці"
-                dot.addEventListener('click', () => {
-                    const slideIndex = i * slidesPerView();
-                    slides[slideIndex].scrollIntoView({
-                        behavior: 'smooth',
-                        inline: 'start',
-                        block: 'nearest'
-                    });
+                // Знімаємо 'active' з усіх
+                tabsContainer.querySelectorAll('.modal-tab-link').forEach(link => {
+                    link.classList.remove('active');
                 });
-                dotsContainer.appendChild(dot);
+                
+                // Додаємо 'active' натиснутому
+                targetLink.classList.add('active');
+                
+                // (Тут у майбутньому буде логіка показу різного контенту)
             }
-            updateDots(0); // Активуємо першу
-        }
-
-        // Оновлення активної "горошинки"
-        function updateDots(activeIndex) {
-            dotsContainer.querySelectorAll('.news-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === activeIndex);
-            });
-        }
-
-        // Стежимо за прокруткою слайдера, щоб оновлювати "горошинки"
-        let scrollTimer = null;
-        sliderContainer.addEventListener('scroll', () => {
-            // Використовуємо debounce, щоб не навантажувати
-            clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(() => {
-                const scrollLeft = sliderContainer.scrollLeft;
-                const sliderWidth = sliderContainer.clientWidth;
-                
-                // Визначаємо поточний індекс
-                // (це наближене значення, але працює для snap-scroll)
-                let currentIndex = Math.round(scrollLeft / (sliderWidth / slidesPerView()));
-                
-                if (isMobile()) {
-                     updateDots(currentIndex);
-                } else {
-                     // На ПК у нас 2 новини, тому ділимо
-                     updateDots(Math.floor(currentIndex / 2));
-                     // Коригування для останньої сторінки (якщо новин непарна к-сть)
-                     if(currentIndex > (totalPages-1)*2) {
-                         updateDots(totalPages-1);
-                     }
-                }
-
-            }, 100);
+            // Якщо це посилання на модалку (як "Персонал"), 
+            // скрипт з пункту 7 сам його обробить
         });
-
-        // Перестворюємо "горошинки", якщо розмір екрану змінився
-        window.addEventListener('resize', createDots);
-        
-        // Запускаємо все
-        createDots();
-    }
+    });
 
 });
