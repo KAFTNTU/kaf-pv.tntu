@@ -8,7 +8,6 @@
     <!-- Open Graph (OG) Tags for Link Previews -->
     <meta property="og:title" content="Кафедра ПВ, ТНТУ ім. Івана Пулюя">
     <meta property="og:description" content="Створюємо майбутнє вимірювальних технологій. Готуємо фахівців, здатних розробляти та експлуатувати найсучасніші прилади та системи.">
-    <!-- ВАЖЛИВО: Переконайтеся, що це посилання правильне! -->
     <meta property="og:url" content="https://kaftntu.github.io/">
     <meta property="og:image" content="https://kaftntu.github.io/ludipv.jpg"> 
     <meta property="og:type" content="website">
@@ -27,11 +26,12 @@
 </head>
 <body class="antiasaed">
 
-<!-- === HEADER === -->
+<!-- === HEADER (ПОВНІСТЮ ПЕРЕРОБЛЕНО З ДРОПДАУНАМИ) === -->
 <header id="header" class="frosted-glass fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- ОНОВЛЕНО: h-auto для гнучкої висоти мобільного меню -->
         <div class="flex items-center justify-between h-24">
-            <!-- Logo and Department Name -->
+            <!-- Logo -->
             <div class="flex-shrink-0">
                 <a href="#hero" class="flex items-center space-x-3 nav-link" data-target-id="hero-section">
                     <svg class="h-10 w-10 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -44,15 +44,85 @@
                 </a>
             </div>
 
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="#about" class="text-slate-300 hover:text-sky-400 transition-colors duration-300 font-medium nav-link" data-target-id="about">Про кафедру</a>
-                <a href="#specialties" class="text-slate-300 hover:text-sky-400 transition-colors duration-300 font-medium nav-link" data-target-id="specialties">Спеціальності</a>
-                <!-- Кнопки, що відкривають модальні вікна -->
-                <a href="#" class="text-slate-300 hover:text-sky-400 transition-colors duration-300 font-medium nav-link" data-modal-id="staff-modal" data-target-id="staff-title">Викладачі</a>
-                <a href="#" class="text-slate-300 hover:text-sky-400 transition-colors duration-300 font-medium nav-link" data-modal-id="news-modal" data-target-id="news-title">Новини</a>
-                <a href="#" class="text-slate-300 hover:text-sky-400 transition-colors duration-300 font-medium nav-link" data-modal-id="gallery-modal" data-target-id="gallery-title">Галерея</a>
-                <a href="#contacts" class="text-slate-300 hover:text-sky-400 transition-colors duration-300 font-medium nav-link" data-target-id="contacts">Контакти</a>
+            <!-- Desktop Navigation (з дропдаунами) -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="#" class="nav-link-desktop" data-modal-id="news-modal" data-target-id="news-title">Новини</a>
+                
+                <!-- Дропдаун "Кафедра" (ОНОВЛЕНО) -->
+                <div class="relative dropdown-container">
+                    <button class="nav-link-desktop dropdown-toggle" data-dropdown-id="dropdown-staff">
+                        Кафедра
+                        <svg class="w-4 h-4 ml-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <!-- ОНОВЛЕНО: Тепер "Кафедра" відкриває модалку, а решта - під-пункти -->
+                    <div id="dropdown-staff" class="dropdown-menu hidden">
+                        <a href="#" class="dropdown-item nav-link" data-modal-id="about-modal" data-target-id="about-title">Про кафедру (Історія)</a>
+                        <a href="#" class="dropdown-item nav-link" data-modal-id="staff-modal" data-target-id="staff-title">Персонал кафедри</a>
+                        <a href="#" class="dropdown-item">Освітні програми</a>
+                        <a href="#" class="dropdown-item">Навчальний план</a>
+                        <a href="#" class="dropdown-item">Випускники кафедри</a>
+                    </div>
+                </div>
+                
+                <!-- Дропдаун "Спеціальності" -->
+                <div class="relative dropdown-container">
+                    <button class="nav-link-desktop dropdown-toggle" data-dropdown-id="dropdown-specialties">
+                        Спеціальності
+                    </button>
+                    <div id="dropdown-specialties" class="dropdown-menu hidden">
+                        <a href="#specialties" class="dropdown-item nav-link" data-target-id="specialties">Огляд Спеціальностей</a>
+                        <a href="#" class="dropdown-item">152 - Метрологія</a>
+                        <a href="#" class="dropdown-item">171 - Електроніка</a>
+                    </div>
+                </div>
+
+                <a href="#" class="nav-link-desktop">Навчальні лабораторії</a>
+                
+                <!-- Дропдаун "Наука" -->
+                <div class="relative dropdown-container">
+                    <button class="nav-link-desktop dropdown-toggle" data-dropdown-id="dropdown-science">
+                        Наука
+                    </button>
+                    <div id="dropdown-science" class="dropdown-menu hidden">
+                        <a href="#" class="dropdown-item">Напрями досліджень</a>
+                        <a href="#" class="dropdown-item">Публікації</a>
+                    </div>
+                </div>
+                
+                <!-- Дропдаун "Міжнародні зв'язки" -->
+                <div class="relative dropdown-container">
+                    <button class="nav-link-desktop dropdown-toggle" data-dropdown-id="dropdown-international">
+                        Міжнародні зв'язки
+                    </button>
+                    <div id="dropdown-international" class="dropdown-menu hidden">
+                        <a href="#" class="dropdown-item">Партнери</a>
+                        <a href="#" class="dropdown-item">Програми обміну</a>
+                    </div>
+                </div>
+                
+                <!-- Дропдаун "Студенту" -->
+                <div class="relative dropdown-container">
+                    <button class="nav-link-desktop dropdown-toggle" data-dropdown-id="dropdown-student">
+                        Студенту
+                    </button>
+                    <div id="dropdown-student" class="dropdown-menu hidden">
+                        <a href="#" class="dropdown-item">Розклад</a>
+                        <a href="#" class="dropdown-item nav-link" data-modal-id="gallery-modal" data-target-id="gallery-title">Галерея</a>
+                    </div>
+                </div>
+                
+                <!-- Дропдаун "Абітурієнту" -->
+                <div class="relative dropdown-container">
+                    <button class="nav-link-desktop dropdown-toggle" data-dropdown-id="dropdown-entrant">
+                        Абітурієнту
+                    </button>
+                    <div id="dropdown-entrant" class="dropdown-menu hidden">
+                        <a href="#" class="dropdown-item">Умови вступу</a>
+                        <a href="#" class="dropdown-item">Чому ми?</a>
+                    </div>
+                </div>
+
+                <a href="#contacts" class="nav-link-desktop" data-target-id="contacts">Контакти</a>
             </nav>
 
             <!-- Mobile Menu Button -->
@@ -70,15 +140,70 @@
         </div>
     </div>
 
-    <!-- Mobile Navigation Menu (з Галереєю) -->
+    <!-- Mobile Navigation Menu (з дропдаунами) -->
     <div id="mobile-menu" class="md:hidden hidden">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#about" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium nav-link" data-target-id="about">Про кафедру</a>
-            <a href="#specialties" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium nav-link" data-target-id="specialties">Спеціальності</a>
-            <a href="#" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium nav-link" data-modal-id="staff-modal" data-target-id="staff-title">Викладачі</a>
-            <a href="#" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium nav-link" data-modal-id="news-modal" data-target-id="news-title">Новини</a>
-            <a href="#" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium nav-link" data-modal-id="gallery-modal" data-target-id="gallery-title">Галерея</a>
-            <a href="#contacts" class="text-slate-300 hover:bg-slate-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium nav-link" data-target-id="contacts">Контакти</a>
+            <a href="#" class="nav-link-mobile nav-link" data-modal-id="news-modal" data-target-id="news-title">Новини</a>
+            
+            <!-- Мобільний Дропдаун "Кафедра" (ОНОВЛЕНО) -->
+            <div>
+                <button class="nav-link-mobile w-full text-left dropdown-toggle flex items-center justify-between" data-dropdown-id="mobile-dropdown-staff">
+                    Кафедра
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="mobile-dropdown-staff" class="mobile-dropdown-menu hidden pl-4">
+                    <a href="#" class="nav-link-mobile nav-link" data-modal-id="about-modal" data-target-id="about-title">Про кафедру (Історія)</a>
+                    <a href="#" class="nav-link-mobile nav-link" data-modal-id="staff-modal" data-target-id="staff-title">Персонал кафедри</a>
+                    <a href="#" class="nav-link-mobile">Освітні програми</a>
+                    <a href="#" class="nav-link-mobile">Навчальний план</a>
+                    <a href="#" class="nav-link-mobile">Випускники кафедри</a>
+                </div>
+            </div>
+            
+            <!-- Мобільний Дропдаун "Спеціальності" -->
+            <div>
+                <button class="nav-link-mobile w-full text-left dropdown-toggle" data-dropdown-id="mobile-dropdown-specialties">
+                    Спеціальності
+                </button>
+                <div id="mobile-dropdown-specialties" class="mobile-dropdown-menu hidden pl-4">
+                    <a href="#specialties" class="nav-link-mobile nav-link" data-target-id="specialties">Огляд Спеціальностей</a>
+                    <a href="#" class="nav-link-mobile">152 - Метрологія</a>
+                </div>
+            </div>
+
+            <a href="#" class="nav-link-mobile">Навчальні лабораторії</a>
+
+            <!-- Мобільний Дропдаун "Наука" -->
+            <div>
+                <button class="nav-link-mobile w-full text-left dropdown-toggle" data-dropdown-id="mobile-dropdown-science">
+                    Наука
+                </button>
+                <div id="mobile-dropdown-science" class="mobile-dropdown-menu hidden pl-4">
+                    <a href="#" class="nav-link-mobile">Напрями досліджень</a>
+                </div>
+            </div>
+            
+            <!-- Мобільний Дропдаун "Студенту" -->
+            <div>
+                <button class="nav-link-mobile w-full text-left dropdown-toggle" data-dropdown-id="mobile-dropdown-student">
+                    Студенту
+                </button>
+                <div id="mobile-dropdown-student" class="mobile-dropdown-menu hidden pl-4">
+                    <a href="#" class="nav-link-mobile nav-link" data-modal-id="gallery-modal" data-target-id="gallery-title">Галерея</a>
+                </div>
+            </div>
+            
+             <!-- Мобільний Дропдаун "Абітурієнту" -->
+            <div>
+                <button class="nav-link-mobile w-full text-left dropdown-toggle" data-dropdown-id="mobile-dropdown-entrant">
+                    Абітурієнту
+                </button>
+                <div id="mobile-dropdown-entrant" class="mobile-dropdown-menu hidden pl-4">
+                    <a href="#" class="nav-link-mobile">Умови вступу</a>
+                </div>
+            </div>
+
+            <a href="#contacts" class="nav-link-mobile nav-link" data-target-id="contacts">Контакти</a>
         </div>
     </div>
 </header>
@@ -103,48 +228,13 @@
                     Історія кафедри
                 </a>
             </div>
-            <!-- Демонстрація визначення ОС (можна видалити) -->
+            <!-- Демонстрація визначення ОС (ТЕКСТ ПРИХОВАНО) -->
             <p id="platform-demo" class="mt-10 text-yellow-400 text-sm reveal" style="transition-delay: 600ms;"></p>
         </div>
     </section>
 
-    <!-- === ABOUT SECTION === -->
-    <section id="about" class="py-20 lg:py-32 bg-slate-800/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="about-title">Про нашу кафедру</h2>
-                <p class="mt-4 text-lg text-slate-400">Історія, місія та досягнення</p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="reveal">
-                    <img src="ludipv.jpg" alt="Фото лабораторії кафедри" class="rounded-xl shadow-2xl" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Фото+не+знайдено'; this.onerror=null;">
-                </div>
-                <div class="reveal" style="transition-delay: 200ms;">
-                    <h3 class="text-2xl font-bold text-sky-400 mb-4">Наша історія та місія</h3>
-                    <p class="text-slate-300 mb-6">
-                        Кафедра приладів та контрольно-вимірювальних систем була заснована у 1995 році для підготовки висококваліфікованих фахівців у галузі метрології, вимірювальної техніки та неруйнівного контролю.
-                    </p>
-                    <p class="text-slate-300">
-                        Наша місія - надавати студентам глибокі теоретичні знання та практичні навички, що відповідають сучасним вимогам ринку праці, а також проводити передові наукові дослідження, сприяючи інноваційному розвитку України.
-                    </p>
-                    <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-                        <div class="bg-slate-800 p-4 rounded-lg">
-                            <span class="text-3xl font-bold text-sky-400">25+</span>
-                            <p class="text-sm text-slate-400 mt-1">років досвіду</p>
-                        </div>
-                        <div class="bg-slate-800 p-4 rounded-lg">
-                            <span class="text-3xl font-bold text-sky-400">1000+</span>
-                            <p class="text-sm text-slate-400 mt-1">випускників</p>
-                        </div>
-                        <div class="bg-slate-800 p-4 rounded-lg">
-                            <span class="text-3xl font-bold text-sky-400">15+</span>
-                            <p class="text-sm text-slate-400 mt-1">партнерів</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- === ABOUT SECTION (ВИДАЛЕНО З MAINS) === -->
+    <!-- Секція "Про нашу кафедру" тепер знаходиться у модальному вікні "about-modal" -->
 
     <!-- === SPECIALTIES SECTION === -->
     <section id="specialties" class="py-20 lg:py-32">
@@ -299,7 +389,70 @@
 
 <!-- === ПОЧАТОК: МОДАЛЬНІ ВІКНА === -->
 
-<!-- 1. Модальне вікно "Викладачі" (з винесеним заголовком) -->
+<!-- 1. НОВЕ Модальне вікно "Про Кафедру" (колишня секція "About") -->
+<div id="about-modal" class="modal-base hidden" role="dialog" aria-modal="true" aria-labelledby="about-title">
+    <!-- Фон -->
+    <div class="modal-overlay modal-close"></div>
+    <!-- Контент -->
+    <div class="relative w-full max-w-6xl transform transition-all neon-border-box modal-content-container">
+        <div class="modal-content-inner">
+            <!-- Кнопка закриття -->
+            <button class="modal-close-btn modal-close">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            
+            <!-- Вкладки (Tabs) всередині модального вікна -->
+            <div class="modal-tabs-container">
+                <a href="#" class="modal-tab-link active">Історія кафедри</a>
+                <a href="#" class="modal-tab-link nav-link" data-modal-id="staff-modal" data-target-id="staff-title">Персонал</a>
+                <a href="#" class="modal-tab-link">Освітні програми</a>
+                <a href="#" class="modal-tab-link">Навчальний план</a>
+                <a href="#" class="modal-tab-link">Випускники</a>
+            </div>
+
+            <!-- Контейнер з прокруткою -->
+            <div class="modal-scroll-content p-6 md:p-8">
+                <!-- Вміст секції "Про нашу кафедру" -->
+                <div class="text-center mb-16">
+                    <h2 id="about-title" class="text-3xl lg:text-4xl font-extrabold text-white section-title">Про нашу кафедру</h2>
+                    <p class="mt-4 text-lg text-slate-400">Історія, місія та досягнення</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <img src="ludipv.jpg" alt="Фото лабораторії кафедри" class="rounded-xl shadow-2xl" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Фото+не+знайдено'; this.onerror=null;">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-sky-400 mb-4">Наша історія та місія</h3>
+                        <p class="text-slate-300 mb-6">
+                            Кафедра приладів та контрольно-вимірювальних систем була заснована у 1995 році для підготовки висококваліфікованих фахівців у галузі метрології, вимірювальної техніки та неруйнівного контролю.
+                        </p>
+                        <p class="text-slate-300">
+                            Наша місія - надавати студентам глибокі теоретичні знання та практичні навички, що відповідають сучасним вимогам ринку праці, а також проводити передові наукові дослідження, сприяючи інноваційному розвитку України.
+                        </p>
+                        <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                            <div class="bg-slate-800 p-4 rounded-lg">
+                                <span class="text-3xl font-bold text-sky-400">25+</span>
+                                <p class="text-sm text-slate-400 mt-1">років досвіду</p>
+                            </div>
+                            <div class="bg-slate-800 p-4 rounded-lg">
+                                <span class="text-3xl font-bold text-sky-400">1000+</span>
+                                <p class="text-sm text-slate-400 mt-1">випускників</p>
+                            </div>
+                            <div class="bg-slate-800 p-4 rounded-lg">
+                                <span class="text-3xl font-bold text-sky-400">15+</span>
+                                <p class="text-sm text-slate-400 mt-1">партнерів</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Кінець вмісту секції -->
+            </div> <!--- кінець .modal-scroll-content -->
+        </div>
+    </div>
+</div>
+
+<!-- 2. Модальне вікно "Викладачі" -->
 <div id="staff-modal" class="modal-base hidden" role="dialog" aria-modal="true" aria-labelledby="staff-title">
     <!-- Фон -->
     <div class="modal-overlay modal-close"></div>
