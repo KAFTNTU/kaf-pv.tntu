@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="uk" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Кафедра ПВ — оптимізована</title>
+  <meta name="description" content="Кафедра Приладів та Контрольно-Вимірювальних Систем — ТНТУ" />
+  <!-- Tailwind via CDN (keeps original utility classes) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="antiasaed bg-slate-900 text-slate-300 font-sans">
+  <!-- Header -->
+  <header id="header" class="frosted-glass fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex items-center justify-between h-24">
+        <a href="#hero" class="flex items-center space-x-3 nav-link">
+          <svg class="h-10 w-10 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m6 0h-6" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg text-white">Кафедра ПВ</span>
+            <span class="text-xs text-slate-400">ТНТУ ім. Івана Пулюя</span>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#about" class="nav-link hover:text-sky-400">Про кафедру</a>
+          <a href="#specialties" class="nav-link hover:text-sky-400">Спеціальності</a>
+          <button data-modal-id="staff-modal" class="nav-link hover:text-sky-400" aria-haspopup="dialog">Викладачі</button>
+          <button data-modal-id="news-modal" class="nav-link hover:text-sky-400" aria-haspopup="dialog">Новини</button>
+          <button data-modal-id="gallery-modal" class="nav-link hover:text-sky-400" aria-haspopup="dialog">Галерея</button>
+          <a href="#contacts" class="nav-link hover:text-sky-400">Контакти</a>
+        </nav>
+
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="p-2 rounded-md text-slate-400">
+            <svg id="menu-open-icon" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="md:hidden hidden px-2 pb-3">
+      <a href="#about" class="block py-2">Про кафедру</a>
+      <a href="#specialties" class="block py-2">Спеціальності</a>
+      <button data-modal-id="staff-modal" class="block py-2 text-left w-full">Викладачі</button>
+      <button data-modal-id="news-modal" class="block py-2 text-left w-full">Новини</button>
+      <a href="#contacts" class="block py-2">Контакти</a>
+    </div>
+  </header>
+
+  <main class="pt-24">
+    <!-- Hero -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative">
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-900/80"></div>
+      <div class="relative z-10 text-center px-4 max-w-4xl">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-white reveal section-title">Кафедра Приладів та <span class="gradient-text">Контрольно-Вимірювальних Систем</span></h1>
+        <p class="mt-6 text-lg text-slate-300 reveal">Створюємо майбутнє вимірювальних технологій. Готуємо фахівців, здатних розробляти та експлуатувати сучасні прилади.</p>
+        <div class="mt-10 flex gap-4 justify-center">
+          <a href="#specialties" class="bg-sky-500 text-white px-6 py-3 rounded-lg">Дізнатись про вступ</a>
+          <a href="#about" class="bg-slate-700/50 text-white px-6 py-3 rounded-lg">Історія кафедри</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-20 bg-slate-800/50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-extrabold text-white section-title">Про нашу кафедру</h2>
+          <p class="mt-4 text-slate-400">Історія, місія та досягнення</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12">
+          <img src="ludipv.jpg" alt="Лабораторія" class="rounded-xl shadow-2xl object-cover w-full h-64" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Фото';">
+          <div>
+            <h3 class="text-2xl font-bold text-sky-400">Наша історія та місія</h3>
+            <p class="mt-4 text-slate-300">Кафедра була заснована у 1995 році для підготовки фахівців у галузі метрології та вимірювальної техніки.</p>
+            <div class="mt-8 grid grid-cols-3 gap-4 text-center">
+              <div class="p-4 bg-slate-800 rounded-lg"><span class="text-2xl text-sky-400 font-bold">25+</span><div class="text-sm text-slate-400">років досвіду</div></div>
+              <div class="p-4 bg-slate-800 rounded-lg"><span class="text-2xl text-sky-400 font-bold">1000+</span><div class="text-sm text-slate-400">випускників</div></div>
+              <div class="p-4 bg-slate-800 rounded-lg"><span class="text-2xl text-sky-400 font-bold">15+</span><div class="text-sm text-slate-400">партнерів</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Specialties -->
+    <section id="specialties" class="py-20">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-extrabold text-white section-title">Наші спеціальності</h2>
+          <p class="mt-4 text-slate-400">Обери свій шлях в інженерії</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-slate-800 rounded-xl p-8">
+            <h3 class="text-xl font-bold text-white">G6 Інформаційно-вимірювальні технології</h3>
+            <p class="text-slate-400 mt-3">Розробка комп'ютеризованих вимірювальних систем та IoT.</p>
+          </div>
+          <div class="bg-slate-800 rounded-xl p-8">
+            <h3 class="text-xl font-bold text-white">G5 Електроніка та приладобудування</h3>
+            <p class="text-slate-400 mt-3">Проєктування мікроелектронних систем і пристроїв.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacts -->
+    <section id="contacts" class="py-20">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-extrabold text-white section-title">Контакти</h2>
+          <p class="mt-2 text-slate-400">Зв'яжіться з нами</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-10">
+          <div class="bg-slate-800 p-8 rounded-xl">
+            <h3 class="text-lg font-semibold text-white">Наша адреса</h3>
+            <p class="text-slate-400 mt-2">вул. Текстильна, 28, м. Тернопіль, 46400</p>
+            <p class="mt-4"><a href="mailto:kafedra-pv@tntu.edu.ua" class="text-sky-400">kafedra-pv@tntu.edu.ua</a></p>
+            <p class="mt-2"><a href="tel:+380352253509" class="text-sky-400">+38 (0352) 25-35-09</a></p>
+          </div>
+          <div class="rounded-xl min-h-[300px] bg-slate-800 overflow-hidden">
+            <iframe class="w-full h-full rounded-xl" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1303.6288675121172!2d25.5689115!3d49.562283!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4730310217a4143b%3A0x868128328c31e289!2sTernopil%20Ivan%20Pul%27ui%20National%20Technical%20University%20building%209!5e0!3m2!1sen!2sua!4v1700147895000!5m2!1sen!2sua"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto py-12 px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div>
+          <div class="font-bold text-white">Кафедра ПВ ТНТУ</div>
+          <p class="text-slate-400 mt-2">Інновації у вимірюваннях.</p>
+        </div>
+        <div>
+          <h3 class="uppercase text-sm text-slate-200">Навігація</h3>
+          <ul class="mt-4 space-y-2 text-slate-400"><li><a href="#about">Про кафедру</a></li></ul>
+        </div>
+        <div>
+          <h3 class="uppercase text-sm text-slate-200">Ресурси</h3>
+        </div>
+        <div>
+          <h3 class="uppercase text-sm text-slate-200">Соцмережі</h3>
+        </div>
+      </div>
+      <div class="mt-8 border-t border-slate-800 pt-6 text-center text-slate-400">&copy; 2025 Кафедра Приладів та Контрольно-Вимірювальних Систем</div>
+    </div>
+  </footer>
+
+  <!-- Modals (minimal DOM kept; content can be generated from JS) -->
+  <div id="staff-modal" class="modal-base hidden" role="dialog" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-inner max-w-4xl mx-auto my-8 p-6 bg-slate-800 rounded-xl relative">
+      <button class="modal-close absolute top-4 right-4">✕</button>
+      <h2 class="text-2xl font-bold text-white">Наш колектив</h2>
+      <div id="staff-list" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+      <div class="text-center mt-6">
+        <button id="toggle-staff-btn" class="text-sky-400">Показати всіх</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="news-modal" class="modal-base hidden" role="dialog" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-inner max-w-3xl mx-auto my-8 p-4 bg-slate-800 rounded-xl relative">
+      <button class="modal-close absolute top-4 right-4">✕</button>
+      <h2 class="text-2xl font-bold text-white">Останні новини</h2>
+      <div id="news-slider" class="mt-4 grid gap-4"></div>
+      <div id="news-dots" class="mt-4 flex justify-center gap-2"></div>
+    </div>
+  </div>
+
+  <div id="gallery-modal" class="modal-base hidden" role="dialog" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-inner max-w-6xl mx-auto my-8 p-6 bg-slate-800 rounded-xl relative">
+      <button class="modal-close absolute top-4 right-4">✕</button>
+      <h2 class="text-2xl font-bold text-white">Галерея</h2>
+      <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <img src="pavuk.jpg" class="rounded-lg object-cover w-full h-48" loading="lazy" onerror="this.src='https://placehold.co/500x400/1e293b/ffffff?text=Фото'">
+        <img src="https://placehold.co/500x400/1e293b/ffffff?text=Фото2" class="rounded-lg object-cover w-full h-48" loading="lazy">
+        <img src="https://placehold.co/500x500/1e293b/ffffff?text=Фото3" class="rounded-lg object-cover w-full h-48" loading="lazy">
+        <img src="https://placehold.co/500x700/1e293b/ffffff?text=Фото4" class="rounded-lg object-cover w-full h-48" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
