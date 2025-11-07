@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- 1. Логіка визначення платформи ---
+    // --- 1. Логіка визначення платформи --
     // (Ми додали це для демонстрації)
     const platformDemo = document.getElementById('platform-demo');
     if (platformDemo) {
