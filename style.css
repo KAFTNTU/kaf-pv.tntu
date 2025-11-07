@@ -1,24 +1,230 @@
-/* style.css - оптимізована версія кастомних стилів */
-:root{--bg:#0f172a;--muted:#cbd5e1;--accent:#38bdf8}
-html{scroll-padding-top:6rem}
-body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial}
-.frosted-glass{background-color:rgba(15,23,42,0.8);backdrop-filter:blur(10px)}
-.gradient-text{background:linear-gradient(90deg,var(--accent),#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease-out,transform .6s ease-out}
-.reveal.visible{opacity:1;transform:none}
+/* Base styling */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0f172a; /* bg-slate-900 */
+    color: #cbd5e1; /* text-slate-300 */
+}
 
-/* modal base */
-.modal-base{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:60}
-.modal-base.hidden{display:none}
-.modal-overlay{position:absolute;inset:0;background:rgba(2,6,23,0.7);backdrop-filter:blur(6px)}
-.modal-inner{position:relative;z-index:10;border-radius:10px;border:1px solid rgba(148,163,184,0.06)}
+/* Фікс прокрутки для "якорів" (щоб шапка не перекривала) */
+html {
+    scroll-padding-top: 6rem; /* 96px, висота нашої h-24 шапки */
+}
 
-/* neon border box simplified (used earlier) */
-.neon-border-box::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,#ff0000 0deg,#38bdf8 180deg);filter:blur(28px);opacity:.25;pointer-events:none;}
+/* Custom scrollbar for a modern look */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #1e293b; /* bg-slate-800 */
+}
+::-webkit-scrollbar-thumb {
+    background: #38bdf8; /* bg-sky-400 */
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #0ea5e9; /* bg-sky-500 */
+}
 
-/* scrollbar */
-::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-thumb{background:#334155;border-radius:999px}
+/* Frosted glass effect for the header (без полоси знизу) */
+.frosted-glass {
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
 
-/* small helpers */
-.hidden{display:none}
+/* Animation classes for scroll effects */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Custom gradient text */
+.gradient-text {
+    background: linear-gradient(to right, #38bdf8, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* === СТИЛІ ДЛЯ МОДАЛЬНИХ ВІКОН (Вся логіка) === */
+
+/* Базовий контейнер модалки (прихований) */
+.modal-base {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex; /* Використовуємо flex для центрування */
+    align-items: center;
+    justify-content: center;
+    padding: 1rem; /* Відступи для мобільних */
+    
+    /* Анімація появи */
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+/* Видимий стан */
+.modal-base.modal-visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+/* Фон-затемнення (з блюром) */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Контейнер для рамки (тримає анімацію) */
+.neon-border-box {
+    position: relative;
+    background: #0f172a; /* Темний фон */
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%; /* Займає всю доступну ширину (обмежену max-w-*) */
+}
+
+/* Анімація "бігаючих" точок (сповільнена) */
+.neon-border-box::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%; 
+    height: 200%; 
+    transform-origin: center;
+    transform: translate(-50%, -50%);
+    
+    background: conic-gradient(
+      from 0deg,
+      #ff0000 0deg,   /* Червона */
+      #ff0000 1deg,
+      transparent 1deg,
+      transparent 179deg,
+      #38bdf8 179deg, /* Синя */
+      #38bdf8 180deg,
+      transparent 180deg,
+      transparent 360deg
+    );
+    
+    /* Швидкість 9с (6s * 1.5) */
+    animation: neon-spin 9s linear infinite; 
+}
+
+@keyframes neon-spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Внутрішній контент (той, що має фон і відступи) */
+.modal-content-inner {
+    position: relative; /* Щоб бути поверх анімації */
+    background: #1e293b; /* Фон самого вікна (slate-800) */
+    margin: 1px; /* Наша "рамка" в 1px */
+    border-radius: 9px; /* 10px - 1px */
+    
+    /* Розділяємо на 2 частини: заголовок і контент */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* Встановлюємо максимальну висоту для всього вікна */
+    max-height: 90vh; 
+}
+
+/* Контейнер з контентом, що має прокручуватись */
+.modal-scroll-content {
+    overflow-y: auto;
+    /* Кастомний скролбар для контенту модалки */
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.5); /* темніший трек */
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #334155; /* сіріший бігунок */
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+    }
+}
+
+/* Кнопка закриття */
+.modal-close-btn {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    color: #94a3b8; /* slate-400 */
+    z-index: 10;
+    transition: color 0.3s ease;
+}
+.modal-close-btn:hover {
+    color: #ffffff;
+}
+
+/* Блокування прокрутки фону */
+html.modal-open {
+    overflow: hidden;
+}
+
+/* === СЛАЙДЕР НОВИН (вся логіка) === */
+
+/* Приховуємо стандартний скролбар слайдера */
+#news-slider-container::-webkit-scrollbar {
+    display: none;
+}
+#news-slider-container {
+    -ms-overflow-style: none;  /* IE та Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Стилі для "горошинок" */
+.news-dot {
+    width: 0.75rem; /* 12px */
+    height: 0.75rem;
+    border-radius: 9999px;
+    background-color: #334155; /* bg-slate-700 */
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+/* Активна "горошинка" з неоном */
+.news-dot.active {
+    background-color: #f87171; /* bg-red-400 */
+    transform: scale(1.1);
+    /* Червоний неон */
+    box-shadow: 0 0 10px #f87171, 0 0 20px #f87171; 
+    animation: neon-pulse 1.5s infinite alternate;
+}
+@keyframes neon-pulse {
+    from { box-shadow: 0 0 5px #f87171, 0 0 10px #f87171; }
+    to { box-shadow: 0 0 10px #f87171, 0 0 20px #f87171; }
+}
+
+
+/* === НЕОНОВІ ЗАГОЛОВКИ (вся логіка) === */
+.section-title {
+    transition: text-shadow 0.5s ease-out, color 0.5s ease-out;
+}
+.section-title.section-title-active {
+    color: #fff;
+    /* Блакитний неон */
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.7),
+                 0 0 20px rgba(56, 189, 248, 0.5),
+                 0 0 30px rgba(56, 189, 248, 0.3);
+}
+
+/* Демонстрація платформи (можна видалити) */
+#platform-demo {
+    /* Додаткові стилі, якщо потрібні */
+}
