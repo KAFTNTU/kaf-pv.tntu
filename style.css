@@ -1,0 +1,24 @@
+/* style.css - оптимізована версія кастомних стилів */
+:root{--bg:#0f172a;--muted:#cbd5e1;--accent:#38bdf8}
+html{scroll-padding-top:6rem}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial}
+.frosted-glass{background-color:rgba(15,23,42,0.8);backdrop-filter:blur(10px)}
+.gradient-text{background:linear-gradient(90deg,var(--accent),#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease-out,transform .6s ease-out}
+.reveal.visible{opacity:1;transform:none}
+
+/* modal base */
+.modal-base{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:60}
+.modal-base.hidden{display:none}
+.modal-overlay{position:absolute;inset:0;background:rgba(2,6,23,0.7);backdrop-filter:blur(6px)}
+.modal-inner{position:relative;z-index:10;border-radius:10px;border:1px solid rgba(148,163,184,0.06)}
+
+/* neon border box simplified (used earlier) */
+.neon-border-box::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,#ff0000 0deg,#38bdf8 180deg);filter:blur(28px);opacity:.25;pointer-events:none;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#334155;border-radius:999px}
+
+/* small helpers */
+.hidden{display:none}
