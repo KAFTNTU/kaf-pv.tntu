@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     const htmlEl = document.documentElement; // Отримуємо <html>
-    const modalOverlay = document.getElementById('modal-overlay'); // Отримуємо фон
+    const modalOverlay = document.getElementById('modal-overlay'); // Отримуємо ОДИН фон
 
     // --- 1. Логіка визначення платформи (Приховано) ---
     // (Ми додали це, але приховали на ваше прохання)
@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Закриття по кнопці "хрестик"
     document.querySelectorAll('.modal-close-btn').forEach(button => {
         button.addEventListener('click', (e) => {
+            // Знайти найближчу модалку, до якої належить кнопка, і закрити її
             const modalToClose = e.target.closest('.modal-base');
             closeModal(modalToClose);
         });
@@ -180,10 +181,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // A. Якщо це посилання відкриває МОДАЛЬНЕ ВІКНО
             if (modalId) {
                 e.preventDefault(); // Заборонити прокрутку
+                e.stopPropagation(); // ВИПРАВЛЕННЯ: Зупинити "провалювання" кліку на фон
                 
                 // 1. Закрити ВСІ відкриті вікна (окрім того, що ми відкриваємо)
                 document.querySelectorAll('.modal-base.modal-visible').forEach(m => {
-                    if (m.id !== modalId && m.id !== 'staff-detail-modal') { // Не закривати вікно деталей
+                    if (m.id !== modalId) {
                         closeModal(m);
                     }
                 });
@@ -328,14 +330,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // --- 10. Логіка Вкладок (Tabs) у модалці "Кафедра" ---
-    const tabsContainer = document.querySelector('#kafedra-modal .modal-tabs-container');
+    const tabsContainer = document.querySelector('.modal-tabs-container');
     if (tabsContainer) {
         const tabButtons = tabsContainer.querySelectorAll('.modal-tab');
         const tabContents = tabsContainer.closest('.modal-content-inner').querySelectorAll('.modal-tab-pane');
 
         tabButtons.forEach(button => {
             button.addEventListener('click', (e) => {
-                e.stopPropagation(); // Зупинити клік, щоб не закрити модалку "Кафедра"
+                e.stopPropagation(); // Зупинити "провалювання" кліку
                 
                 const targetTabId = button.dataset.tab;
                 
@@ -371,6 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileDropdownToggles.forEach(toggle => {
         toggle.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // Зупинити "провалювання" кліку
             const menuId = toggle.dataset.dropdownId;
             const menu = document.getElementById(menuId);
             if (menu) {
@@ -381,6 +384,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- 12. НОВА ЛОГІКА: Детальне вікно викладача ---
+    const staffDetailModal = document.getElementById('staff-detail-modal');
     
     // Елементи у вікні деталей
     const detailName = document.getElementById('staff-detail-name');
@@ -390,27 +394,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const detailLinks = document.getElementById('staff-detail-links');
     const detailDisciplines = document.getElementById('staff-detail-disciplines');
     const detailBio = document.getElementById('staff-detail-bio');
-    
-    // Вкладки у вікні деталей
-    const detailTabButtons = document.querySelectorAll('.detail-tab-button');
-    const detailTabPanes = document.querySelectorAll('.detail-tab-pane');
-
-    detailTabButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const targetPaneId = button.dataset.tab;
-            
-            detailTabButtons.forEach(btn => btn.classList.remove('active'));
-            detailTabPanes.forEach(pane => pane.classList.remove('active'));
-            
-            button.classList.add('active');
-            document.getElementById(targetPaneId).classList.add('active');
-        });
-    });
 
     document.querySelectorAll('.staff-card').forEach(card => {
         card.addEventListener('click', (e) => {
-            e.stopPropagation(); // Зупинити клік
+            e.stopPropagation(); // Зупинити "провалювання" кліку
             const staffId = card.dataset.staffId;
             
             // Перевіряємо, чи існують дані ТА чи існує файл staff_data.js
@@ -462,14 +449,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     p.textContent = 'Посилання відсутні.';
                     detailLinks.appendChild(p);
                 }
-                
-                // 6. Скидаємо вкладки до стану "за замовчуванням"
-                detailTabButtons.forEach((btn, index) => {
-                    btn.classList.toggle('active', index === 0);
-                });
-                detailTabPanes.forEach((pane, index) => {
-                    pane.classList.toggle('active', index === 0);
-                });
 
                 // Відкриваємо модальне вікно деталей
                 openModal('staff-detail-modal');
@@ -477,21 +456,13 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Заглушка, якщо дані не знайдені
                 console.warn(`Дані для викладача з ID: ${staffId} не знайдені у staff_data.js`);
-                detailName.textContent = card.querySelector('h3').textContent || "Інформація відсутня";
+                detailName.textContent = "Інформація відсутня";
                 detailTitle.textContent = card.querySelector('p').textContent || "";
                 detailImg.src = card.querySelector('img').src;
                 detailDetails.innerHTML = "<p>Детальна інформація про цього викладача буде додана незабаром.</p>";
                 detailLinks.innerHTML = '<p class="text-sm text-slate-400">Посилання відсутні.</p>';
                 detailDisciplines.innerHTML = '<li>Інформація про дисципліни відсутня.</li>';
                 detailBio.innerHTML = '<p>Біографічна довідка буде додана згодом.</p>';
-                
-                // Скидаємо вкладки
-                 detailTabButtons.forEach((btn, index) => {
-                    btn.classList.toggle('active', index === 0);
-                });
-                detailTabPanes.forEach((pane, index) => {
-                    pane.classList.toggle('active', index === 0);
-                });
                 
                 openModal('staff-detail-modal');
             }
