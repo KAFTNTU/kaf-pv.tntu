@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- 6. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН (ОНОВЛЕНО) ---
     
     const allModals = document.querySelectorAll('.modal-base');
-    // ВИПРАВЛЕНО: Тепер "слухаємо" і .dropdown-link, і .nav-link-mobile
+    // ВИПРАВЛЕНО: Тепер "слухаємо" і .dropdown-link
     const allNavLinks = document.querySelectorAll('.nav-link-desktop, .nav-link-mobile, .dropdown-link');
     
     // Функція відкриття модалки
@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Закриття по кнопці "хрестик"
     document.querySelectorAll('.modal-close-btn').forEach(button => {
         button.addEventListener('click', (e) => {
-            e.stopPropagation(); // Зупинити "провалювання"
             // Знайти найближчу модалку, до якої належить кнопка, і закрити її
             const modalToClose = e.target.closest('.modal-base');
             closeModal(modalToClose);
@@ -156,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keydown', (e) => {
         if (e.key === "Escape") {
             // Спочатку закриваємо найвищу модалку (z-60), якщо вона є
-            const topModal = document.querySelector('#staff-detail-modal.modal-visible, #small-news-modal.modal-visible');
+            const topModal = document.querySelector('.modal-base.modal-visible[style*="z-index: 60"]');
             if (topModal) {
                 closeModal(topModal);
             } else {
@@ -274,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalDots = Math.ceil(slides.length / slidesPerView);
 
         // Створюємо "горошинки"
-        dotsContainer.innerHTML = ''; // Очищуємо, про всяк випадок
         for (let i = 0; i < totalDots; i++) {
             const dot = document.createElement('button');
             dot.className = 'news-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500';
@@ -291,17 +289,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Функція оновлення активної "горошинки"
         const updateDots = () => {
-            // Затримка, щоб дати скролу "прилипнути"
-            setTimeout(() => {
-                const scrollLeft = sliderContainer.scrollLeft;
-                const containerWidth = sliderContainer.clientWidth;
-                
-                let activeDotIndex = Math.round(scrollLeft / containerWidth);
-                
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === activeDotIndex);
-                });
-            }, 150); // 150ms затримка
+            const scrollLeft = sliderContainer.scrollLeft;
+            const containerWidth = sliderContainer.clientWidth;
+            
+            // Визначаємо, який "набір" слайдів зараз активний
+            let activeDotIndex = Math.round(scrollLeft / containerWidth);
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeDotIndex);
+            });
         };
 
         if (dots.length > 0) dots[0].classList.add('active'); // Активуємо першу
@@ -341,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         tabButtons.forEach(button => {
             button.addEventListener('click', (e) => {
-                e.stopPropagation(); // ВИПРАВЛЕННЯ: Зупинити "провалювання" кліку
+                e.stopPropagation(); // Зупинити "провалювання" кліку
                 
                 const targetTabId = button.dataset.tab;
                 
@@ -381,9 +377,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const menuId = toggle.dataset.dropdownId;
             const menu = document.getElementById(menuId);
             if (menu) {
-                const isOpen = menu.classList.toggle('open');
-                toggle.classList.toggle('open', isOpen);
-                toggle.querySelector('svg').style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+                menu.classList.toggle('open');
+                toggle.querySelector('svg').classList.toggle('rotate-180');
             }
         });
     });
@@ -422,9 +417,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 detailBio.innerHTML = data.bio || '<p>Біографічна довідка буде додана згодом.</p>';
                 
                 // 4. Заповнюємо дисципліни
-                const discContainer = detailDisciplines.parentElement;
+                detailDisciplines.innerHTML = ''; // Очищуємо
                 if (data.disciplines && data.disciplines.length > 0) {
-                    detailDisciplines.innerHTML = ''; // Очищуємо
                     const ul = document.createElement('ul');
                     ul.className = 'list-disc pl-5 space-y-1';
                     data.disciplines.forEach(disc => {
@@ -433,13 +427,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         ul.appendChild(li);
                     });
                     detailDisciplines.appendChild(ul);
-                    discContainer.classList.remove('hidden'); // Показываем блок
                 } else {
-                    discContainer.classList.add('hidden'); // Прячем блок, если дисциплин нет
+                    detailDisciplines.innerHTML = '<li>Інформація про дисципліни відсутня.</li>';
                 }
                 
                 // 5. Заповнюємо посилання
-                const linksContainer = detailLinks.parentElement;
                 detailLinks.innerHTML = ''; // Очищуємо
                 if (data.links && data.links.length > 0) {
                      data.links.forEach(link => {
@@ -451,9 +443,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         a.textContent = link.name;
                         detailLinks.appendChild(a);
                     });
-                    linksContainer.classList.remove('hidden'); // Показываем
                 } else {
-                    linksContainer.classList.add('hidden'); // Прячем
+                    const p = document.createElement('p');
+                    p.className = 'text-sm text-slate-400';
+                    p.textContent = 'Посилання відсутні.';
+                    detailLinks.appendChild(p);
                 }
 
                 // Відкриваємо модальне вікно деталей
@@ -462,25 +456,17 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Заглушка, якщо дані не знайдені
                 console.warn(`Дані для викладача з ID: ${staffId} не знайдені у staff_data.js`);
-                detailName.textContent = card.querySelector('h3').textContent || "Інформація відсутня";
+                detailName.textContent = "Інформація відсутня";
                 detailTitle.textContent = card.querySelector('p').textContent || "";
                 detailImg.src = card.querySelector('img').src;
                 detailDetails.innerHTML = "<p>Детальна інформація про цього викладача буде додана незабаром.</p>";
-                detailLinks.parentElement.classList.add('hidden');
-                detailDisciplines.parentElement.classList.add('hidden');
+                detailLinks.innerHTML = '<p class="text-sm text-slate-400">Посилання відсутні.</p>';
+                detailDisciplines.innerHTML = '<li>Інформація про дисципліни відсутня.</li>';
                 detailBio.innerHTML = '<p>Біографічна довідка буде додана згодом.</p>';
                 
                 openModal('staff-detail-modal');
             }
         });
-    });
-    
-    // --- 13. ВИПРАВЛЕННЯ ДЛЯ МОБІЛЬНИХ ВКЛАДОК (щоб не закривались) ---
-    document.querySelectorAll('.modal-tab').forEach(tab => {
-        tab.addEventListener('click', (e) => e.stopPropagation());
-    });
-    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
-        toggle.addEventListener('click', (e) => e.stopPropagation());
     });
 
 });
