@@ -394,7 +394,7 @@
                 <div id="tab-staff" class="modal-tab-pane">
                     <div class="content-block p-6">
                         <p>Наш колектив – це професіонали, що надихають на нові звершення.</p>
-                        <button class="mt-4 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-6 rounded-lg nav-link" data-modal-id="staff-modal" data-target-id="staff">
+                        <button class="mt-4 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-6 rounded-lg nav-link-desktop" data-modal-id="staff-modal" data-target-id="staff">
                             Переглянути персонал
                         </button>
                         <p class="mt-4 text-sm text-slate-400">(Це відкриє окреме вікно, як ми робили раніше)</p>
@@ -459,33 +459,33 @@
             </div>
             
             <!-- Контент (з прокруткою) -->
-            <div class="modal-scroll-content max-h-[70vh] overflow-y-auto pr-3">
+            <div class="modal-scroll-content max-h-[70vh] overflow-y-auto pr-3 p-6">
                 <!-- 4 видимих -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- ОНОВЛЕНО: Додано .staff-card та data-staff-id -->
+                    <!-- ОНОВЛЕНО: rounded-full -> rounded-xl, додано .staff-card та data-staff-id -->
                     <div class="text-center reveal staff-card" data-staff-id="palamar">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/palamar.png" alt="Фото Паламар Михайло Іванович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/palamar.png" alt="Фото Паламар Михайло Іванович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Паламар Михайло Іванович</h3>
                             <p class="text-sky-400">д.р. техн. наук, завідувач кафедри</p>
                         </div>
                     </div>
                     <div class="text-center reveal staff-card" style="transition-delay: 100ms;" data-staff-id="yavorska">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/yavorska.png" alt="Фото Яворська Мирослава Іванівна" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/yavorska.png" alt="Фото Яворська Мирослава Іванівна" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Яворська Мирослава Іванівна</h3>
                             <p class="text-sky-400">к.т.н., доцент</p>
                         </div>
                     </div>
                     <div class="text-center reveal staff-card" style="transition-delay: 200ms;" data-staff-id="zelinskyi">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/zelinskij.png" alt="Фото Зелінський Ігор Микитович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/zelinskij.png" alt="Фото Зелінський Ігор Микитович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Зелінський Ігор Микитович</h3>
                             <p class="text-sky-400">к.ф.-м.н, доцент</p>
                         </div>
                     </div>
                     <div class="text-center reveal staff-card" style="transition-delay: 300ms;" data-staff-id="nakonechnyi">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Наконечний Юрій Іванович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Наконечний Юрій Іванович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Наконечний Юрій Іванович</h3>
                             <p class="text-sky-400">старший викладач</p>
@@ -496,70 +496,70 @@
                 <!-- Прихований персонал -->
                 <div id="hidden-staff" class="hidden mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="text-center reveal staff-card" data-staff-id="apostol">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/apostol.png" alt="Фото Апостол Юрій Орестович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/apostol.png" alt="Фото Апостол Юрій Орестович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Апостол Юрій Орестович</h3>
                             <p class="text-sky-400">старший викладач</p>
                         </div>
                     </div>
-                    <div class="text-center reveal staff-card" data-staff-id="dybuniak">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/dybuniak.png" alt="Фото Дубиняк Тарас Степанович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                    <div class="text-center reveal staff-card" data-staff-id="dubyniak">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/dybuniak.png" alt="Фото Дубиняк Тарас Степанович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Дубиняк Тарас Степанович</h3>
                             <p class="text-sky-400">к.т.н., доцент</p>
                         </div>
                     </div>
-                    <div class="text-center reveal staff-card" data-staff-id="chajkovskij">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/chajkovskij.png" alt="Фото Чайковський Андрій Вікторович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                    <div class="text-center reveal staff-card" data-staff-id="chaikovskyi">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/chajkovskij.png" alt="Фото Чайковський Андрій Вікторович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Чайковський Андрій Вікторович</h3>
                             <p class="text-sky-400">к.т.н., доцент</p>
                         </div>
                     </div>
-                    <div class="text-center reveal staff-card" data-staff-id="strembickij">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/strembickij.jpg" alt="Фото Стрембіцький Михайло Олексійович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                    <div class="text-center reveal staff-card" data-staff-id="strembitskyi">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/strembickij.jpg" alt="Фото Стрембіцький Михайло Олексійович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Стрембіцький Михайло Олексійович</h3>
                             <p class="text-sky-400">к.т.н., доцент</p>
                         </div>
                     </div>
-                    <div class="text-center reveal staff-card" data-staff-id="batuk">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/batuk.png" alt="Фото Батюк Віталій Васильович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                    <div class="text-center reveal staff-card" data-staff-id="batiuk">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/batuk.png" alt="Фото Батюк Віталій Васильович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Батюк Віталій Васильович</h3>
                             <p class="text-sky-400">асистент</p>
                         </div>
                     </div>
-                    <div class="text-center reveal staff-card" data-staff-id="rafaluk">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/rafaluk.png" alt="Фото Рафалюк Олександр Олексійович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                    <div class="text-center reveal staff-card" data-staff-id="rafaliuk">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/rafaluk.png" alt="Фото Рафалюк Олександр Олексійович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Рафалюк Олександр Олексійович</h3>
                             <p class="text-sky-400">асистент (сумісник)</p>
                         </div>
                     </div>
-                    <div class="text-center reveal staff-card" data-staff-id="kucevich">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/kucevich.jpg" alt="Фото Куцевич Світлана Петрівна" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                    <div class="text-center reveal staff-card" data-staff-id="kucevych">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/kucevich.jpg" alt="Фото Куцевич Світлана Петрівна" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Куцевич Світлана Петрівна</h3>
                             <p class="text-sky-400">навчально-допоміжний персонал</p>
                         </div>
                     </div>
                     <div class="text-center reveal staff-card" data-staff-id="rydnyk">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/rydnyk.png" alt="Фото Рудник Андрій Андрійович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/rydnyk.png" alt="Фото Рудник Андрій Андрійович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Рудник Андрій Андрійович</h3>
                             <p class="text-sky-400">навчально-допоміжний персонал</p>
                         </div>
                     </div>
-                    <div class="text-center reveal staff-card" data-staff-id="ostafiychuk">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/ostafiychuk.jpg" alt="Фото Остафійчук Іван Васильович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                    <div class="text-center reveal staff-card" data-staff-id="ostafiichuk">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/ostafiychuk.jpg" alt="Фото Остафійчук Іван Васильович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Остафійчук Іван Васильович</h3>
                             <p class="text-sky-400">навчально-допоміжний персонал</p>
                         </div>
                     </div>
-                    <div class="text-center reveal staff-card" data-staff-id="poprocka">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="image/poprocka.jpg" alt="Фото Папроцька Олена Володимирівна" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                    <div class="text-center reveal staff-card" data-staff-id="paprotska">
+                        <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/poprocka.jpg" alt="Фото Папроцька Олена Володимирівна" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Папроцька Олена Володимирівна</h3>
                             <p class="text-sky-400">інженер 2-ї категорії</p>
@@ -715,6 +715,7 @@
                     <div class="grid sm:grid-cols-3 gap-6">
                         <!-- Фото та Посилання -->
                         <div class="sm:col-span-1">
+                            <!-- ОНОВЛЕНО: rounded-xl -->
                             <img id="staff-detail-img" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото викладача" class="rounded-xl shadow-lg w-full">
                             <h3 class="text-lg font-semibold text-white mt-4">Посилання</h3>
                             <div id="staff-detail-links" class="mt-2 space-y-1">
