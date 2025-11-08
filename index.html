@@ -394,10 +394,9 @@
                 <div id="tab-staff" class="modal-tab-pane">
                     <div class="content-block">
                         <p>Наш колектив – це професіонали, що надихають на нові звершення.</p>
-                        <button class="mt-4 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-6 rounded-lg nav-link" data-modal-id="staff-modal" data-target-id="staff">
+                        <button class="mt-4 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-6 rounded-lg nav-link-desktop" data-modal-id="staff-modal" data-target-id="staff">
                             Переглянути персонал
                         </button>
-                        <p class="mt-4 text-sm text-slate-400">(Це відкриє окреме вікно, як ми робили раніше)</p>
                     </div>
                 </div>
                 
@@ -433,7 +432,7 @@
                 
                 <!-- Вкладка 5: Випускники кафедри (Заглушка) -->
                 <div id="tab-graduates" class="modal-tab-pane">
-                    <div class="content-block">
+                     <div class="content-block">
                         <h3>Наші випускники</h3>
                         <p>Ми пишаємося нашими випускниками, які працюють у провідних українських та міжнародних компаніях у сфері ІТ, приладобудування, автоматизації та метрології.</p>
                         <p>(Тут буде розміщено історії успіху та інформація про випускників...)</p>
@@ -445,153 +444,181 @@
 </div>
 
 
-<!-- 2. Модальне вікно "Персонал" (колишнє "Викладачі") (z-50) -->
+<!-- 2. Модальне вікно "Персонал" (ОНОВЛЕНО з data-staff-id та фото) -->
 <div id="staff-modal" class="modal-base hidden" aria-labelledby="staff-title" role="dialog" aria-modal="true">
     <div class="modal-content-container max-w-6xl neon-border-box">
         <div class="modal-content-inner">
-            <!-- Заголовок -->
-            <div class="modal-header">
-                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title text-center" id="staff-title">Наш колектив</h2>
-                <button class="modal-close-btn">
-                    <span class="sr-only">Закрити</span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-            </div>
+            <button class="modal-close-btn">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
 
             <!-- Контент -->
+            <div class="modal-header">
+                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title text-center" id="staff-title">Наш колектив</h2>
+            </div>
+            
             <div class="modal-scroll-content">
                 <!-- 4 видимих -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
-                    <!-- Картка 1: Паламар (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="palamar">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Паламар Михайло Іванович">
+                    <!-- Картка 1: Паламар -->
+                    <div class="staff-card text-center reveal" data-staff-id="palamar">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/palamar.PNG" 
+                             alt="Фото Паламар Михайло Іванович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Паламар Михайло Іванович</h3>
                             <p class="text-sky-400">д.р. техн. наук, завідувач кафедри</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 2: Яворська (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="yavorska">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Яворська Мирослава Іванівна">
+                    </div>
+                    <!-- Картка 2: Яворська -->
+                    <div class="staff-card text-center reveal" style="transition-delay: 100ms;" data-staff-id="yavorska">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/javorivska.PNG" 
+                             alt="Фото Яворська Мирослава Іванівна"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Яворська Мирослава Іванівна</h3>
                             <p class="text-sky-400">к.т.н., доцент</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 3: Зелінський (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="zelinskyi">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Зелінський Ігор Микитович">
+                    </div>
+                    <!-- Картка 3: Зелінський -->
+                    <div class="staff-card text-center reveal" style="transition-delay: 200ms;" data-staff-id="zelinskyi">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/zelinskij.PNG" 
+                             alt="Фото Зелінський Ігор Микитович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Зелінський Ігор Микитович</h3>
                             <p class="text-sky-400">к.ф.-м.н, доцент</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 4: Наконечний (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="nakonechnyi">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Наконечний Юрій Іванович">
+                    </div>
+                    <!-- Картка 4: Наконечний -->
+                    <div class="staff-card text-center reveal" style="transition-delay: 300ms;" data-staff-id="nakonechnyi">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" 
+                             alt="Фото Наконечний Юрій Іванович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Наконечний Юрій Іванович</h3>
                             <p class="text-sky-400">старший викладач</p>
                         </div>
-                    </button>
+                    </div>
                 </div>
                 
                 <!-- Прихований персонал -->
                 <div id="hidden-staff" class="hidden mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
-                    <!-- Картка 5: Апостол (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="apostol">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Апостол Юрій Орестович">
+                    <!-- Картка 5: Апостол -->
+                    <div class="staff-card text-center reveal" data-staff-id="apostol">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/apostol.PNG" 
+                             alt="Фото Апостол Юрій Орестович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Апостол Юрій Орестович</h3>
                             <p class="text-sky-400">старший викладач</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 6: Дубиняк (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="dubyniak">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Дубиняк Тарас Степанович">
+                    </div>
+                    <!-- Картка 6: Дубиняк -->
+                    <div class="staff-card text-center reveal" data-staff-id="dubyniak">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/dybuniak.PNG" 
+                             alt="Фото Дубиняк Тарас Степанович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Дубиняк Тарас Степанович</h3>
                             <p class="text-sky-400">к.т.н., доцент</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 7: Чайковський (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="chaikovskyi">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Чайковський Андрій Вікторович">
+                    </div>
+                    <!-- Картка 7: Чайковський -->
+                    <div class="staff-card text-center reveal" data-staff-id="chaikovskyi">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/chajkovskij.PNG" 
+                             alt="Фото Чайковський Андрій Вікторович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Чайковський Андрій Вікторович</h3>
                             <p class="text-sky-400">к.т.н., доцент</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 8: Стрембіцький (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="strembitskyi">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Стрембіцький Михайло Олексійович">
+                    </div>
+                    <!-- Картка 8: Стрембіцький -->
+                    <div class="staff-card text-center reveal" data-staff-id="strembitskyi">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/strembickij.JPG" 
+                             alt="Фото Стрембіцький Михайло Олексійович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Стрембіцький Михайло Олексійович</h3>
                             <p class="text-sky-400">к.т.н., доцент</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 9: Батюк (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="batiuk">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Батюк Віталій Васильович">
+                    </div>
+                    <!-- Картка 9: Батюк -->
+                    <div class="staff-card text-center reveal" data-staff-id="batiuk">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/batuk.PNG" 
+                             alt="Фото Батюк Віталій Васильович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Батюк Віталій Васильович</h3>
                             <p class="text-sky-400">асистент</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 10: Рафалюк (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="rafaliuk">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Рафалюк Олександр Олексійович">
+                    </div>
+                    <!-- Картка 10: Рафалюк -->
+                    <div class="staff-card text-center reveal" data-staff-id="rafaliuk">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/rafaluk.PNG" 
+                             alt="Фото Рафалюк Олександр Олексійович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Рафалюк Олександр Олексійович</h3>
                             <p class="text-sky-400">асистент (сумісник)</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 11: Куцевич (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="kucevych">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Куцевич Світлана Петрівна">
+                    </div>
+                    <!-- Картка 11: Куцевич -->
+                    <div class="staff-card text-center reveal" data-staff-id="kucevych">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/kucevich.JPG" 
+                             alt="Фото Куцевич Світлана Петрівна"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Куцевич Світлана Петрівна</h3>
                             <p class="text-sky-400">навчально-допоміжний персонал</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 12: Рудник (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="rudnyk">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Рудник Андрій Андрійович">
+                    </div>
+                    <!-- Картка 12: Рудник -->
+                    <div class="staff-card text-center reveal" data-staff-id="rudnyk">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/rydnik.PNG" 
+                             alt="Фото Рудник Андрій Андрійович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Рудник Андрій Андрійович</h3>
                             <p class="text-sky-400">навчально-допоміжний персонал</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 13: Остафійчук (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="ostafiichuk">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Остафійчук Іван Васильович">
+                    </div>
+                    <!-- Картка 13: Остафійчук -->
+                    <div class="staff-card text-center reveal" data-staff-id="ostafiichuk">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/ostafiychuk.JPG" 
+                             alt="Фото Остафійчук Іван Васильович"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Остафійчук Іван Васильович</h3>
                             <p class="text-sky-400">навчально-допоміжний персонал</p>
                         </div>
-                    </button>
-                    
-                    <!-- Картка 14: Папроцька (ДОДАНО data-staff-id) -->
-                    <button class="staff-card" data-staff-id="paprotska">
-                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото Папроцька Олена Володимирівна">
+                    </div>
+                    <!-- Картка 14: Папроцька -->
+                    <div class="staff-card text-center reveal" data-staff-id="paprotska">
+                        <img class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg cursor-pointer transform transition-transform hover:scale-105" 
+                             src="image/poprocka.JPG" 
+                             alt="Фото Папроцька Олена Володимирівна"
+                             onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                         <div class="mt-4">
                             <h3 class="text-lg font-semibold text-white">Папроцька Олена Володимирівна</h3>
                             <p class="text-sky-400">інженер 2-ї категорії</p>
                         </div>
-                    </button>
+                    </div>
                 </div>
 
                 <!-- Toggle Button -->
@@ -608,22 +635,19 @@
     </div>
 </div>
 
-<!-- 3. Модальне вікно "Новини" (з Слайдером) (z-50) -->
+<!-- 3. Модальне вікно "Новини" (з Слайдером) -->
 <div id="news-modal" class="modal-base hidden" aria-labelledby="news-title" role="dialog" aria-modal="true">
     <div class="modal-content-container max-w-4xl neon-border-box">
         <div class="modal-content-inner">
-            <!-- Заголовок -->
-            <div class="modal-header">
-                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title text-center" id="news-title">Останні новини</h2>
-                <button class="modal-close-btn">
-                    <span class="sr-only">Закрити</span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-            </div>
+            <button class="modal-close-btn">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
             
             <!-- Контент (зменшені відступи) -->
-            <div class="py-4">
-                <p class="text-lg text-slate-400 text-center">Будьте в курсі подій нашої кафедри</p>
+            <div class="p-6 py-8">
+                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title text-center" id="news-title">Останні новини</h2>
+                <p class="mt-4 text-lg text-slate-400 text-center">Будьте в курсі подій нашої кафедри</p>
                 
                 <!-- Слайдер -->
                 <div id="news-slider-container" class="news-slider-container mt-8 flex overflow-x-auto snap-x snap-mandatory scroll-p-4 px-4 -mx-4">
@@ -702,7 +726,7 @@
                 </div>
                 
                 <!-- "Горошинки" (Dots) -->
-                <div id="news-dots-container" class="flex justify-center space-x-2 mt-4">
+                <div id="news-dots-container" class="flex justify-center space-x-2 mt-6">
                     <!-- Будуть додані сюди динамічно -->
                 </div>
             </div>
@@ -711,10 +735,10 @@
 </div>
 
 <!-- 4. Маленьке модальне вікно "Читати Далі" (z-60) -->
-<div id="small-news-modal" class="modal-base hidden" aria-labelledby="small-news-title" role="dialog" aria-modal="true" style="z-index: 60;">
+<div id="small-news-modal" class="modal-base hidden" style="z-index: 60;" aria-labelledby="small-news-title" role="dialog" aria-modal="true">
     <div class="modal-content-container max-w-2xl neon-border-box">
         <div class="modal-content-inner">
-            <button class="modal-close-btn absolute top-4 right-6 text-slate-400 hover:text-white z-20">
+            <button class="modal-close-btn">
                 <span class="sr-only">Закрити</span>
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
@@ -728,127 +752,136 @@
 </div>
 
 <!-- 5. Модальне вікно "Деталі про Викладача" (z-60) -->
-<div id="staff-detail-modal" class="modal-base hidden" aria-labelledby="staff-detail-title" role="dialog" aria-modal="true" style="z-index: 60;">
+<div id="staff-detail-modal" class="modal-base hidden" style="z-index: 60;" aria-labelledby="staff-detail-name" role="dialog" aria-modal="true">
     <div class="modal-content-container max-w-4xl neon-border-box">
         <div class="modal-content-inner">
-            <button class="modal-close-btn absolute top-4 right-6 text-slate-400 hover:text-white z-20">
+            <button class="modal-close-btn">
                 <span class="sr-only">Закрити</span>
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
             
-            <div class="modal-scroll-content max-h-[80vh] overflow-y-auto">
-                <div class="content-block p-6">
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <!-- Колонка 1: Фото та Загальна Інфо -->
-                        <div class="md:col-span-1">
-                            <img id="staff-detail-img" class="mx-auto h-40 w-40 rounded-full object-cover border-4 border-slate-700 shadow-lg" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото викладача">
-                            <h2 id="staff-detail-name" class="text-2xl font-bold text-white text-center mt-4"></h2>
-                            <p id="staff-detail-title" class="text-sky-400 text-center"></p>
-                            
-                            <div id="staff-detail-details" class="mt-6 text-sm"></div>
-                            
-                            <div id="staff-detail-links" class="mt-6 space-y-2"></div>
+            <div class="modal-scroll-content max-h-[80vh] overflow-y-auto p-6 md:p-8">
+                <!-- Шапка профілю -->
+                <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                    <img id="staff-detail-img" class="flex-shrink-0 h-40 w-40 rounded-full object-cover border-4 border-slate-700" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="">
+                    <div class="text-center sm:text-left">
+                        <h2 id="staff-detail-name" class="text-3xl font-bold text-white"></h2>
+                        <p id="staff-detail-title" class="text-xl text-sky-400 mt-1"></p>
+                        
+                        <!-- Посилання -->
+                        <div id="staff-detail-links" class="mt-4 space-y-1">
+                            <!-- Посилання будуть вставлені сюди -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Вкладки -->
+                <div class="mt-8">
+                    <!-- Я спростив вкладки для цього вікна, щоб уникнути конфліктів -->
+                    <div class="border-b border-slate-700">
+                        <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                            <button class="detail-tab-button active" data-tab="tab-detail-info">Загальна інформація</button>
+                            <button class="detail-tab-button" data-tab="tab-detail-bio">Біографія</button>
+                        </nav>
+                    </div>
+                    
+                    <!-- Контент Вкладок -->
+                    <div class="mt-6">
+                        <!-- Вкладка 1: Інфо -->
+                        <div id="tab-detail-info" class="detail-tab-pane active content-block">
+                            <div id="staff-detail-details">
+                                <!-- Деталі (Посада, ступінь) -->
+                            </div>
+                            <h3>Основні дисципліни</h3>
+                            <ul id="staff-detail-disciplines" class="list-disc pl-5 space-y-1">
+                                <!-- Дисципліни -->
+                            </ul>
                         </div>
                         
-                        <!-- Колонка 2: Дисципліни та Біографія -->
-                        <div class="md:col-span-2">
-                            <h3>Дисципліни, що викладає:</h3>
-                            <ul id="staff-detail-disciplines" class="text-sm"></ul>
-                            
-                            <div id="staff-detail-bio" class="mt-6"></div>
+                        <!-- Вкладка 2: Біографія -->
+                        <div id="tab-detail-bio" class="detail-tab-pane content-block">
+                            <!-- Біографія -->
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 
 
-<!-- 6. Модальні вікна - Заглушки (z-50) -->
-
+<!-- 6. Модальні вікна - Заглушки для нових пунктів меню (z-50) -->
 <div id="labs-modal" class="modal-base hidden" aria-labelledby="labs-title" role="dialog" aria-modal="true">
     <div class="modal-content-container max-w-4xl neon-border-box">
         <div class="modal-content-inner">
-             <div class="modal-header">
+            <button class="modal-close-btn">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div class="modal-header">
                 <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="labs-title">Навчальні лабораторії</h2>
-                <button class="modal-close-btn">
-                    <span class="sr-only">Закрити</span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
             </div>
-            <div class="modal-scroll-content">
-                <p class="text-slate-300 content-block">Інформація про навчальні лабораторії буде додана тут незабаром...</p>
-            </div>
+            <div class="modal-scroll-content"><p>Інформація про навчальні лабораторії буде додана тут незабаром...</p></div>
         </div>
     </div>
 </div>
 
 <div id="science-modal" class="modal-base hidden" aria-labelledby="science-title" role="dialog" aria-modal="true">
-    <div class="modal-content-container max-w-4xl neon-border-box">
+     <div class="modal-content-container max-w-4xl neon-border-box">
         <div class="modal-content-inner">
-             <div class="modal-header">
+            <button class="modal-close-btn">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div class="modal-header">
                 <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="science-title">Наука</h2>
-                <button class="modal-close-btn">
-                    <span class="sr-only">Закрити</span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
             </div>
-            <div class="modal-scroll-content">
-                <p class="text-slate-300 content-block">Інформація про наукову роботу, публікації та інноваційні розробки буде додана тут незабаром...</p>
-            </div>
+            <div class="modal-scroll-content"><p>Інформація про наукову роботу, публікації та інноваційні розробки буде додана тут незабаром...</p></div>
         </div>
     </div>
 </div>
 
 <div id="international-modal" class="modal-base hidden" aria-labelledby="international-title" role="dialog" aria-modal="true">
-    <div class="modal-content-container max-w-4xl neon-border-box">
+     <div class="modal-content-container max-w-4xl neon-border-box">
         <div class="modal-content-inner">
-             <div class="modal-header">
+            <button class="modal-close-btn">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div class="modal-header">
                 <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="international-title">Міжнародні зв'язки</h2>
-                <button class="modal-close-btn">
-                    <span class="sr-only">Закрити</span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
             </div>
-            <div class="modal-scroll-content">
-                <p class="text-slate-300 content-block">Інформація про міжнародну співпрацю, проєкти та стажування буде додана тут незабаром...</p>
-            </div>
+            <div class="modal-scroll-content"><p>Інформація про міжнародну співпрацю, проєкти та стажування буде додана тут незабаром...</p></div>
         </div>
     </div>
 </div>
 
 <div id="student-modal" class="modal-base hidden" aria-labelledby="student-title" role="dialog" aria-modal="true">
-    <div class="modal-content-container max-w-4xl neon-border-box">
+     <div class="modal-content-container max-w-4xl neon-border-box">
         <div class="modal-content-inner">
-             <div class="modal-header">
+            <button class="modal-close-btn">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div class="modal-header">
                 <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="student-title">Студенту</h2>
-                <button class="modal-close-btn">
-                    <span class="sr-only">Закрити</span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
             </div>
-            <div class="modal-scroll-content">
-                <p class="text-slate-300 content-block">Інформація про графіки, дисципліни та практику буде додана тут незабаром...</p>
-            </div>
+            <div class="modal-scroll-content"><p>Інформація про графіки, дисципліни та практику буде додана тут незабаром...</p></div>
         </div>
     </div>
 </div>
 
 <div id="entrant-modal" class="modal-base hidden" aria-labelledby="entrant-title" role="dialog" aria-modal="true">
-    <div class="modal-content-container max-w-4xl neon-border-box">
+     <div class="modal-content-container max-w-4xl neon-border-box">
         <div class="modal-content-inner">
-             <div class="modal-header">
+            <button class="modal-close-btn">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div class="modal-header">
                 <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="entrant-title">Абітурієнту</h2>
-                <button class="modal-close-btn">
-                    <span class="sr-only">Закрити</span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
             </div>
-            <div class="modal-scroll-content">
-                <p class="text-slate-300 content-block">Інформація про умови вступу буде додана тут незабаром...</p>
-            </div>
+            <div class="modal-scroll-content"><p>Інформація про умови вступу буде додана тут незабаром...</p></div>
         </div>
     </div>
 </div>
@@ -862,8 +895,8 @@
   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
 </button>
 
-<!-- ПОСИЛАННЯ НА ВАШІ JS ФАЙЛИ -->
-<!-- Важливо: staff_data.js має бути ПЕРЕД script.js -->
+<!-- ПОСИЛАННЯ НА НАШІ СКРИПТИ -->
+<!-- Підключаємо файл з даними ДО головного скрипта -->
 <script src="staff_data.js" defer></script>
 <script src="script.js" defer></script>
 
