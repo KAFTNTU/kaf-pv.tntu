@@ -155,19 +155,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keydown', (e) => {
         if (e.key === "Escape") {
             // Спочатку закриваємо найвищу модалку (z-60), якщо вона є
-            const topModal = document.querySelector('.modal-base.modal-visible[style*="z-index: 60"]');
+            const topModal = document.querySelector('.modal-base.modal-visible.z-\\[60\\]'); // Шукаємо z-60
             if (topModal) {
                 closeModal(topModal);
             } else {
                 // Якщо немає, закриваємо всі видимі z-50
-                document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
+                document.querySelectorAll('.modal-base.modal-visible.z-50').forEach(modal => { // Шукаємо z-50
                      closeModal(modal);
                 });
             }
         }
     });
 
-    // --- 7. Логіка Навігації (Кліки по посиланнях) ---
+    // --- 7. Логіка Навігації (Кліки по посиланнях) (ВИПРАВЛЕНО) ---
 
     let neonTimer = null; // Таймер для неону
 
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // 1. Закрити ВСІ відкриті вікна (окрім того, що ми відкриваємо)
                 document.querySelectorAll('.modal-base.modal-visible').forEach(m => {
-                    if (m.id !== modalId) {
+                    if (m.id !== modalId && !m.classList.contains('z-[60]')) { // Не закривати z-60
                         closeModal(m);
                     }
                 });
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Активувати потрібні
                         const targetButton = targetModal.querySelector(`.modal-tab[data-tab="${tabTarget}"]`);
-                        const targetPane = document.getElementById(tabTarget);
+                        const targetPane = document.getElementById(targetTabId);
                         
                         if (targetButton) targetButton.classList.add('active');
                         if (targetPane) targetPane.classList.add('active');
