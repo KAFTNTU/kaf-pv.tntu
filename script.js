@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     const htmlEl = document.documentElement; // Отримуємо <html>
-    const modalOverlay = document.getElementById('modal-overlay'); // Єдиний фон
-
-    // --- 1. Mobile Menu Toggle ---
+    const modalOverlay = document.getElementById('modal-overlay'); // Отримуємо фон
+    // --- 2. Mobile Menu Toggle ---
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const menuOpenIcon = document.getElementById('menu-open-icon');
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- 2. Scroll to Top Button ---
+    // --- 3. Scroll to Top Button ---
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
     if (scrollToTopBtn) {
         window.onscroll = function() {
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- 3. Animate on Scroll (Reveal) ---
+    // --- 4. Animate on Scroll (Reveal) ---
     const revealElements = document.querySelectorAll('.reveal');
     if (revealElements.length > 0) {
         const observer = new IntersectionObserver((entries) => {
@@ -49,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- 4. Staff Toggle (у модальному вікні) ---
+    // --- 5. Staff Toggle (у модальному вікні) ---
     const toggleStaffBtn = document.getElementById('toggle-staff-btn');
     const hiddenStaff = document.getElementById('hidden-staff');
     const toggleStaffText = document.getElementById('toggle-staff-text');
@@ -67,82 +66,102 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // --- 5. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН ---
+    // --- 6. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН ---
     
     const allModals = document.querySelectorAll('.modal-base');
-    const allNavLinks = document.querySelectorAll('.nav-link-desktop, .nav-link-mobile');
+    // ВИПРАВЛЕНО: Тепер "слухаємо" і .dropdown-link
+    const allNavLinks = document.querySelectorAll('.nav-link-desktop, .nav-link-mobile, .dropdown-link');
     
     // Функція відкриття модалки
     function openModal(modalId) {
         const targetModal = document.getElementById(modalId);
-        if (!targetModal) return;
-
-        // Закрити ВСІ інші модалки
-        allModals.forEach(m => {
-            if (m.id !== modalId) {
-                m.classList.remove('modal-visible');
-                m.classList.add('hidden');
+        if (targetModal) {
+            
+            // Специфічна логіка для модалок, що перекривають (z-60)
+            // Вони НЕ повинні показувати/ховати головний оверлей
+            if (targetModal.style.zIndex != '60') {
+                 modalOverlay.classList.remove('hidden');
             }
-        });
-        
-        // Відкрити потрібну
-        modalOverlay.classList.remove('hidden');
-        targetModal.classList.remove('hidden');
-        setTimeout(() => {
-            modalOverlay.style.opacity = '1';
-            targetModal.classList.add('modal-visible');
-        }, 10);
-        htmlEl.classList.add('modal-open');
+            
+            targetModal.classList.remove('hidden');
+            setTimeout(() => {
+                if (targetModal.style.zIndex != '60') {
+                    modalOverlay.style.opacity = '1';
+                }
+                targetModal.classList.add('modal-visible');
+            }, 10);
+            
+            if (targetModal.style.zIndex != '60') {
+                htmlEl.classList.add('modal-open');
+            }
+        }
     }
 
-    // Функція закриття ВСІХ модальних вікон
-    function closeAllModals() {
-        modalOverlay.style.opacity = '0';
-        allModals.forEach(modal => {
-            modal.classList.remove('modal-visible');
-        });
+    // Функція закриття модалки
+    function closeModal(modal) {
+        if (!modal) return;
+        
+        // Специфічна логіка для модалок, що перекривають (z-60)
+        // Вони НЕ повинні ховати головний оверлей
+        if (modal.style.zIndex != '60') {
+            modalOverlay.style.opacity = '0';
+        }
+
+        modal.classList.remove('modal-visible');
+        
         setTimeout(() => {
-            modalOverlay.classList.add('hidden');
-            allModals.forEach(modal => {
-                modal.classList.add('hidden');
-            });
-         }, 300); // 300ms - це час transition в CSS
-        htmlEl.classList.remove('modal-open');
+            modal.classList.add('hidden');
+            if (modal.style.zIndex != '60') {
+                // Ховаємо фон, ТІЛЬКИ якщо не відкрито інших модалок z-50
+                const isAnyModalVisible = document.querySelector('.modal-base.modal-visible[style*="z-index: 50"]');
+                if (!isAnyModalVisible) {
+                    modalOverlay.classList.add('hidden');
+                }
+            }
+        }, 300); // 300ms - це час transition в CSS
+
+        // Розблокувати скрол, ТІЛЬКИ якщо це була остання модалка
+        const isAnyModalVisible = document.querySelector('.modal-base.modal-visible');
+        if (!isAnyModalVisible) {
+            htmlEl.classList.remove('modal-open');
+        }
     }
 
     // Закриття по кнопці "хрестик"
     document.querySelectorAll('.modal-close-btn').forEach(button => {
         button.addEventListener('click', (e) => {
-            // Якщо це кнопка на модалці 2-го рівня (z-60), закрити лише її
-            const modal = e.target.closest('.modal-base');
-            if (modal && modal.style.zIndex === '60') {
-                modal.classList.remove('modal-visible');
-                setTimeout(() => modal.classList.add('hidden'), 300);
-            } else {
-                // Інакше закрити всі
-                closeAllModals();
-            }
+            const modalToClose = e.target.closest('.modal-base');
+            closeModal(modalToClose);
         });
     });
 
-    // Закриття по кліку на фон (overlay)
-    modalOverlay.addEventListener('click', closeAllModals);
+    // Закриття по кліку на фон (лише для головного фону)
+    modalOverlay.addEventListener('click', () => {
+        // Знайти всі видимі модалки z-50 і закрити їх
+        document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
+             if (modal.style.zIndex != '60') {
+                 closeModal(modal);
+             }
+        });
+    });
 
     // Закриття по клавіші Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === "Escape") {
-            // Знайти найвищу видиму модалку і закрити її
+            // Спочатку закриваємо найвищу модалку (z-60), якщо вона є
             const topModal = document.querySelector('.modal-base.modal-visible[style*="z-index: 60"]');
             if (topModal) {
-                topModal.classList.remove('modal-visible');
-                setTimeout(() => topModal.classList.add('hidden'), 300);
+                closeModal(topModal);
             } else {
-                closeAllModals();
+                // Якщо немає, закриваємо всі видимі z-50
+                document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
+                     closeModal(modal);
+                });
             }
         }
     });
 
-    // --- 6. Логіка Навігації (Кліки по посиланнях) ---
+    // --- 7. Логіка Навігації (Кліки по посиланнях) ---
 
     let neonTimer = null; // Таймер для неону
 
@@ -156,35 +175,60 @@ document.addEventListener('DOMContentLoaded', function() {
             // A. Якщо це посилання відкриває МОДАЛЬНЕ ВІКНО
             if (modalId) {
                 e.preventDefault(); // Заборонити прокрутку
+                
+                // 1. Закрити ВСІ відкриті вікна (окрім того, що ми відкриваємо)
+                document.querySelectorAll('.modal-base.modal-visible').forEach(m => {
+                    if (m.id !== modalId) {
+                        closeModal(m);
+                    }
+                });
+
+                // 2. Відкрити потрібне вікно
                 openModal(modalId);
                 
-                // Якщо посилання також вказує на вкладку
+                // 3. (Нове) Активувати потрібну вкладку, якщо вказано
                 if (tabTarget) {
-                    const modal = document.getElementById(modalId);
-                    const targetTabButton = modal.querySelector(`.modal-tab[data-tab="${tabTarget}"]`);
-                    if (targetTabButton) {
-                        // Симулюємо клік по вкладці
-                        targetTabButton.click();
+                    const targetModal = document.getElementById(modalId);
+                    if (targetModal) {
+                        // Знайти всі кнопки та панелі вкладок у цьому вікні
+                        const tabButtons = targetModal.querySelectorAll('.modal-tab');
+                        const tabPanes = targetModal.querySelectorAll('.modal-tab-pane');
+                        
+                        // Деактивувати всі
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        tabPanes.forEach(pane => pane.classList.remove('active'));
+                        
+                        // Активувати потрібні
+                        const targetButton = targetModal.querySelector(`.modal-tab[data-tab="${tabTarget}"]`);
+                        const targetPane = document.getElementById(tabTarget);
+                        
+                        if (targetButton) targetButton.classList.add('active');
+                        if (targetPane) targetPane.classList.add('active');
                     }
                 }
             }
-            // B. Якщо це звичайне посилання-ЯКІР
+            // B. Якщо це звичайне посилання-ЯКІР (Спеціальності, Контакти)
             else {
-                closeAllModals(); // Закрити всі вікна
+                // Закрити всі модалки
+                document.querySelectorAll('.modal-base.modal-visible').forEach(m => closeModal(m));
             }
             
             // C. Логіка Неонової Підсвітки Заголовка
             if (targetId) {
                 let targetTitle;
+                
                 if(modalId) {
                     const targetModal = document.getElementById(modalId);
                     if(targetModal) {
                          targetTitle = targetModal.querySelector('.section-title');
                     }
-                } else {
+                } 
+                else {
                     const targetSection = document.getElementById(targetId);
                     if(targetSection) {
                          targetTitle = targetSection.querySelector('.section-title');
+                    } else if (targetId === 'hero-section') {
+                         targetTitle = document.getElementById('hero-section').querySelector('.section-title');
                     }
                 }
 
@@ -193,7 +237,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.querySelectorAll('.section-title-active').forEach(el => {
                         el.classList.remove('section-title-active');
                     });
+                    
                     targetTitle.classList.add('section-title-active');
+                    
                     neonTimer = setTimeout(() => {
                         targetTitle.classList.remove('section-title-active');
                     }, 1500); // 1.5 секунди
@@ -209,16 +255,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- 7. Логіка Слайдера Новин ---
+    // --- 8. Логіка Слайдера Новин (у модальному вікні) ---
     const sliderContainer = document.getElementById('news-slider-container');
     const dotsContainer = document.getElementById('news-dots-container');
     
     if (sliderContainer && dotsContainer) {
         const slides = sliderContainer.querySelectorAll('.news-slide');
         const dots = [];
-        const slidesPerView = window.innerWidth < 640 ? 1 : 2; 
+        const slidesPerView = window.innerWidth < 640 ? 1 : 2; // 1 на моб, 2 на десктопі
         const totalDots = Math.ceil(slides.length / slidesPerView);
 
+        // Створюємо "горошинки"
         for (let i = 0; i < totalDots; i++) {
             const dot = document.createElement('button');
             dot.className = 'news-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500';
@@ -233,20 +280,22 @@ document.addEventListener('DOMContentLoaded', function() {
             dots.push(dot);
         }
 
+        // Функція оновлення активної "горошинки"
         const updateDots = () => {
             const scrollLeft = sliderContainer.scrollLeft;
             const containerWidth = sliderContainer.clientWidth;
             let activeDotIndex = Math.round(scrollLeft / containerWidth);
+            
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === activeDotIndex);
             });
         };
 
-        if (dots.length > 0) dots[0].classList.add('active'); 
+        if (dots.length > 0) dots[0].classList.add('active'); // Активуємо першу
         sliderContainer.addEventListener('scroll', updateDots, { passive: true });
     }
 
-    // --- 8. Логіка "Читати Далі" (Маленьке вікно новин) ---
+    // --- 9. Логіка "Читати Далі" (Маленьке вікно новин) ---
     const openSmallModalButtons = document.querySelectorAll('.open-small-modal-btn');
     const smallModal = document.getElementById('small-news-modal');
     
@@ -258,60 +307,56 @@ document.addEventListener('DOMContentLoaded', function() {
         openSmallModalButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-                e.stopPropagation(); 
+                e.stopPropagation(); // Зупинити клік, щоб не закрити велику модалку
+
                 modalDate.textContent = this.dataset.date;
                 modalTitle.textContent = this.dataset.title;
                 modalText.textContent = this.dataset.text.replace(/\\n/g, '\n'); 
 
-                smallModal.classList.remove('hidden');
-                setTimeout(() => {
-                    smallModal.classList.add('modal-visible');
-                }, 10);
+                openModal('small-news-modal'); // Використовуємо нашу нову функцію
             });
         });
     }
     
-    // --- 9. Логіка Вкладок (Tabs) у модалці "Кафедра" ---
+    // --- 10. Логіка Вкладок (Tabs) у модалці "Кафедра" ---
     const tabsContainer = document.querySelector('.modal-tabs-container');
     if (tabsContainer) {
         const tabButtons = tabsContainer.querySelectorAll('.modal-tab');
         const tabContents = tabsContainer.closest('.modal-content-inner').querySelectorAll('.modal-tab-pane');
 
         tabButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
+            button.addEventListener('click', () => {
+                
                 const targetTabId = button.dataset.tab;
-                const modalId = button.dataset.modalId;
-
-                // Якщо кнопка вкладки має відкрити ІНШУ модалку (напр. Персонал)
-                if (modalId) {
-                    openModal(modalId);
-                    // Підсвітити заголовок
-                    const targetTitle = document.getElementById(modalId)?.querySelector('.section-title');
-                    if (targetTitle) {
+                
+                // Спеціальний випадок: кнопка "Персонал кафедри"
+                if (button.dataset.modalId) {
+                    openModal(button.dataset.modalId);
+                    // Підсвічуємо заголовок персоналу
+                    const staffTitle = document.getElementById('staff-title');
+                    if (staffTitle) {
                          if (neonTimer) clearTimeout(neonTimer);
-                         document.querySelectorAll('.section-title-active').forEach(el => el.classList.remove('section-title-active'));
-                         targetTitle.classList.add('section-title-active');
+                         staffTitle.classList.add('section-title-active');
                          neonTimer = setTimeout(() => {
-                             targetTitle.classList.remove('section-title-active');
+                            staffTitle.classList.remove('section-title-active');
                          }, 1500);
                     }
-                } 
-                // Якщо це звичайна вкладка
-                else if (targetTabId) {
-                    const targetContent = document.getElementById(targetTabId);
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    button.classList.add('active');
-                    if (targetContent) {
-                        targetContent.classList.add('active');
-                    }
+                    return; // Не перемикаємо вкладку, просто відкриваємо модалку
+                }
+
+                // Звичайна логіка перемикання вкладок
+                const targetContent = document.getElementById(targetTabId);
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                button.classList.add('active');
+                if (targetContent) {
+                    targetContent.classList.add('active');
                 }
             });
         });
     }
 
-    // --- 10. Логіка випадаючих меню (Dropdowns) для мобільних ---
+    // --- 11. Логіка випадаючих меню (Dropdowns) для мобільних ---
     const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
     mobileDropdownToggles.forEach(toggle => {
         toggle.addEventListener('click', (e) => {
@@ -320,78 +365,90 @@ document.addEventListener('DOMContentLoaded', function() {
             const menu = document.getElementById(menuId);
             if (menu) {
                 menu.classList.toggle('open');
+                toggle.querySelector('svg').classList.toggle('rotate-180');
             }
         });
     });
-    
-    // --- 11. НОВА ЛОГІКА: Детальне вікно викладача ---
+
+    // --- 12. НОВА ЛОГІКА: Детальне вікно викладача ---
     const staffDetailModal = document.getElementById('staff-detail-modal');
     
-    // Перевірка, чи staff_data.js завантажився і чи є об'єкт
-    if (staffDetailModal && typeof staffDetailsData !== 'undefined') {
-        const staffCards = document.querySelectorAll('.staff-card');
-        
-        // Елементи всередині детального вікна
-        const detailName = document.getElementById('staff-detail-name');
-        const detailTitle = document.getElementById('staff-detail-title');
-        const detailImg = document.getElementById('staff-detail-img');
-        const detailDetails = document.getElementById('staff-detail-details');
-        const detailLinks = document.getElementById('staff-detail-links');
-        const detailDisciplines = document.getElementById('staff-detail-disciplines');
-        const detailBio = document.getElementById('staff-detail-bio');
+    // Елементи у вікні деталей
+    const detailName = document.getElementById('staff-detail-name');
+    const detailTitle = document.getElementById('staff-detail-title');
+    const detailImg = document.getElementById('staff-detail-img');
+    const detailDetails = document.getElementById('staff-detail-details');
+    const detailLinks = document.getElementById('staff-detail-links');
+    const detailDisciplines = document.getElementById('staff-detail-disciplines');
+    const detailBio = document.getElementById('staff-detail-bio');
 
-        staffCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const staffId = card.dataset.staffId;
+    document.querySelectorAll('.staff-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const staffId = card.dataset.staffId;
+            
+            // Перевіряємо, чи існують дані ТА чи існує файл staff_data.js
+            if (typeof staffDetailsData !== 'undefined' && staffDetailsData[staffId]) {
                 const data = staffDetailsData[staffId];
+
+                // 1. Заповнюємо базові дані
+                detailName.textContent = data.name;
+                detailTitle.textContent = data.title;
+                detailImg.src = card.querySelector('img').src; // Беремо фото з картки
+                detailImg.alt = `Фото ${data.name}`;
                 
-                if (data) {
-                    // 1. Заповнити даними
-                    detailName.textContent = data.name;
-                    detailTitle.textContent = data.title;
-                    detailImg.src = card.querySelector('img').src; // Беремо фото з картки
-                    
-                    detailDetails.innerHTML = data.details || '';
-                    detailBio.innerHTML = data.bio || '<h3>Біографічна довідка</h3><p>Інформація додається...</p>';
-                    
-                    // Заповнити дисципліни
-                    detailDisciplines.innerHTML = ''; // Очистити
-                    if (data.disciplines && data.disciplines.length > 0) {
-                        data.disciplines.forEach(disc => {
-                            const li = document.createElement('li');
-                            li.textContent = disc;
-                            detailDisciplines.appendChild(li);
-                        });
-                    } else {
-                        detailDisciplines.innerHTML = '<li>Інформація додається...</li>';
-                    }
-                    
-                    // Заповнити посилання
-                    detailLinks.innerHTML = ''; // Очистити
-                    if (data.links && data.links.length > 0) {
-                        data.links.forEach(link => {
-                            const a = document.createElement('a');
-                            a.href = link.url;
-                            a.textContent = link.name;
-                            a.target = '_blank';
-                            a.rel = 'noopener noreferrer';
-                            detailLinks.appendChild(a);
-                        });
-                    }
-                    
-                    // 2. Відкрити модалку (вона має бути поверх)
-                    staffDetailModal.classList.remove('hidden');
-                    setTimeout(() => {
-                        staffDetailModal.classList.add('modal-visible');
-                    }, 10);
-                    // НЕ блокуємо htmlEl, бо він вже заблокований
+                // 2. Заповнюємо деталі (Посада, ступінь, звання)
+                detailDetails.innerHTML = data.details || '';
+                
+                // 3. Заповнюємо біографію
+                detailBio.innerHTML = data.bio || '<p>Біографічна довідка буде додана згодом.</p>';
+                
+                // 4. Заповнюємо дисципліни
+                detailDisciplines.innerHTML = ''; // Очищуємо
+                if (data.disciplines && data.disciplines.length > 0) {
+                    data.disciplines.forEach(disc => {
+                        const li = document.createElement('li');
+                        li.textContent = disc;
+                        detailDisciplines.appendChild(li);
+                    });
+                } else {
+                    detailDisciplines.innerHTML = '<li>Інформація про дисципліни відсутня.</li>';
                 }
-            });
+                
+                // 5. Заповнюємо посилання
+                detailLinks.innerHTML = ''; // Очищуємо
+                if (data.links && data.links.length > 0) {
+                     data.links.forEach(link => {
+                        const a = document.createElement('a');
+                        a.href = link.url;
+                        a.target = '_blank';
+                        a.rel = 'noopener noreferrer';
+                        a.textContent = link.name;
+                        detailLinks.appendChild(a);
+                    });
+                } else {
+                    const p = document.createElement('p');
+                    p.className = 'text-sm text-slate-400';
+                    p.textContent = 'Посилання відсутні.';
+                    detailLinks.appendChild(p);
+                }
+
+                // Відкриваємо модальне вікно деталей
+                openModal('staff-detail-modal');
+                
+            } else {
+                // Заглушка, якщо дані не знайдені
+                console.warn(`Дані для викладача з ID: ${staffId} не знайдені у staff_data.js`);
+                detailName.textContent = "Інформація відсутня";
+                detailTitle.textContent = "";
+                detailImg.src = 'https://placehold.co/160x160/1e293b/ffffff?text=?';
+                detailDetails.innerHTML = "<p>Детальна інформація про цього викладача буде додана незабаром.</p>";
+                detailLinks.innerHTML = '';
+                detailDisciplines.innerHTML = '';
+                detailBio.innerHTML = '';
+                
+                openModal('staff-detail-modal');
+            }
         });
-    } else if (!staffDetailModal) {
-        console.error("Елемент #staff-detail-modal не знайдено в index.html");
-    } else {
-        console.error("Файл staff_data.js не завантажено або об'єкт staffDetailsData не знайдено.");
-    }
+    });
 
 });
