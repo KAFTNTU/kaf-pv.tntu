@@ -2,6 +2,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const htmlEl = document.documentElement; // Отримуємо <html>
     const modalOverlay = document.getElementById('modal-overlay'); // Отримуємо фон
+
+    // --- 1. Логіка визначення платформи (Приховано) ---
+    // (Ми додали це, але приховали на ваше прохання)
+    // const platformDemo = document.getElementById('platform-demo');
+    // if (platformDemo) {
+    //     let os = 'Unknown OS';
+    //     const userAgent = navigator.userAgent;
+    //     if (userAgent.indexOf('Win') !== -1) os = 'Windows';
+    //     if (userAgent.indexOf('Mac') !== -1) os = 'Apple (macOS/iOS)';
+    //     if (userAgent.indexOf('Android') !== -1) os = 'Android';
+    //     if (userAgent.indexOf('Linux') !== -1) os = 'Linux';
+    //     if (os) {
+    //         document.documentElement.classList.add(`platform-${os.toLowerCase().split(' ')[0].split('(')[0]}`);
+    //     }
+    //     // platformDemo.textContent = `Визначена платформа: ${os}`; // Приховано
+    // }
+
     // --- 2. Mobile Menu Toggle ---
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -66,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // --- 6. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН ---
+    // --- 6. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН (ОНОВЛЕНО) ---
     
     const allModals = document.querySelectorAll('.modal-base');
     // ВИПРАВЛЕНО: Тепер "слухаємо" і .dropdown-link
@@ -77,23 +94,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetModal = document.getElementById(modalId);
         if (targetModal) {
             
-            // Специфічна логіка для модалок, що перекривають (z-60)
-            // Вони НЕ повинні показувати/ховати головний оверлей
-            if (targetModal.style.zIndex != '60') {
-                 modalOverlay.classList.remove('hidden');
-            }
+            // ЗАВЖДИ показуємо фон
+            modalOverlay.classList.remove('hidden');
             
             targetModal.classList.remove('hidden');
             setTimeout(() => {
-                if (targetModal.style.zIndex != '60') {
-                    modalOverlay.style.opacity = '1';
-                }
+                // ЗАВЖДИ вмикаємо opacity
+                modalOverlay.style.opacity = '1';
                 targetModal.classList.add('modal-visible');
             }, 10);
             
-            if (targetModal.style.zIndex != '60') {
-                htmlEl.classList.add('modal-open');
-            }
+            // ЗАВЖДИ блокуємо скрол
+            htmlEl.classList.add('modal-open');
         }
     }
 
@@ -101,30 +113,25 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeModal(modal) {
         if (!modal) return;
         
-        // Специфічна логіка для модалок, що перекривають (z-60)
-        // Вони НЕ повинні ховати головний оверлей
-        if (modal.style.zIndex != '60') {
-            modalOverlay.style.opacity = '0';
-        }
-
         modal.classList.remove('modal-visible');
         
         setTimeout(() => {
             modal.classList.add('hidden');
-            if (modal.style.zIndex != '60') {
-                // Ховаємо фон, ТІЛЬКИ якщо не відкрито інших модалок z-50
-                const isAnyModalVisible = document.querySelector('.modal-base.modal-visible[style*="z-index: 50"]');
-                if (!isAnyModalVisible) {
+            
+            // Перевіряємо, чи ЗАЛИШИЛИСЬ ще якісь *видимі* модалки
+            // Ми шукаємо будь-яку модалку, яка все ще має клас modal-visible
+            const anyModalStillVisible = document.querySelector('.modal-base.modal-visible');
+            
+            if (!anyModalStillVisible) {
+                // Якщо ні - ховаємо фон і розблоковуємо скрол
+                modalOverlay.style.opacity = '0';
+                htmlEl.classList.remove('modal-open');
+                setTimeout(() => {
                     modalOverlay.classList.add('hidden');
-                }
+                }, 300); // даємо час зникнути
             }
+            
         }, 300); // 300ms - це час transition в CSS
-
-        // Розблокувати скрол, ТІЛЬКИ якщо це була остання модалка
-        const isAnyModalVisible = document.querySelector('.modal-base.modal-visible');
-        if (!isAnyModalVisible) {
-            htmlEl.classList.remove('modal-open');
-        }
     }
 
     // Закриття по кнопці "хрестик"
@@ -137,11 +144,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Закриття по кліку на фон (лише для головного фону)
     modalOverlay.addEventListener('click', () => {
-        // Знайти всі видимі модалки z-50 і закрити їх
+        // Знайти всі видимі модалки і закрити їх
         document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
-             if (modal.style.zIndex != '60') {
-                 closeModal(modal);
-             }
+             closeModal(modal);
         });
     });
 
@@ -284,6 +289,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const updateDots = () => {
             const scrollLeft = sliderContainer.scrollLeft;
             const containerWidth = sliderContainer.clientWidth;
+            
+            // Визначаємо, який "набір" слайдів зараз активний
             let activeDotIndex = Math.round(scrollLeft / containerWidth);
             
             dots.forEach((dot, index) => {
@@ -309,10 +316,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 e.stopPropagation(); // Зупинити клік, щоб не закрити велику модалку
 
+                // Заповнюємо даними
                 modalDate.textContent = this.dataset.date;
                 modalTitle.textContent = this.dataset.title;
-                modalText.textContent = this.dataset.text.replace(/\\n/g, '\n'); 
+                modalText.textContent = this.dataset.text.replace(/\\n/g, '\n'); // Для переносів рядків
 
+                // Показуємо
                 openModal('small-news-modal'); // Використовуємо нашу нову функцію
             });
         });
@@ -405,11 +414,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 4. Заповнюємо дисципліни
                 detailDisciplines.innerHTML = ''; // Очищуємо
                 if (data.disciplines && data.disciplines.length > 0) {
+                    const ul = document.createElement('ul');
+                    ul.className = 'list-disc pl-5 space-y-1';
                     data.disciplines.forEach(disc => {
                         const li = document.createElement('li');
                         li.textContent = disc;
-                        detailDisciplines.appendChild(li);
+                        ul.appendChild(li);
                     });
+                    detailDisciplines.appendChild(ul);
                 } else {
                     detailDisciplines.innerHTML = '<li>Інформація про дисципліни відсутня.</li>';
                 }
@@ -422,6 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         a.href = link.url;
                         a.target = '_blank';
                         a.rel = 'noopener noreferrer';
+                        a.className = 'text-sky-400 hover:text-sky-300 block truncate';
                         a.textContent = link.name;
                         detailLinks.appendChild(a);
                     });
@@ -439,12 +452,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Заглушка, якщо дані не знайдені
                 console.warn(`Дані для викладача з ID: ${staffId} не знайдені у staff_data.js`);
                 detailName.textContent = "Інформація відсутня";
-                detailTitle.textContent = "";
-                detailImg.src = 'https://placehold.co/160x160/1e293b/ffffff?text=?';
+                detailTitle.textContent = card.querySelector('p').textContent || "";
+                detailImg.src = card.querySelector('img').src;
                 detailDetails.innerHTML = "<p>Детальна інформація про цього викладача буде додана незабаром.</p>";
-                detailLinks.innerHTML = '';
-                detailDisciplines.innerHTML = '';
-                detailBio.innerHTML = '';
+                detailLinks.innerHTML = '<p class="text-sm text-slate-400">Посилання відсутні.</p>';
+                detailDisciplines.innerHTML = '<li>Інформація про дисципліни відсутня.</li>';
+                detailBio.innerHTML = '<p>Біографічна довідка буде додана згодом.</p>';
                 
                 openModal('staff-detail-modal');
             }
