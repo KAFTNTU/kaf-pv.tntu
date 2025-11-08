@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Закриття по кнопці "хрестик"
     document.querySelectorAll('.modal-close-btn').forEach(button => {
         button.addEventListener('click', (e) => {
-            e.stopPropagation(); // Зупинити "провалювання" кліку
             // Знайти найближчу модалку, до якої належить кнопка, і закрити її
             const modalToClose = e.target.closest('.modal-base');
             closeModal(modalToClose);
@@ -208,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Активувати потрібні
                         const targetButton = targetModal.querySelector(`.modal-tab[data-tab="${tabTarget}"]`);
-                        const targetPane = document.getElementById(targetTabId);
+                        const targetPane = document.getElementById(tabTarget);
                         
                         if (targetButton) targetButton.classList.add('active');
                         if (targetPane) targetPane.classList.add('active');
@@ -307,9 +306,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- 9. Логіка "Читати Далі" (Маленьке вікно новин) ---
     const openSmallModalButtons = document.querySelectorAll('.open-small-modal-btn');
-    const smallModal = document.getElementById('small-news-modal');
     
-    if (smallModal && openSmallModalButtons.length > 0) {
+    if (openSmallModalButtons.length > 0) {
+        const smallModal = document.getElementById('small-news-modal');
         const modalDate = document.getElementById('small-news-date');
         const modalTitle = document.getElementById('small-news-title');
         const modalText = document.getElementById('small-news-modal-text');
@@ -385,7 +384,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- 12. НОВА ЛОГІКА: Детальне вікно викладача ---
-    const staffDetailModal = document.getElementById('staff-detail-modal');
     
     // Елементи у вікні деталей
     const detailName = document.getElementById('staff-detail-name');
@@ -457,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Заглушка, якщо дані не знайдені
                 console.warn(`Дані для викладача з ID: ${staffId} не знайдені у staff_data.js`);
-                detailName.textContent = "Інформація відсутня";
+                detailName.textContent = card.querySelector('h3').textContent || "Інформація відсутня";
                 detailTitle.textContent = card.querySelector('p').textContent || "";
                 detailImg.src = card.querySelector('img').src;
                 detailDetails.innerHTML = "<p>Детальна інформація про цього викладача буде додана незабаром.</p>";
@@ -469,26 +467,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    // --- 13. НОВА ЛОГІКА: Вкладки у вікні Деталей Викладача ---
-    const detailTabsContainer = document.querySelector('#staff-detail-modal .border-b');
-    if (detailTabsContainer) {
-        const tabButtons = detailTabsContainer.querySelectorAll('.detail-tab-button');
-        const tabPanes = detailTabsContainer.parentElement.querySelectorAll('.detail-tab-pane');
-        
-        tabButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.stopPropagation(); // Зупинити "провалювання" кліку
-                const targetTabId = button.dataset.tab;
-                
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabPanes.forEach(pane => pane.classList.remove('active'));
-                
-                button.classList.add('active');
-                const targetPane = document.getElementById(targetTabId);
-                if (targetPane) targetPane.classList.add('active');
-            });
-        });
-    }
 
 });
