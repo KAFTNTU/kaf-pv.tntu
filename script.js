@@ -207,14 +207,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Активувати потрібні
                         const targetButton = targetModal.querySelector(`.modal-tab[data-tab="${tabTarget}"]`);
-                        const targetPane = document.getElementById(tabTarget);
+                        const targetPane = document.getElementById(targetTab);
                         
                         if (targetButton) targetButton.classList.add('active');
                         if (targetPane) targetPane.classList.add('active');
                     }
                 }
             }
-            // B. Якщо це звичайне посилання-ЯКІР (Спеціальності, Контакти)
+            // B. Якщо це звичайне посилання-ЯКІR (Спеціальності, Контакти)
             else {
                 // Закрити всі модалки
                 document.querySelectorAll('.modal-base.modal-visible').forEach(m => closeModal(m));
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Заглушка, якщо дані не знайдені
                 console.warn(`Дані для викладача з ID: ${staffId} не знайдені у staff_data.js`);
-                detailName.textContent = "Інформація відсутня";
+                detailName.textContent = card.querySelector('h3').textContent || "Інформація відсутня";
                 detailTitle.textContent = card.querySelector('p').textContent || "";
                 detailImg.src = card.querySelector('img').src;
                 detailDetails.innerHTML = "<p>Детальна інформація про цього викладача буде додана незабаром.</p>";
