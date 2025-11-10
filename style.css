@@ -10,6 +10,7 @@ body {
 }
 
 /* Custom scrollbar for a modern look */
+/* ЦЕЙ СКРОЛБАР - ДЛЯ ВСІЄЇ СТОРІНКИ (ЗОВНІШНІЙ) */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -167,7 +168,8 @@ body {
 /* Заголовок модалки (для виправлення неону) */
 .modal-header {
     padding: 1.5rem 1.5rem 1.5rem 1.5rem; /* p-6 */
-    padding-bottom: 1.5rem; /* ВИПРАВЛЕННЯ: Додано, щоб неон не обрізався */
+    /* ОНОВЛЕНО: Додано відступ, щоб неон не обрізався */
+    padding-bottom: 1.5rem; 
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -203,15 +205,21 @@ body {
     padding: 1.5rem; /* p-6 */
 }
 
-/* Скролбар всередині модальних вікон */
+/*
+============================================
+!!! ВАШЕ ВИПРАВЛЕННЯ ТУТ !!!
+Стилізуємо "ползунок" (скролбар) 
+всередині модальних вікон
+============================================
+*/
 .modal-scroll-content::-webkit-scrollbar {
-    width: 6px;
+    width: 6px; /* Тоненький */
 }
 .modal-scroll-content::-webkit-scrollbar-track {
     background: #1e293b; /* bg-slate-800 */
 }
 .modal-scroll-content::-webkit-scrollbar-thumb {
-    background: #38bdf8; /* bg-sky-400 */
+    background: #38bdf8; /* bg-sky-400 (Синій) */
     border-radius: 10px;
 }
 .modal-scroll-content::-webkit-scrollbar-thumb:hover {
@@ -222,6 +230,8 @@ body {
      scrollbar-width: thin;  /* Firefox */
      scrollbar-color: #38bdf8 #1e293b; /* Firefox */
 }
+/* === КІНЕЦЬ ВИПРАВЛЕННЯ === */
+
 
 /* === Слайдер Новин (News Slider) === */
 .news-slider-container {
