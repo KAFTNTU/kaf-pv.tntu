@@ -411,3 +411,12 @@ html.modal-open {
     height: 100%;
     border: none;
 }
+/* ховає смуги прокрутки, але дозволяє скролити */
+::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}
+
+body {
+  scrollbar-width: none; /* Firefox */
+}
+
