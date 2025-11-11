@@ -421,8 +421,5 @@ html, body, * {
   display: none !important; /* Chrome, Safari, Edge */
 }
 
-/* Якщо хочеш ще й прибрати можливість прокрутки */
-html, body {
-  overflow: hidden !important;
-}
+
 
