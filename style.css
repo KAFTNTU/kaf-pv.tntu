@@ -411,15 +411,20 @@ html.modal-open {
     height: 100%;
     border: none;
 }
-/* Ховає всі смуги прокрутки всюди */
+
+
+/* Ховає всі смуги прокрутки, але дозволяє скролити */
 html, body, * {
   scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE і Edge старі */
+  -ms-overflow-style: none !important; /* IE, Edge старі */
 }
 
 *::-webkit-scrollbar {
   display: none !important; /* Chrome, Safari, Edge */
 }
 
-
+/* Дозволяємо прокрутку */
+html, body {
+  overflow: auto !important;
+}
 
