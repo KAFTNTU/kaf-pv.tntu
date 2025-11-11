@@ -413,18 +413,26 @@ html.modal-open {
 }
 
 
-/* Ховає всі смуги прокрутки, але дозволяє скролити */
-html, body, * {
+
+
+html, body {
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Edge */
+}
+
+body {
   scrollbar-width: none !important; /* Firefox */
   -ms-overflow-style: none !important; /* IE, Edge старі */
 }
 
-*::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari, Edge */
+.wrapper, .main, .page, .content {
+  height: auto !important;
+  overflow-y: visible !important;
 }
 
-/* Дозволяємо прокрутку */
-html, body {
-  overflow: auto !important;
-}
 
