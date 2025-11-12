@@ -199,7 +199,9 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < totalDots; i++) {
             const dot = document.createElement('button');
             dot.className = 'news-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500';
-            dot.addEventListener('click', () => {
+          dot.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
                 const slide = slides[i * slidesPerView];
                 if (slide) slide.scrollIntoView({ behavior: 'smooth', inline: 'start' });
             });
