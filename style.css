@@ -436,3 +436,81 @@ body {
 }
 
 
+
+/* === МОДАЛЬНЕ ВІКНО СТУДЕНТУ === */
+#student-modal .dropdown-link {
+  display: inline-block;
+  background: rgba(56, 189, 248, 0.1);
+  color: #7dd3fc;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+#student-modal .dropdown-link:hover {
+  background: rgba(56, 189, 248, 0.2);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  color: #fff;
+  transform: scale(1.03);
+}
+
+/* === МОДАЛЬНЕ ВІКНО НАВЧАЛЬНІ ДИСЦИПЛІНИ === */
+#discipline-modal h1 {
+  font-size: 1.5rem; /* text-2xl */
+  color: #7dd3fc; /* блакитний */
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+#discipline-modal h2 {
+  font-size: 1.25rem; /* text-xl */
+  color: #93c5fd; /* світліший */
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+#discipline-modal ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+#discipline-modal li {
+  margin-bottom: 0.25rem;
+}
+
+/* === Анімація точок внизу === */
+.dots-animation {
+  position: relative;
+  height: 40px;
+  margin-top: 20px;
+}
+.dots-animation .dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: moveDots 3s linear infinite;
+}
+.dots-animation .dot.red {
+  background: #ef4444;
+  left: 10%;
+  animation-delay: 0s;
+}
+.dots-animation .dot.blue {
+  background: #38bdf8;
+  right: 10%;
+  animation-delay: 1.5s;
+}
+
+@keyframes moveDots {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(200px); }
+  100% { transform: translateX(0); }
+}
+
+
