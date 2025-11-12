@@ -76,6 +76,23 @@
                 <a href="#" class="nav-link-desktop" data-modal-id="science-modal" data-target-id="science">Наука</a>
                 <a href="#" class="nav-link-desktop" data-modal-id="international-modal" data-target-id="international">Міжнародні зв'язки</a>
                 <a href="#" class="nav-link-desktop" data-modal-id="student-modal" data-target-id="student">Студенту</a>
+
+                <li class="dropdown">
+  <button class="nav-link-desktop">Студенту</button>
+  <ul class="dropdown-content">
+    <li><a href="#" class="dropdown-link" data-modal-id="discipline-modal">Навчальні дисципліни</a></li>
+    <li><a href="#" class="dropdown-link">Електронне навчання (вставити сюди посилання)</a></li>
+    <li><a href="#" class="dropdown-link">Розклад (вставити сюди посилання)</a></li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+                
                 <a href="#" class="nav-link-desktop" data-modal-id="entrant-modal" data-target-id="entrant">Абітурієнту</a>
 
                 <a href="#contacts" class="nav-link-desktop" data-target-id="contacts">Контакти</a>
@@ -841,5 +858,222 @@
 <!-- 2. Наш головний скрипт -->
 <script src="script.js" defer></script>
 
+
+<!-- Модальне вікно Студенту -->
+<div id="student-modal" class="modal-base hidden">
+  <div class="neon-border-box modal-content-inner max-w-lg w-full">
+    <div class="modal-header flex justify-between items-center">
+      <h2 class="text-2xl font-bold text-white section-title">Студенту</h2>
+      <button class="modal-close-btn text-slate-400 hover:text-white">&times;</button>
+    </div>
+    <div class="modal-scroll-content text-slate-300">
+      <ul class="space-y-3 text-lg">
+        <li><a href="#" class="dropdown-link text-sky-400" data-modal-id="discipline-modal">Навчальні дисципліни</a></li>
+        <li><a href="#" class="dropdown-link text-sky-400">Електронне навчання (вставити сюди посилання)</a></li>
+        <li><a href="#" class="dropdown-link text-sky-400">Розклад (вставити сюди посилання)</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Модальне вікно Навчальні дисципліни -->
+<div id="discipline-modal" class="modal-base hidden">
+  <div class="neon-border-box modal-content-inner max-w-5xl w-full">
+    <div class="modal-header flex justify-between items-center">
+      <h2 class="text-2xl font-bold text-white section-title">Навчальні дисципліни</h2>
+      <button class="modal-close-btn text-slate-400 hover:text-white">&times;</button>
+    </div>
+
+    <div class="modal-scroll-content text-slate-300">
+      <h1>152 «Метрологія та інформаційно-вимірювальна техніка»</h1>
+
+      <h2>Бакалавр</h2>
+      <ul>
+        <li>Освітня програма «Мехатроніка та інтелектуальні інформаційні системи»</li>
+        <li>Інформаційні системи</li>
+        <li>Архітектура ПК</li>
+        <li>Іноземна мова професійно-ділового спрямування</li>
+        <li>Моделювання систем</li>
+        <li>Методи і засоби вимірювання механічних величин</li>
+        <li>Програмування мікропроцесорних систем</li>
+        <li>Методи та засоби реєстрації та відтворення інформації</li>
+        <li>Основи антенної техніки</li>
+        <li>Основи менеджменту і маркетингу</li>
+        <li>Основи наукових досліджень</li>
+        <li>Основи САПР</li>
+        <li>Основи теорії вимірювальних приладів</li>
+        <li>Прикладна оптика</li>
+        <li>Системи штучного інтелекту</li>
+        <li>Теорія похибок вимірювальних приладів</li>
+      </ul>
+
+      <h2>Магістр</h2>
+      <ul>
+        <li>Автоматизоване проєктування та дизайн приладів і систем</li>
+        <li>Інформаційні технології в приладобудуванні</li>
+        <li>Комп’ютерні технології проєктування електронних вузлів приладів</li>
+        <li>Математичне моделювання</li>
+        <li>Проєктування вбудованих систем</li>
+        <li>Синтез систем з використанням LabView</li>
+        <li>Системи прецизійного управління мехатронних систем</li>
+      </ul>
+
+      <br>
+
+      <h1>153 «Мікро- та наносистемна техніка»</h1>
+
+      <h2>Бакалавр</h2>
+      <ul>
+        <li>Фізика низькорозмірних систем</li>
+        <li>Технологічні основи електроніки</li>
+        <li>Твердотільна електроніка</li>
+        <li>Прикладна оптика</li>
+        <li>Основи інформаційних систем</li>
+        <li>Надійність виробів електроніки</li>
+        <li>Моделювання в електроніці</li>
+        <li>Мікропроцесорні пристрої керування та обробки інформації</li>
+        <li>Мікро- та наносистеми з програмованими структурами</li>
+        <li>Метрологія</li>
+        <li>Методи діагностики та аналізу мікро- і наноструктур</li>
+        <li>Матеріалознавство та конструкційні матеріали</li>
+        <li>Компоненти мікро- та нанотехніки</li>
+        <li>Електронні системи</li>
+        <li>Автоматизовані системи проектування наноелектронних пристроїв</li>
+        <li>Політологія</li>
+        <li>Іноземна мова професійно-ділового спрямування</li>
+        <li>Безпека життєдіяльності, основи охорони праці</li>
+      </ul>
+
+      <h2>Магістр</h2>
+      <ul>
+        <li>Інтегровані системи на основі геоінформаційних технологій</li>
+        <li>Інтелектуальні прилади та системи штучного інтелекту</li>
+        <li>Інформаційні технології в приладобудуванні</li>
+        <li>Проєктування програмного забезпечення мікропроцесорних приладових систем</li>
+        <li>Синтез систем з використанням LabView</li>
+      </ul>
+
+      <!-- Анімація точок -->
+      <div class="dots-animation">
+        <span class="dot red"></span>
+        <span class="dot blue"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Модальне вікно Студенту -->
+<div id="student-modal" class="modal-base hidden">
+  <div class="neon-border-box modal-content-inner max-w-lg w-full">
+    <div class="modal-header flex justify-between items-center">
+      <h2 class="text-2xl font-bold text-white section-title">Студенту</h2>
+      <button class="modal-close-btn text-slate-400 hover:text-white">&times;</button>
+    </div>
+    <div class="modal-scroll-content text-slate-300">
+      <ul class="space-y-3 text-lg">
+        <li><a href="#" class="dropdown-link text-sky-400" data-modal-id="discipline-modal">Навчальні дисципліни</a></li>
+        <li><a href="#" class="dropdown-link text-sky-400">Електронне навчання (вставити сюди посилання)</a></li>
+        <li><a href="#" class="dropdown-link text-sky-400">Розклад (вставити сюди посилання)</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Модальне вікно Навчальні дисципліни -->
+<div id="discipline-modal" class="modal-base hidden">
+  <div class="neon-border-box modal-content-inner max-w-5xl w-full">
+    <div class="modal-header flex justify-between items-center">
+      <h2 class="text-2xl font-bold text-white section-title">Навчальні дисципліни</h2>
+      <button class="modal-close-btn text-slate-400 hover:text-white">&times;</button>
+    </div>
+
+    <div class="modal-scroll-content text-slate-300">
+      <h1>152 «Метрологія та інформаційно-вимірювальна техніка»</h1>
+
+      <h2>Бакалавр</h2>
+      <ul>
+        <li>Освітня програма «Мехатроніка та інтелектуальні інформаційні системи»</li>
+        <li>Інформаційні системи</li>
+        <li>Архітектура ПК</li>
+        <li>Іноземна мова професійно-ділового спрямування</li>
+        <li>Моделювання систем</li>
+        <li>Методи і засоби вимірювання механічних величин</li>
+        <li>Програмування мікропроцесорних систем</li>
+        <li>Методи та засоби реєстрації та відтворення інформації</li>
+        <li>Основи антенної техніки</li>
+        <li>Основи менеджменту і маркетингу</li>
+        <li>Основи наукових досліджень</li>
+        <li>Основи САПР</li>
+        <li>Основи теорії вимірювальних приладів</li>
+        <li>Прикладна оптика</li>
+        <li>Системи штучного інтелекту</li>
+        <li>Теорія похибок вимірювальних приладів</li>
+      </ul>
+
+      <h2>Магістр</h2>
+      <ul>
+        <li>Автоматизоване проєктування та дизайн приладів і систем</li>
+        <li>Інформаційні технології в приладобудуванні</li>
+        <li>Комп’ютерні технології проєктування електронних вузлів приладів</li>
+        <li>Математичне моделювання</li>
+        <li>Проєктування вбудованих систем</li>
+        <li>Синтез систем з використанням LabView</li>
+        <li>Системи прецизійного управління мехатронних систем</li>
+      </ul>
+
+      <br>
+
+      <h1>153 «Мікро- та наносистемна техніка»</h1>
+
+      <h2>Бакалавр</h2>
+      <ul>
+        <li>Фізика низькорозмірних систем</li>
+        <li>Технологічні основи електроніки</li>
+        <li>Твердотільна електроніка</li>
+        <li>Прикладна оптика</li>
+        <li>Основи інформаційних систем</li>
+        <li>Надійність виробів електроніки</li>
+        <li>Моделювання в електроніці</li>
+        <li>Мікропроцесорні пристрої керування та обробки інформації</li>
+        <li>Мікро- та наносистеми з програмованими структурами</li>
+        <li>Метрологія</li>
+        <li>Методи діагностики та аналізу мікро- і наноструктур</li>
+        <li>Матеріалознавство та конструкційні матеріали</li>
+        <li>Компоненти мікро- та нанотехніки</li>
+        <li>Електронні системи</li>
+        <li>Автоматизовані системи проектування наноелектронних пристроїв</li>
+        <li>Політологія</li>
+        <li>Іноземна мова професійно-ділового спрямування</li>
+        <li>Безпека життєдіяльності, основи охорони праці</li>
+      </ul>
+
+      <h2>Магістр</h2>
+      <ul>
+        <li>Інтегровані системи на основі геоінформаційних технологій</li>
+        <li>Інтелектуальні прилади та системи штучного інтелекту</li>
+        <li>Інформаційні технології в приладобудуванні</li>
+        <li>Проєктування програмного забезпечення мікропроцесорних приладових систем</li>
+        <li>Синтез систем з використанням LabView</li>
+      </ul>
+
+      <!-- Анімація точок -->
+      <div class="dots-animation">
+        <span class="dot red"></span>
+        <span class="dot blue"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    
+    
+
+    
 </body>
 </html>
