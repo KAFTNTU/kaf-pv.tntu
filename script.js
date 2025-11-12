@@ -262,10 +262,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // D. Закрити мобільне меню після кліку
-            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
-                menuOpenIcon.classList.remove('hidden');
-                menuCloseIcon.classList.add('hidden');
+           // if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+               // mobileMenu.classList.add('hidden');
+              //  menuOpenIcon.classList.remove('hidden');
+               // menuCloseIcon.classList.add('hidden');
             }
         });
     });
