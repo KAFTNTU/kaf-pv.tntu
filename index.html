@@ -30,12 +30,11 @@
 <header id="header" class="frosted-glass fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-24">
-
             <!-- Logo -->
             <div class="flex-shrink-0">
                 <a href="#hero" class="flex items-center space-x-3 nav-link-desktop" data-target-id="hero-section">
                     <svg class="h-10 w-10 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0v-1.5m6 1.5v-1.5m0 0l.415-.207a.75.75 0 011.085.67V10.5m-6-3h6m-6 3a.75.75 0 01-.75-.75V7.5m7.5 3a.75.75 0 00-.75-.75V7.5m-6 3h.008v.008H8.25v-.008zm5.25 0h.008v.008H13.5v-.008zm2.25 0h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-6-6h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008zm2.25 3h.008v.008H7.5в-.008zm2.25 0h.008v.008H9.75в-.008zm2.25 0h.008v.008H12в-.008zm2.25 0h.008v.008H14.25в-.008zm-2.25 3h.008v.008H12в-.008zm-2.25 0h.008v.008H9.75в-.008zm-2.25 0h.008v.008H7.5в-.008zm-2.25 0h.008v.008H5.25в-.008z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0v-1.5m6 1.5v-1.5m0 0l.415-.207a.75.75 0 011.085.67V10.5m-6-3h6m-6 3a.75.75 0 01-.75-.75V7.5m7.5 3a.75.75 0 00-.75-.75V7.5m-6 3h.008v.008H8.25v-.008zm5.25 0h.008v.008H13.5v-.008zm2.25 0h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-6-6h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008zm2.25 3h.008v.008H7.5v-.008zm2.25 0h.008v.008H9.75v-.008zm2.25 0h.008v.008H12v-.008zm2.25 0h.008v.008H14.25v-.008zm-2.25 3h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008z" />
                     </svg>
                     <div class="flex flex-col">
                         <span class="font-bold text-lg text-white">Кафедра ПВ</span>
@@ -47,24 +46,26 @@
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center space-x-2">
                 <a href="#" class="nav-link-desktop" data-modal-id="news-modal" data-target-id="news">Новини</a>
-
-                <!-- Кафедра -->
+                
                 <div class="dropdown-container">
                     <button class="nav-link-desktop flex items-center" data-modal-id="kafedra-modal" data-target-id="kafedra">
                         Кафедра
                     </button>
+                    <!-- Випадаюче меню "Кафедра" -->
                     <div class="dropdown-menu">
-                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-tab-target="tab-history">Історія кафедри</button>
-                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-tab-target="tab-staff">Персонал кафедри</button>
-                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-tab-target="tab-programs">Освітні програми</button>
-                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-tab-target="tab-plan">Навчальний план</button>
-                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-tab-target="tab-graduates">Випускники кафедри</button>
+                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-target-id="kafedra" data-tab-target="tab-history">Історія кафедри</button>
+                        <!-- ОНОВЛЕНО: Тепер це перемикає вкладку -->
+                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-target-id="staff" data-tab-target="tab-staff">Персонал кафедри</button>
+                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-target-id="kafedra" data-tab-target="tab-programs">Освітні програми</button>
+                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-target-id="kafedra" data-tab-target="tab-plan">Навчальний план</button>
+                        <button class="dropdown-link w-full text-left" data-modal-id="kafedra-modal" data-target-id="kafedra" data-tab-target="tab-graduates">Випускники кафедри</button>
                     </div>
                 </div>
-
-                <!-- Спеціальності -->
+                
                 <div class="dropdown-container">
-                    <a href="#specialties" class="nav-link-desktop flex items-center" data-target-id="specialties">Спеціальності</a>
+                    <a href="#specialties" class="nav-link-desktop flex items-center" data-target-id="specialties">
+                        Спеціальності
+                    </a>
                     <div class="dropdown-menu">
                         <a href="#specialties" class="dropdown-link nav-link-desktop" data-target-id="specialties">152 - Метрологія</a>
                         <a href="#specialties" class="dropdown-link nav-link-desktop" data-target-id="specialties">171 - Електроніка</a>
@@ -74,31 +75,20 @@
                 <a href="#" class="nav-link-desktop" data-modal-id="labs-modal" data-target-id="labs">Навчальні лабораторії</a>
                 <a href="#" class="nav-link-desktop" data-modal-id="science-modal" data-target-id="science">Наука</a>
                 <a href="#" class="nav-link-desktop" data-modal-id="international-modal" data-target-id="international">Міжнародні зв'язки</a>
-
-                <!-- ✅ Студенту (випадаюче меню як у "Кафедра") -->
-                <div class="dropdown-container">
-                    <button class="nav-link-desktop flex items-center" type="button">
-                        Студенту
-                    </button>
-                    <div class="dropdown-menu">
-                        <button class="dropdown-link w-full text-left" data-modal-id="disciplines-modal">Навчальні дисципліни</button>
-                        <a href="https://dl.tntu.edu.ua/login.php" target="_blank" class="dropdown-link w-full text-left">Електронне навчання</a>
-                        <a href="https://tntu.edu.ua/?p=uk/schedule/" target="_blank" class="dropdown-link w-full text-left">Розклад</a>
-                    </div>
-                </div>
-
+                <a href="#" class="nav-link-desktop" data-modal-id="student-modal" data-target-id="student">Студенту</a>
                 <a href="#" class="nav-link-desktop" data-modal-id="entrant-modal" data-target-id="entrant">Абітурієнту</a>
+
                 <a href="#contacts" class="nav-link-desktop" data-target-id="contacts">Контакти</a>
             </nav>
 
             <!-- Mobile Menu Button -->
             <div class="md:hidden flex items-center">
-                <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500">
-                    <span class="sr-only">Відкрити головне меню</span>
-                    <svg id="menu-open-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500">
+                    <span class="sr-only">Відкрити меню</span>
+                    <svg class="h-6 w-6" id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
-                    <svg id="menu-close-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <svg class="h-6 w-6 hidden" id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -106,65 +96,71 @@
         </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="md:hidden hidden bg-slate-900/95 border-t border-slate-800">
-        <div class="px-4 pt-4 pb-6 space-y-2">
-            <a href="#hero" class="nav-link-mobile" data-target-id="hero-section">Головна</a>
-            <button class="nav-link-mobile" data-modal-id="news-modal" data-target-id="news">Новини</button>
-
-            <!-- Mobile: Кафедра з випадаючим меню -->
-            <div>
-                <button class="nav-link-mobile mobile-dropdown-toggle flex items-center justify-between w-full" data-dropdown-id="mobile-kafedra-menu">
-                    <span>Кафедра</span>
-                    <svg class="w-4 h-4 ml-2 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div id="mobile-kafedra-menu" class="mobile-dropdown-menu mt-1 space-y-1">
-                    <button class="nav-link-mobile" data-modal-id="kafedra-modal" data-tab-target="tab-history">Історія кафедри</button>
-                    <button class="nav-link-mobile" data-modal-id="kafedra-modal" data-tab-target="tab-staff">Персонал кафедри</button>
-                    <button class="nav-link-mobile" data-modal-id="kafedra-modal" data-tab-target="tab-programs">Освітні програми</button>
-                    <button class="nav-link-mobile" data-modal-id="kafedra-modal" data-tab-target="tab-plan">Навчальний план</button>
-                    <button class="nav-link-mobile" data-modal-id="kafedra-modal" data-tab-target="tab-graduates">Випускники кафедри</button>
-                </div>
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="md:hidden hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#" class="nav-link-mobile" data-modal-id="news-modal" data-target-id="news">Новини</a>
+            
+            <!-- Мобільне випадаюче меню "Кафедра" -->
+            <button class="nav-link-mobile w-full text-left flex justify-between items-center mobile-dropdown-toggle" data-dropdown-id="mobile-kafedra-menu">
+                Кафедра
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 4 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            </button>
+            <div id="mobile-kafedra-menu" class="mobile-dropdown-menu">
+                <a href="#" class="nav-link-mobile" data-modal-id="kafedra-modal" data-target-id="kafedra" data-tab-target="tab-history">Історія кафедри</a>
+                <!-- ОНОВЛЕНО: Тепер це перемикає вкладку -->
+                <a href="#" class="nav-link-mobile" data-modal-id="kafedra-modal" data-target-id="staff" data-tab-target="tab-staff">Персонал кафедри</a>
+                <a href="#" class="nav-link-mobile" data-modal-id="kafedra-modal" data-target-id="kafedra" data-tab-target="tab-programs">Освітні програми</a>
+                <a href="#" class="nav-link-mobile" data-modal-id="kafedra-modal" data-target-id="kafedra" data-tab-target="tab-plan">Навчальний план</a>
+                <a href="#" class="nav-link-mobile" data-modal-id="kafedra-modal" data-target-id="kafedra" data-tab-target="tab-graduates">Випускники кафедри</a>
             </div>
 
-            <a href="#specialties" class="nav-link-mobile" data-target-id="specialties">Спеціальності</a>
-            <button class="nav-link-mobile" data-modal-id="labs-modal" data-target-id="labs">Навчальні лабораторії</button>
-            <button class="nav-link-mobile" data-modal-id="science-modal" data-target-id="science">Наука</button>
-            <button class="nav-link-mobile" data-modal-id="international-modal" data-target-id="international">Міжнародні зв'язки</button>
+            <!-- Мобільне випадаюче меню "Спеціальності" -->
+            <button class="nav-link-mobile w-full text-left flex justify-between items-center mobile-dropdown-toggle" data-dropdown-id="mobile-specialties-menu">
+                Спеціальності
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            </button>
+            <div id="mobile-specialties-menu" class="mobile-dropdown-menu">
+                <a href="#specialties" class="nav-link-mobile" data-target-id="specialties">152 - Метрологія</a>
+                <a href="#specialties" class="nav-link-mobile" data-target-id="specialties">171 - Електроніка</a>
+            </div>
 
-            <!-- Mobile: Студенту (одна кнопка відкриває загальне модальне вікно студенту) -->
-            <button class="nav-link-mobile" data-modal-id="student-modal" data-target-id="student">Студенту</button>
+            <a href="#" class="nav-link-mobile" data-modal-id="labs-modal" data-target-id="labs">Навчальні лабораторії</a>
+            <a href="#" class="nav-link-mobile" data-modal-id="science-modal" data-target-id="science">Наука</a>
+            <a href="#" class="nav-link-mobile" data-modal-id="international-modal" data-target-id="international">Міжнародні зв'язки</a>
+            <a href="#" class="nav-link-mobile" data-modal-id="student-modal" data-target-id="student">Студенту</a>
+            <a href="#" class="nav-link-mobile" data-modal-id="entrant-modal" data-target-id="entrant">Абітурієнту</a>
 
-            <button class="nav-link-mobile" data-modal-id="entrant-modal" data-target-id="entrant">Абітурієнту</button>
             <a href="#contacts" class="nav-link-mobile" data-target-id="contacts">Контакти</a>
         </div>
     </div>
 </header>
 
-<!-- === HERO SECTION === -->
 <main>
-<section id="hero" class="relative min-h-screen flex items-center justify-center pt-24">
-  <div class="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-900/80"></div>
-  <div class="relative z-10 text-center px-4 max-w-5xl mx-auto" id="hero-section">
-      <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight reveal section-title">
-          Кафедра приладів i<br>
-          <span class="gradient-text">контрольно-вимірювальних систем</span>
-      </h1>
-      <p class="mt-6 max-w-5xl mx-auto text-lg md:text-xl text-slate-300 reveal" style="transition-delay: 200ms;">
-          Створюємо майбутнє вимірювальних технологій. Готуємо фахівців, здатних розробляти та експлуатувати найсучасніші прилади та системи.
-      </p>
-      <div class="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4 reveal" style="transition-delay: 400ms;">
-          <a href="#specialties" class="w-full sm:w-auto bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 shadow-lg shadow-sky-500/20 nav-link-desktop" data-target-id="specialties">
-              Дізнатись про вступ
-          </a>
-          <button class="w-full sm:w-auto bg-slate-700/50 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 border border-slate-600 nav-link-desktop" data-modal-id="kafedra-modal" data-target-id="kafedra">
-              Кафедра
-          </button>
-      </div>
-  </div>
-</section>
+    <!-- === HERO SECTION === -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-24">
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-900/80"></div>
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto" id="hero-section">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight reveal section-title">
+                Кафедра приладів i<br>
+                <span class="gradient-text">контрольно-вимірювальних систем</span>
+            </h1>
+            <p class="mt-6 max-w-5xl mx-auto text-lg md:text-xl text-slate-300 reveal" style="transition-delay: 200ms;">
+                Створюємо майбутнє вимірювальних технологій. Готуємо фахівців, здатних розробляти та експлуатувати найсучасніші прилади та системи.
+            </p>
+            <div class="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4 reveal" style="transition-delay: 400ms;">
+                <a href="#specialties" class="w-full sm:w-auto bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 shadow-lg shadow-sky-500/20 nav-link-desktop" data-target-id="specialties">
+                    Дізнатись про вступ
+                </a>
+                <button class="w-full sm:w-auto bg-slate-700/50 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 border border-slate-600 nav-link-desktop" data-modal-id="kafedra-modal" data-target-id="kafedra">
+                    Кафедра
+                </button>
+            </div>
+            <!-- <div id="platform-demo" class="mt-8 text-yellow-400 text-sm reveal" style="transition-delay: 600ms;"></div> -->
+        </div>
+    </section>
+
+    <!-- === ABOUT SECTION (Переміщено у модальне вікно "Кафедра") === -->
 
     <!-- === SPECIALTIES SECTION === -->
     <section id="specialties" class="py-20 lg:py-32">
@@ -280,7 +276,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div class="space-y-4 col-span-2 md:col-span-1">
                  <a href="#hero" class="flex items-center space-x-3">
-                    <svg class="h-8 w-8 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0v-1.5m6 1.5v-1.5m0 0l.415-.207a.75.75 0 011.085.67V10.5м-6-3h6m-6 3a.75.75 0 01-.75-.75V7.5m7.5 3a.75.75 0 00-.75-.75V7.5m-6 3h.008v.008H8.25v-.008zm5.25 0h.008v.008H13.5в-.008zm2.25 0h.008v.008H15.75в-.008zm2.25 0h.008v.008H18в-.008zm-2.25 3h.008v.008H15.75в-.008zm2.25 0h.008v.008H18в-.008zm-2.25 3h.008v.008H15.75в-.008zm2.25 0h.008v.008H18в-.008zm-6-6h.008v.008H12в-.008zm-2.25 0h.008v.008H9.75в-.008zm-2.25 0h.008v.008H7.5в-.008zm-2.25 0h.008v.008H5.25в-.008zm2.25 3h.008v.008H7.5в-.008zm2.25 0h.008v.008H9.75в-.008zm2.25 0h.008v.008H12в-.008zm2.25 3h.008v.008H14.25в-.008zm-2.25 3h.008v.008H12в-.008zm-2.25 0h.008v.008H9.75в-.008zm-2.25 0h.008v.008H7.5в-.008zm-2.25 0h.008v.008H5.25в-.008z" /></svg>
+                    <svg class="h-8 w-8 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0v-1.5m6 1.5v-1.5m0 0l.415-.207a.75.75 0 011.085.67V10.5m-6-3h6m-6 3a.75.75 0 01-.75-.75V7.5m7.5 3a.75.75 0 00-.75-.75V7.5m-6 3h.008v.008H8.25v-.008zm5.25 0h.008v.008H13.5v-.008zm2.25 0h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-6-6h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008zm2.25 3h.008v.008H7.5v-.008zm2.25 0h.008v.008H9.75v-.008zm2.25 0h.008v.008H12v-.008zm2.25 0h.008v.008H14.25v-.008zm-2.25 3h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008z" /></svg>
                     <span class="font-bold text-lg text-white">Кафедра ПВ ТНТУ</span>
                 </a>
                 <p class="text-slate-400 text-sm">Інновації у вимірюваннях, якість в освіті.</p>
@@ -307,8 +303,8 @@
              <div>
                 <h3 class="text-sm font-semibold text-slate-200 tracking-wider uppercase">Ми в соцмережах</h3>
                 <div class="flex mt-4 space-x-6">
-                    <a href="#" class="text-slate-400 hover:text-sky-400"><span class="sr-only">Facebook</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773л-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg></a>
-                    <a href="https://www.instagram.com/prila_dy2025?igsh=MWtyb2t1czMzNjEyNA%3D%3D" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-400"><span class="sr-only">Instagram</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2.34a1.5 1.5 0 011.37 0 1.5 1.5 0 01.884.884 1.5 1.5 0 010 1.37 1.5 1.5 0 01-.884.884 1.5 1.5 0 01-1.37 0 1.5 1.5 0 01-.884-.884 1.5 1.5 0 010-1.37A1.5 1.5 0 0112.315 2.34z" clip-rule="evenodd" /><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-2.068 5.47a.75.75 0 01.996-.062л4.5 2.25a.75.75 0 010 1.328л-4.5 2.25a.75.75 0 11-.874-1.206L13.755 12л-3.885-2.194a.75.75 0 01-.062-.996z" clip-rule="evenodd" /></svg></a>
+                    <a href="#" class="text-slate-400 hover:text-sky-400"><span class="sr-only">Facebook</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg></a>
+                    <a href="https://www.instagram.com/prila_dy2025?igsh=MWtyb2t1czMzNjEyNA%3D%3D" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-400"><span class="sr-only">Instagram</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2.34a1.5 1.5 0 011.37 0 1.5 1.5 0 01.884.884 1.5 1.5 0 010 1.37 1.5 1.5 0 01-.884.884 1.5 1.5 0 01-1.37 0 1.5 1.5 0 01-.884-.884 1.5 1.5 0 010-1.37A1.5 1.5 0 0112.315 2.34z" clip-rule="evenodd" /><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-2.068 5.47a.75.75 0 01.996-.062l4.5 2.25a.75.75 0 010 1.328l-4.5 2.25a.75.75 0 11-.874-1.206L13.755 12 9.87 9.806a.75.75 0 01-.062-.996z" clip-rule="evenodd" /></svg></a>
                 </div>
             </div>
         </div>
@@ -321,12 +317,16 @@
 <!-- === ПОЧАТОК: Секції у Модальних Вікнах === -->
 
 <!-- Фон (Overlay) для ВСІХ модальних вікон -->
+<!-- Він один, щоб уникнути нашарування блюру -->
 <div id="modal-overlay" class="modal-overlay hidden fixed inset-0 z-40 bg-slate-900/70 backdrop-blur-md transition-opacity duration-300" style="opacity: 0;"></div>
 
-<!-- 1. Модальне вікно "Кафедра" -->
+
+<!-- 1. Модальне вікно "Кафедра" (z-50) -->
 <div id="kafedra-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="kafedra-title" role="dialog" aria-modal="true">
+    <!-- ОНОВЛЕНО: 'w-full' та 'max-w-6xl' тут -->
     <div class="modal-content-container max-w-6xl w-full neon-border-box">
         <div class="modal-content-inner">
+            <!-- Заголовок -->
             <div class="modal-header">
                 <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="kafedra-title">Кафедра</h2>
                 <button class="modal-close-btn">
@@ -335,17 +335,20 @@
                 </button>
             </div>
             
-            <!-- Вкладки -->
+            <!-- Вкладки (Tabs) -->
             <div class="modal-tabs-container">
                 <button class="modal-tab active" data-tab="tab-history">Історія</button>
+                <!-- ОНОВЛЕНО: "data-modal-id" прибрано, додано "data-tab" -->
                 <button class="modal-tab" data-tab="tab-staff">Персонал кафедри</button>
                 <button class="modal-tab" data-tab="tab-programs">Освітні програми</button>
                 <button class="modal-tab" data-tab="tab-plan">Навчальний план</button>
                 <button class="modal-tab" data-tab="tab-graduates">Випускники кафедри</button>
             </div>
 
+            <!-- Контент Вкладок -->
+            <!-- ОНОВЛЕНО: Додано 'max-h-[70vh]' та 'overflow-y-auto' сюди -->
             <div class="modal-scroll-content max-h-[70vh] overflow-y-auto">
-                <!-- Історія -->
+                <!-- Вкладка 1: Історія -->
                 <div id="tab-history" class="modal-tab-pane active">
                     <div class="content-block p-6">
                         <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -371,24 +374,33 @@
                         </div>
 
                         <h3 class="mt-12">Заснування та розвиток</h3>
-                        <p>Кафедра ПВ утворилася у 1993 р. шляхом відокремлення від кафедри автоматизації технологічних процесів та виробництв...</p>
-                        <p>Першим завідувачем кафедри був доц. Рудник Андрій Григорович...</p>
+                        <p>Кафедра ПВ утворилася у 1993 р. шляхом відокремлення від кафедри автоматизації технологічних процесів та виробництв з метою організації підготовки спеціалістів з профільної для тодішньому новоствореного Тернопільського державного приладобудівного інституту спеціальності – приладобудування. Базовою групою засновників кафедри була: доц. Рудник А. Г., доц. Рожук С. Г., доц. Куцевич А. В., та ст. викл. Лушпак В. Й. Згодом склад кафедри поповнився висококваліфікованими спеціалістами з інших вишів – проф. Кривень В. А., доц. Яворська М. І., (з НУ ЛП)) та з галузевих науково- дослідних інститутів – Паламар М. І., Умзар Ю. А., Зелінський І. М., Осов’як І.І., Дуда С. П., а також випускниками кафедри – Апостол Ю. О., Наконечний Ю. І., Новосад  М. В., Ольшанський І. Є, Муха А. М., Шин О. Г., Нікулін Р. А., Дубиняк Т.С., а дещо пізніше випускниками аспірантури кафедри ПВ: Чайковський А.В., Пастернак Ю.В., Стрембіцький М.О., Кругльов В.В.</p>
+                        <p>Першим завідувачем кафедри був доц. Рудник Андрій Григорович, з ініціативи якого була запроваджена антенна тематика робіт на кафедрі.</p>
 
                         <h3>Зміна спеціальностей</h3>
-                        <p>Підготовка фахівців на кафедрі велась за спеціальністю «Приладобудування»...</p>
+                        <p>Підготовка фахівців на кафедрі велась за спеціальністю «Приладобудування». У 1993 році перейдено на багатоступеневу систему підготовки фахівців за схемою «бакалавр–спеціаліст–магістр» згідно Болонської системи. 1994 року відбувся перший випуск інженерів спеціальності 7.090901 «Приладобудування», яка після упорядкування назв спеціальностей згідно нового кодифікатора стала називатись «Прилади точної механіки».</p>
+                        <p>Згодом з 2015 р. спеціальність «Прилади точної механіки» згідно нової кодифікації трансформувалась у спеціальність 152 «Метрологія та інформаційно-вимірювальна техніка». У 2017 р. було проведено ліцензування нового напряму підготовки бакалаврів за спеціальністю 153 «Мікро- та наносистемна техніка».</p>
+                        <p>З 2023 р. спеціальності кафедри перейшли до галузі знань 17 – «Електроніка, автоматизація та електронні комунікації», а на кафедрі ведеться підготовка за двома спеціальностями: 175 «Інформаційно-вимірювальні технології»; 176 «Мікро- та наносистемна техніка».</p>
 
                         <h3>Керівництво</h3>
-                        <p>Після трагічної смерті зав. каф. доц. Рудника А.Г....</p>
-
+                        <p>Після трагічної смерті зав. каф. доц. Рудника А.Г. з 2004 р. по 2006 р обов’язки завідувача кафедри виконував тодішній декан факультету доц. Куцевич А.В.</p>
+                        <p>З 2006 р. кафедру очолює д.т.н., професор Паламар Михайло Іванович, що привніс нові напрямки досліджень з електроніки, мікропроцесорної техніки та систем керування на основі досвіду роботи у ТФ Київського науково-дослідного інституту мікроприладобудування (КНДІМП) та СКБ «Квантор», де пройшов шлях від інженера до начальника КБ та займався проєктуванням спеціалізованого вимірювального обладнання для технологічних процесів виготовлення інтегральних схем.</p>
+                        <p>У 2013 році Паламар М. І. захистив дисертацію на здобуття наукового ступеня доктора технічних наук на тему: «Системи керування антенними станціями зв’язку з низькоорбітальними супутниками» (спеціальність 05.13.03 «Системи та процеси керування») у Національному університеті «Львівська політехніка».</p>
+                        <p>З 2013 по 2021 р. випускниками кафедри під керівництвом проф. Паламара М.І. захищено 3 дисертації на здобуття наукового ступеня кандидата технічних наук за спеціальністю 05.13.05 – «комп’ютерні системи та компоненти»: доц. Чайковський А.В., доц. Стрембіцький М.О., Пастернак Ю.В. та 1 дисертація під керівництвом проф. Гевко І.Б за спеціальністю 05.05.05 – «піднімально-транспортні машини», доц. Дубиняк Т.С.</p>
+                        
                         <h3>Сьогодення кафедри</h3>
-                        <p>На сьогоднішній день на кафедрі плідно працюють 1 професор, 5 доцентів...</p>
+                        <p>На сьогоднішній день на кафедрі плідно працюють 1 професор, 5 доцентів, 2 старших викладачі, 1 асистент та 3 аспіранти.</p>
+                        <p>Кафедра активно працює в напрямку розвитку прогресивних форм навчання, зокрема, системи електронного навчання за допомогою Інтернет і мультимедіа-технологій, що дає змогу організовувати освітній процес на якісно новому рівні. Кафедра розвиває навчання студентів за програмами подвійних дипломів.</p>
+                        <p>Студенти кафедри залучаються до роботи у дослідно-конструкторських роботах в НДЛ ІТІС, що діє при кафедрі, беруть участь у міжнародних студентських змаганнях, де представляють свої досягнення в галузі мехатронних приладів і систем, робототехніки.</p>
                     </div>
                 </div>
-
-                <!-- Персонал -->
+                
+                <!-- Вкладка 2: Персонал (ОНОВЛЕНО: Тепер контент тут) -->
                 <div id="tab-staff" class="modal-tab-pane">
                     <div class="content-block p-6">
+                        <!-- 4 видимих -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <!-- ОНОВЛЕНО: Додано .staff-card та data-staff-id, змінено на rounded-xl -->
                             <div class="text-center reveal staff-card" data-staff-id="palamar">
                                 <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/palamar.png" alt="Фото Паламар Михайло Іванович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
                                 <div class="mt-4">
@@ -418,11 +430,82 @@
                                 </div>
                             </div>
                         </div>
-
+                        
+                        <!-- Прихований персонал -->
                         <div id="hidden-staff" class="hidden mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            <!-- тут решта викладачів як у тебе в файлі -->
+                            <div class="text-center reveal staff-card" data-staff-id="apostol">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/apostol.png" alt="Фото Апостол Юрій Орестович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Апостол Юрій Орестович</h3>
+                                    <p class="text-sky-400">старший викладач</p>
+                                </div>
+                            </div>
+                            <div class="text-center reveal staff-card" data-staff-id="dubyniak">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/dybuniak.png" alt="Фото Дубиняк Тарас Степанович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Дубиняк Тарас Степанович</h3>
+                                    <p class="text-sky-400">к.т.н., доцент</p>
+                                </div>
+                            </div>
+                            <div class="text-center reveal staff-card" data-staff-id="chaikovskyi">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/chajkovskij.png" alt="Фото Чайковський Андрій Вікторович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Чайковський Андрій Вікторович</h3>
+                                    <p class="text-sky-400">к.т.н., доцент</p>
+                                </div>
+                            </div>
+                            <div class="text-center reveal staff-card" data-staff-id="strembitskyi">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/strembickij.jpg" alt="Фото Стрембіцький Михайло Олексійович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Стрембіцький Михайло Олексійович</h3>
+                                    <p class="text-sky-400">к.т.н., доцент</p>
+                                </div>
+                            </div>
+                            <div class="text-center reveal staff-card" data-staff-id="batiuk">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/batuk.png" alt="Фото Батюк Віталій Васильович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Батюк Віталій Васильович</h3>
+                                    <p class="text-sky-400">асистент</p>
+                                </div>
+                            </div>
+                            <div class="text-center reveal staff-card" data-staff-id="rafaliuk">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/rafaluk.png" alt="Фото Рафалюк Олександр Олексійович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Рафалюк Олександр Олексійович</h3>
+                                    <p class="text-sky-400">асистент (сумісник)</p>
+                                </div>
+                            </div>
+                            <div class="text-center reveal staff-card" data-staff-id="kucevych">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/kucevich.jpg" alt="Фото Куцевич Світлана Петрівна" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Куцевич Світлана Петрівна</h3>
+                                    <p class="text-sky-400">навчально-допоміжний персонал</p>
+                                </div>
+                            </div>
+                            <div class="text-center reveal staff-card" data-staff-id="rydnyk">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/rydnik.png" alt="Фото Рудник Андрій Андрійович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Рудник Андрій Андрійович</h3>
+                                    <p class="text-sky-400">навчально-допоміжний персонал</p>
+                                </div>
+                            </div>
+                            <div class="text-center reveal staff-card" data-staff-id="ostafiichuk">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/ostafiychuk.jpg" alt="Фото Остафійчук Іван Васильович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Остафійчук Іван Васильович</h3>
+                                    <p class="text-sky-400">навчально-допоміжний персонал</p>
+                                </div>
+                            </div>
+                            <div class="text-center reveal staff-card" data-staff-id="paprotska">
+                                <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/poprocka.jpg" alt="Фото Папроцька Олена Володимирівна" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
+                                <div class="mt-4">
+                                    <h3 class="text-lg font-semibold text-white">Папроцька Олена Володимирівна</h3>
+                                    <p class="text-sky-400">інженер 2-ї категорії</p>
+                                </div>
+                            </div>
                         </div>
 
+                        <!-- Toggle Button -->
                         <div class="mt-12 text-center">
                             <button id="toggle-staff-btn" class="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 font-semibold transition-colors duration-300">
                                 <span id="toggle-staff-text">Показати всіх</span>
@@ -433,27 +516,43 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Освітні програми -->
+                
+                <!-- Вкладка 3: Освітні програми (Заповнено) -->
                 <div id="tab-programs" class="modal-tab-pane">
                     <div class="content-block p-6">
-                        <!-- ... як у тебе було ... -->
+                        <h3>Спеціальність 175 «Інформаційно-вимірювальні технології»</h3>
+                        <p>Освітня програма «Мехатроніка та інтелектуальні інформаційні системи». Ця програма фокусується на розробці та інтеграції механічних, електронних та програмних компонентів для створення інтелектуальних систем, таких як роботи, автоматизовані лінії та "розумні" пристрої.</p>
+                        <ul>
+                            <li>Вивчення мікроконтролерів та ПЛК.</li>
+                            <li>Основи робототехніки та мехатроніки.</li>
+                            <li>Системи штучного інтелекту та комп'ютерного зору.</li>
+                        </ul>
+
+                        <h3>Спеціальність 176 «Мікро- та наносистемна техніка»</h3>
+                        <p>Освітня програма «Проєктування мікроелектронних систем та пристроїв інтернету речей». Студенти цієї програми отримують глибокі знання в галузі проєктування, виготовлення та тестування мікро- та наноелектронних пристроїв, сенсорів та систем, що є основою для Інтернету речей (IoT).</p>
+                        <ul>
+                            <li>Технології мікро- та наноелектроніки.</li>
+                            <li>Проєктування пристроїв IoT.</li>
+                            <li>Сенсорні системи та обробка сигналів.</li>
+                        </ul>
                     </div>
                 </div>
-
-                <!-- Навчальний план -->
+                
+                <!-- Вкладка 4: Навчальний план (Заглушка) -->
                 <div id="tab-plan" class="modal-tab-pane">
                     <div class="content-block p-6">
                         <h3>Навчальний план</h3>
-                        <p>Тут буде розміщено інформацію про навчальні плани...</p>
+                        <p>Тут буде розміщено інформацію про навчальні плани, графіки навчального процесу та перелік дисциплін для кожної спеціальності.</p>
+                        <p>(Контент для цієї вкладки буде додано згодом...)</p>
                     </div>
                 </div>
-
-                <!-- Випускники -->
+                
+                <!-- Вкладка 5: Випускники кафедри (Заглушка) -->
                 <div id="tab-graduates" class="modal-tab-pane">
                     <div class="content-block p-6">
                         <h3>Наші випускники</h3>
-                        <p>Ми пишаємося нашими випускниками...</p>
+                        <p>Ми пишаємося нашими випускниками, які працюють у провідних українських та міжнародних компаніях у сфері ІТ, приладобудування, автоматизації та метрології.</p>
+                        <p>(Тут буде розміщено історії успіху та інформація про випускників...)</p>
                     </div>
                 </div>
             </div>
@@ -461,35 +560,239 @@
     </div>
 </div>
 
-<!-- 3. Модальне вікно "Новини" -->
+
+<!-- 2. Модальне вікно "Персонал" (ВИДАЛЕНО) -->
+<!-- <div id="staff-modal" ...> ... </div> -->
+
+<!-- 3. Модальне вікно "Новини" (z-50) -->
 <div id="news-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="news-title" role="dialog" aria-modal="true">
-    <!-- ... увесь твій слайдер новин як був ... -->
+    <div class="modal-content-container max-w-4xl w-full neon-border-box">
+        <div class="modal-content-inner">
+            <!-- Заголовок -->
+            <div class="modal-header">
+                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title text-center" id="news-title">Останні новини</h2>
+                <button class="modal-close-btn">
+                    <span class="sr-only">Закрити</span>
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            
+            <!-- Контент (зменшені відступи) -->
+            <div class="pt-4 pb-8">
+                <p class="text-lg text-slate-400 text-center">Будьте в курсі подій нашої кафедри</p>
+                
+                <!-- Слайдер -->
+                <div id="news-slider-container" class="news-slider-container mt-8 flex overflow-x-auto snap-x snap-mandatory scroll-p-4 px-4 -mx-4">
+                    
+                    <!-- Картка 1: Машинка -->
+                    <div class="news-slide snap-start flex-shrink-0 w-full sm:w-1/2 p-4">
+                        <div class="bg-slate-900 rounded-xl overflow-hidden flex flex-col h-full p-6">
+                            <img class="h-48 w-full object-cover rounded-md" src="https://placehold.co/400x224/1e293b/38bdf8?text=AI+Робот" alt="Автономна машинка">
+                            <p class="text-sm text-sky-400 mt-4">29.03.2024</p>
+                            <h3 class="mt-2 text-xl font-semibold text-white">Автономна машинка із елементами штучного інтелекту</h3>
+                            <p class="mt-3 text-slate-400 text-sm flex-grow">
+                                Автономні роботи використовуються такими компаніями як Amazon а Нова Пошта у своїх великих центрах сортування...
+                            </p>
+                            <a href="#" class="mt-4 text-sky-400 hover:text-sky-300 font-semibold open-small-modal-btn"
+                               data-title="Автономна машинка із елементами штучного інтелекту"
+                               data-date="29.03.2024"
+                               data-text="Автономні роботи використовуються такими компаніями як Amazon а Нова Пошта у своїх великих центрах сортування посилок, де кожен робот прокладає маршрут згідно напрямку, тим самим скорочуючи час на сортування посилок людьми і прискорює їх доставку адресату.&#10;Розроблено автономний мобільний робот який призначений для обминання перешкод під час руху і написання для нього програми.&#10;Проведено аналіз принципів побудови систем управління переміщенням мобільних роботів та розробка мобільного робота, який призначений для обминання перешкод під час руху, та написання програми для нього.">
+                               Читати більше &rarr;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Картка 2: Модернізація -->
+                    <div class="news-slide snap-start flex-shrink-0 w-full sm:w-1/2 p-4">
+                        <div class="bg-slate-900 rounded-xl overflow-hidden flex flex-col h-full p-6">
+                            <img class="h-48 w-full object-cover rounded-md" src="https://placehold.co/400x224/1e293b/38bdf8?text=Обладнання" alt="Нове лабораторне обладнання">
+                            <p class="text-sm text-sky-400 mt-4">05.10.2025</p>
+                            <h3 class="mt-2 text-xl font-semibold text-white">Модернізація лабораторії: нові горизонти</h3>
+                            <p class="mt-3 text-slate-400 text-sm flex-grow">
+                                Лабораторія неруйнівного контролю поповнилася дефектоскопом "PhaseScan-3" та ПЗ для 3D-візуалізації.
+                            </p>
+                            <a href="#" class="mt-4 text-sky-400 hover:text-sky-300 font-semibold open-small-modal-btn"
+                               data-title="Модернізація лабораторії: нові горизонти для навчання"
+                               data-date="05.10.2025"
+                               data-text="Лабораторія неруйнівного контролю поповнилася дефектоскопом 'PhaseScan-3' та ПЗ для 3D-візуалізації. Це дозволить студентам опановувати найновіші методи.&#10;&#10;Завдяки новому обладнанню, практичні заняття стануть ще більш наближеними до реальних умов виробництва.">
+                               Читати більше &rarr;
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Картка 3: Партнерство -->
+                    <div class="news-slide snap-start flex-shrink-0 w-full sm:w-1/2 p-4">
+                        <div class="bg-slate-900 rounded-xl overflow-hidden flex flex-col h-full p-6">
+                            <img class="h-48 w-full object-cover rounded-md" src="https://placehold.co/400x224/1e293b/38bdf8?text=Партнерство" alt="Логотип компанії-партнера">
+                            <p class="text-sm text-sky-400 mt-4">28.09.2025</p>
+                            <h3 class="mt-2 text-xl font-semibold text-white">Стратегічне партнерство з "Техно-Індастрі"</h3>
+                            <p class="mt-3 text-slate-400 text-sm flex-grow">
+                                Укладено договір про співпрацю з провідною IT-компанією. Договір передбачає стажування кращих студентів.
+                            </p>
+                            <a href="#" class="mt-4 text-sky-400 hover:text-sky-300 font-semibold open-small-modal-btn"
+                               data-title="Стратегічне партнерство з 'Техно-Індастрі'"
+                               data-date="28.09.2025"
+                               data-text="Укладено договір про співпрацю з провідною IT-компанією. Договір передбачає стажування кращих студентів та проведення спільних хакатонів для розвитку навичок.&#10;&#10;Це відкриває нові можливості для працевлаштування наших випускників.">
+                               Читати більше &rarr;
+                            </a>
+                        </div>
+                    </div>
+                     
+                    <!-- Картка 4: День відкритих дверей -->
+                    <div class="news-slide snap-start flex-shrink-0 w-full sm:w-1/2 p-4">
+                        <div class="bg-slate-900 rounded-xl overflow-hidden flex flex-col h-full p-6">
+                            <img class="h-48 w-full object-cover rounded-md" src="https://placehold.co/400x224/1e293b/38bdf8?text=Онлайн" alt="День відкритих дверей онлайн">
+                            <p class="text-sm text-sky-400 mt-4">20.09.2025</p>
+                            <h3 class="mt-2 text-xl font-semibold text-white">День відкритих дверей у форматі онлайн</h3>
+                            <p class="mt-3 text-slate-400 text-sm flex-grow">
+                                Запрошуємо абітурієнтів та їх батьків на віртуальну екскурсію кафедрою та спілкування з викладачами.
+                            </p>
+                            <a href="#" class="mt-4 text-sky-400 hover:text-sky-300 font-semibold open-small-modal-btn"
+                               data-title="День відкритих дверей у форматі онлайн-зустрічі"
+                               data-date="20.09.2025"
+                               data-text="Запрошуємо абітурієнтів та їх батьків на віртуальну екскурсію кафедрою. Ви зможете поспілкуватися з викладачами та дізнатися все про наші освітні програми.&#10;&#10;Реєстрація за посиланням у наших соцмережах.">
+                               Читати більше &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- "Горошинки" (Dots) -->
+                <div id="news-dots-container" class="flex justify-center space-x-2 mt-6">
+                    <!-- Будуть додані сюди динамічно -->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- 4. Маленьке модальне "Читати далі" -->
+<!-- 4. Маленьке модальне вікно "Читати Далі" (z-60) -->
 <div id="small-news-modal" class="modal-base hidden fixed inset-0 z-[60]" aria-labelledby="small-news-title" role="dialog" aria-modal="true">
-    <!-- ... як у тебе було ... -->
+    <div class="modal-content-container max-w-2xl w-full neon-border-box">
+        <div class="modal-content-inner">
+            <button class="modal-close-btn absolute top-4 right-6 text-slate-400 hover:text-white z-20">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <div class="p-6">
+                <p id="small-news-date" class="text-sm text-sky-400"></p>
+                <h3 id="small-news-title" class="mt-2 text-2xl font-bold text-white pr-8"></h3>
+                <p id="small-news-modal-text" class="mt-4 text-slate-300 whitespace-pre-wrap max-h-[60vh] overflow-y-auto"></p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- 5. Модальне вікно "Деталі про Викладача" -->
+<!-- 5. НОВЕ: Модальне вікно "Деталі про Викладача" (z-60) -->
 <div id="staff-detail-modal" class="modal-base hidden fixed inset-0 z-[60]" aria-labelledby="staff-detail-name" role="dialog" aria-modal="true">
-    <!-- ... як у тебе було ... -->
+    <div class="modal-content-container max-w-4xl w-full neon-border-box">
+        <div class="modal-content-inner">
+            <button class="modal-close-btn absolute top-4 right-6 text-slate-400 hover:text-white z-20">
+                <span class="sr-only">Закрити</span>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            
+            <!-- Контент -->
+            <div class="modal-scroll-content max-h-[80vh] overflow-y-auto">
+                <div class="p-6 sm:p-8">
+                    <div class="grid sm:grid-cols-3 gap-6">
+                        <!-- Фото та Посилання -->
+                        <div class="sm:col-span-1">
+                            <!-- ОНОВЛЕНО: rounded-xl -->
+                            <img id="staff-detail-img" src="https://placehold.co/160x160/1e293b/ffffff?text=Фото" alt="Фото викладача" class="rounded-xl shadow-lg w-full">
+                            <h3 class="text-lg font-semibold text-white mt-4">Посилання</h3>
+                            <div id="staff-detail-links" class="mt-2 space-y-1">
+                                <!-- Посилання будуть тут -->
+                            </div>
+                        </div>
+                        
+                        <!-- Інформація -->
+                        <div class="sm:col-span-2">
+                            <h2 id="staff-detail-name" class="text-3xl font-bold text-white">Ім'я Прізвище</h2>
+                            <p id="staff-detail-title" class="text-sky-400 text-lg mt-1">Посада</p>
+                            
+                            <div class="content-block mt-6">
+                                <div id="staff-detail-details">
+                                    <!-- Посада, ступінь, звання -->
+                                </div>
+
+                                <h3 class="mt-6">Викладає дисципліни</h3>
+                                <ul id="staff-detail-disciplines" class="list-disc pl-5 space-y-1 text-slate-300">
+                                    <!-- Дисципліни будуть тут -->
+                                </ul>
+
+                                <div id="staff-detail-bio" class="mt-6">
+                                    <!-- Біографія буде тут -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- 6. Лабораторії -->
+<!-- 6. Модальні вікна - Заглушки (z-50) -->
 <div id="labs-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="labs-title" role="dialog" aria-modal="true">
-    <!-- ... 3D тур ... -->
+    <div class="modal-content-container max-w-4xl w-full neon-border-box">
+        <div class="modal-content-inner">
+            <div class="modal-header">
+                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="labs-title">Навчальні лабораторії</h2>
+                <button class="modal-close-btn">
+                    <span class="sr-only">Закрити</span>
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <!-- ОНОВЛЕНО: Додано контейнер для 3D-туру -->
+            <div class="modal-scroll-content">
+                <div class="tour-iframe-container">
+                    <iframe 
+                        class="tour-iframe"
+                        src="https://3d.tntu.edu.ua/building9" 
+                        allowfullscreen
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="science-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="science-title" role="dialog" aria-modal="true">
-    <!-- ... заглушка Наука ... -->
+    <div class="modal-content-container max-w-4xl w-full neon-border-box">
+        <div class="modal-content-inner">
+            <div class="modal-header">
+                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="science-title">Наука</h2>
+                <button class="modal-close-btn">
+                    <span class="sr-only">Закрити</span>
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="modal-scroll-content">
+                <p class="p-6 text-slate-300">Інформація про наукову роботу, публікації та інноваційні розробки буде додана тут незабаром...</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="international-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="international-title" role="dialog" aria-modal="true">
-    <!-- ... заглушка Міжнародні зв'язки ... -->
+    <div class="modal-content-container max-w-4xl w-full neon-border-box">
+        <div class="modal-content-inner">
+            <div class="modal-header">
+                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="international-title">Міжнародні зв'язки</h2>
+                <button class="modal-close-btn">
+                    <span class="sr-only">Закрити</span>
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="modal-scroll-content">
+                <p class="p-6 text-slate-300">Інформація про міжнародну співпрацю, проєкти та стажування буде додана тут незабаром...</p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- Старе модальне "Студенту" (залишив, щоб футер/мобілка працювали) -->
 <div id="student-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="student-title" role="dialog" aria-modal="true">
     <div class="modal-content-container max-w-4xl w-full neon-border-box">
         <div class="modal-content-inner">
@@ -507,104 +810,24 @@
     </div>
 </div>
 
-<!-- ✅ НОВЕ МОДАЛЬНЕ "Навчальні дисципліни" -->
-<div id="disciplines-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="disciplines-title" role="dialog" aria-modal="true">
-    <div class="modal-content-container max-w-5xl w-full neon-border-box">
+<div id="entrant-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="entrant-title" role="dialog" aria-modal="true">
+    <div class="modal-content-container max-w-4xl w-full neon-border-box">
         <div class="modal-content-inner">
             <div class="modal-header">
-                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="disciplines-title">Навчальні дисципліни</h2>
+                <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title" id="entrant-title">Абітурієнту</h2>
                 <button class="modal-close-btn">
                     <span class="sr-only">Закрити</span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6л12 12" />
-                    </svg>
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
-            <div class="modal-scroll-content text-slate-300">
-                <div class="p-6 space-y-6">
-                    <div>
-                        <h1 class="text-2xl font-bold text-sky-400 mb-2">152 «Метрологія та інформаційно-вимірювальна техніка»</h1>
-                        <h2 class="text-xl font-semibold text-sky-300 mt-4 mb-2">Бакалавр</h2>
-                        <ul class="list-disc pl-6 space-y-1">
-                            <li>Освітня програма «Мехатроніка та інтелектуальні інформаційні системи»</li>
-                            <li>Інформаційні системи</li>
-                            <li>Архітектура ПК</li>
-                            <li>Іноземна мова професійно-ділового спрямування</li>
-                            <li>Моделювання систем</li>
-                            <li>Методи і засоби вимірювання механічних величин</li>
-                            <li>Програмування мікропроцесорних систем</li>
-                            <li>Методи та засоби реєстрації та відтворення інформації</li>
-                            <li>Основи антенної техніки</li>
-                            <li>Основи менеджменту і маркетингу</li>
-                            <li>Основи наукових досліджень</li>
-                            <li>Основи САПР</li>
-                            <li>Основи теорії вимірювальних приладів</li>
-                            <li>Прикладна оптика</li>
-                            <li>Системи штучного інтелекту</li>
-                            <li>Теорія похибок вимірювальних приладів</li>
-                        </ul>
-
-                        <h2 class="text-xl font-semibold text-sky-300 mt-6 mb-2">Магістр</h2>
-                        <ul class="list-disc pl-6 space-y-1">
-                            <li>Автоматизоване проєктування та дизайн приладів і систем</li>
-                            <li>Інформаційні технології в приладобудуванні</li>
-                            <li>Комп’ютерні технології проєктування електронних вузлів приладів</li>
-                            <li>Математичне моделювання</li>
-                            <li>Проєктування вбудованих систем</li>
-                            <li>Синтез систем з використанням LabView</li>
-                            <li>Системи прецизійного управління мехатронних систем</li>
-                        </ul>
-                    </div>
-
-                    <div class="border-t border-slate-700 pt-6">
-                        <h1 class="text-2xl font-bold text-sky-400 mb-2">153 «Мікро- та наносистемна техніка»</h1>
-                        <h2 class="text-xl font-semibold text-sky-300 mt-4 mb-2">Бакалавр</h2>
-                        <ul class="list-disc pl-6 space-y-1">
-                            <li>Фізика низькорозмірних систем</li>
-                            <li>Технологічні основи електроніки</li>
-                            <li>Твердотільна електроніка</li>
-                            <li>Прикладна оптика</li>
-                            <li>Основи інформаційних систем</li>
-                            <li>Надійність виробів електроніки</li>
-                            <li>Моделювання в електроніці</li>
-                            <li>Мікропроцесорні пристрої керування та обробки інформації</li>
-                            <li>Мікро- та наносистеми з програмованими структурами</li>
-                            <li>Метрологія</li>
-                            <li>Методи діагностики та аналізу мікро- і наноструктур</li>
-                            <li>Матеріалознавство та конструкційні матеріали</li>
-                            <li>Компоненти мікро- та нанотехніки</li>
-                            <li>Електронні системи</li>
-                            <li>Автоматизовані системи проектування наноелектронних пристроїв</li>
-                            <li>Політологія</li>
-                            <li>Іноземна мова професійно-ділового спрямування</li>
-                            <li>Безпека життєдіяльності, основи охорони праці</li>
-                        </ul>
-
-                        <h2 class="text-xl font-semibold text-sky-300 mt-6 mb-2">Магістр</h2>
-                        <ul class="list-disc pl-6 space-y-1">
-                            <li>Інтегровані системи на основі геоінформаційних технологій</li>
-                            <li>Інтелектуальні прилади та системи штучного інтелекту</li>
-                            <li>Інформаційні технології в приладобудуванні</li>
-                            <li>Проєктування програмного забезпечення мікропроцесорних приладових систем</li>
-                            <li>Синтез систем з використанням LabView</li>
-                        </ul>
-                    </div>
-
-                    <div class="dots-animation mt-8">
-                        <span class="dot red"></span>
-                        <span class="dot blue"></span>
-                    </div>
-                </div>
+            <div class="modal-scroll-content">
+                <p class="p-6 text-slate-300">Інформація про умови вступу буде додана тут незабаром...</p>
             </div>
         </div>
     </div>
 </div>
-
-<div id="entrant-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="entrant-title" role="dialog" aria-modal="true">
-    <!-- ... Абітурієнту ... -->
-</div>
-
 <!-- === КІНЕЦЬ: Секції у Модальних Вікнах === -->
+
 
 <!-- Scroll to top button -->
 <button id="scrollToTopBtn" class="hidden fixed bottom-5 right-5 bg-sky-500/80 hover:bg-sky-500 text-white p-3 rounded-full shadow-lg transition-opacity duration-300 z-50">
@@ -613,7 +836,9 @@
 </button>
 
 <!-- Підключення скриптів -->
+<!-- 1. Наш НОВИЙ файл з даними про викладачів -->
 <script src="staff_data.js" defer></script>
+<!-- 2. Наш головний скрипт -->
 <script src="script.js" defer></script>
 
 </body>
