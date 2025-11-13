@@ -327,6 +327,7 @@ html.modal-open {
 /* === Випадаючі меню (Dropdowns) === */
 .dropdown-container {
     position: relative;
+     overflow: visible !important;  /* ДОДАТИ */
 }
 .dropdown-menu {
     display: none; /* Сховано */
