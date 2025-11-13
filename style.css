@@ -163,6 +163,8 @@ body {
   max-height: 90vh; /* Макс висота */
   display: flex;
   flex-direction: column;
+    #kafedra-modal .modal-content-inner {
+    overflow: visible !important;
 }
 
 /* Заголовок модалки (для виправлення неону) */
@@ -174,6 +176,7 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 1px solid #334155; /* border-slate-700 */
+    overflow: visible !important;
 }
 /* Спеціальний фікс для заголовка "Кафедра", бо він не по центру */
 #kafedra-modal .modal-header {
@@ -327,7 +330,6 @@ html.modal-open {
 /* === Випадаючі меню (Dropdowns) === */
 .dropdown-container {
     position: relative;
-     overflow: visible !important;  /* ДОДАТИ */
 }
 .dropdown-menu {
     display: none; /* Сховано */
