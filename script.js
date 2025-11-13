@@ -1,282 +1,502 @@
 /*
 ================================================================
-ОНОВЛЕНИЙ ГОЛОВНИЙ СКРИПТ САЙТУ (script.js)
+ГОЛОВНИЙ СКРИПТ САЙТУ (script.js)
+================================================================
+Тут знаходиться вся інтерактивна логіка:
+- Відкриття/закриття модальних вікон
+- Перемикання вкладок (tabs)
+- Мобільне меню
+- Слайдер новин
+- Логіка "Читати далі"
+- Логіка "Деталі про викладача"
+- Анімації (неон, скрол)
 ================================================================
 */
 
+// Чекаємо, поки вся HTML-сторінка завантажиться
 document.addEventListener('DOMContentLoaded', function() {
 
-  // === ГЛОБАЛЬНІ ===
-  const htmlEl = document.documentElement;
-  const overlay = document.getElementById('modal-overlay');
-  const modals = document.querySelectorAll('.modal-base');
-  const links = document.querySelectorAll('.nav-link-desktop, .nav-link-mobile, .dropdown-link');
-  let neonTimer = null;
+    // --- 0. ГЛОБАЛЬНІ ЗМІННІ ---
+    // Отримуємо доступ до <html>, щоб блокувати прокрутку
+    const htmlEl = document.documentElement; 
+    // Отримуємо доступ до ОДНОГО фону, який буде спільним для всіх вікон
+    const modalOverlay = document.getElementById('modal-overlay'); 
+    // Таймер для неонової підсвітки заголовків
+    let neonTimer = null; 
+    // Всі модальні вікна на сторінці
+    const allModals = document.querySelectorAll('.modal-base');
+    // Всі посилання в навігації (для комп'ютерів, мобільних та випадаючих меню)
+    const allNavLinks = document.querySelectorAll('.nav-link-desktop, .nav-link-mobile, .dropdown-link');
 
-  // === ДОПОМІЖНІ ===
-  const activateTab = (modal, tabId) => {
-    if (!modal) return;
-    modal.querySelectorAll('.modal-tab').forEach(b => b.classList.remove('active'));
-    modal.querySelectorAll('.modal-tab-pane').forEach(p => p.classList.remove('active'));
-    const btn = modal.querySelector(`.modal-tab[data-tab="${tabId}"]`);
-    const pane = modal.querySelector(`#${tabId}`);
-    if (btn) btn.classList.add('active');
-    if (pane) pane.classList.add('active');
-  };
 
-  const resetKafedraTabs = () => {
-    const m = document.getElementById('kafedra-modal');
-    if (m) activateTab(m, 'tab-history');
-  };
+    // --- 1. ЛОГІКА МОБІЛЬНОГО МЕНЮ ("БУРГЕР") ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOpenIcon = document.getElementById('menu-open-icon');
+    const menuCloseIcon = document.getElementById('menu-close-icon');
 
-  // === МОБІЛЬНЕ МЕНЮ ===
-  const btn = document.getElementById('mobile-menu-button');
-  const menu = document.getElementById('mobile-menu');
-  const iconOpen = document.getElementById('menu-open-icon');
-  const iconClose = document.getElementById('menu-close-icon');
-
-  if (btn) {
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-      iconOpen.classList.toggle('hidden');
-      iconClose.classList.toggle('hidden');
-    });
-  }
-
-  // === КНОПКА "НАГОРУ" ===
-  const up = document.getElementById('scrollToTopBtn');
-  if (up) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) up.classList.remove('hidden');
-      else up.classList.add('hidden');
-    });
-    up.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
-  }
-
-  // === REVEAL АНІМАЦІЯ ===
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting) e.target.classList.add('visible');
-    });
-  },{threshold:0.1});
-  reveals.forEach(el=>observer.observe(el));
-
-  // === ПОКАЗАТИ ВСІХ ===
-  const btnShow = document.getElementById('toggle-staff-btn');
-  const hiddenStaff = document.getElementById('hidden-staff');
-  if (btnShow && hiddenStaff) {
-    btnShow.addEventListener('click',()=>{
-      const isHidden = hiddenStaff.classList.toggle('hidden');
-      document.getElementById('toggle-staff-text').textContent = isHidden ? 'Показати всіх' : 'Згорнути';
-      document.getElementById('toggle-staff-icon').classList.toggle('rotate-180');
-    });
-  }
-
-  // === МОДАЛЬНІ ВІКНА ===
-  function openModal(id){
-    const modal = document.getElementById(id);
-    if(!modal || !overlay) return;
-    overlay.classList.remove('hidden');
-    modal.classList.remove('hidden');
-    setTimeout(()=>{
-      overlay.style.opacity='1';
-      modal.classList.add('modal-visible');
-    },10);
-    htmlEl.classList.add('modal-open');
-    if(id==='kafedra-modal') resetKafedraTabs();
-  }
-
-  function closeModal(modal){
-    if(!modal) return;
-    modal.classList.remove('modal-visible');
-    setTimeout(()=>{
-      modal.classList.add('hidden');
-      const anyVisible=document.querySelector('.modal-base.modal-visible');
-      if(!anyVisible && overlay){
-        overlay.style.opacity='0';
-        htmlEl.classList.remove('modal-open');
-        setTimeout(()=>overlay.classList.add('hidden'),300);
-      }
-    },300);
-  }
-
-  document.querySelectorAll('.modal-close-btn').forEach(b=>{
-    b.addEventListener('click',e=>closeModal(e.target.closest('.modal-base')));
-  });
-  if(overlay){
-    overlay.addEventListener('click',()=>{
-      document.querySelectorAll('.modal-base.modal-visible').forEach(m=>closeModal(m));
-    });
-  }
-  document.addEventListener('keydown',e=>{
-    if(e.key==='Escape')
-      document.querySelectorAll('.modal-base.modal-visible').forEach(m=>closeModal(m));
-  });
-
-  // === НАВІГАЦІЯ ===
-  links.forEach(a=>{
-    a.addEventListener('click',function(e){
-      const mid=this.dataset.modalId;
-      const tid=this.dataset.targetId;
-      const tab=this.dataset.tabTarget;
-      if(mid){
-        e.preventDefault();
-        e.stopPropagation();
-        document.querySelectorAll('.modal-base.modal-visible').forEach(m=>{
-          if(m.id!==mid) closeModal(m);
+    if(mobileMenuButton) {
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuOpenIcon.classList.toggle('hidden');
+            menuCloseIcon.classList.toggle('hidden');
         });
-        openModal(mid);
-        if(tab){
-          const m=document.getElementById(mid);
-          if(m) activateTab(m,tab);
-        }
-      }
-      if(tid){
-        const target=document.getElementById(tid);
-        const title=target?target.querySelector('.section-title'):null;
-        if(title){
-          if(neonTimer) clearTimeout(neonTimer);
-          document.querySelectorAll('.section-title-active').forEach(el=>el.classList.remove('section-title-active'));
-          title.classList.add('section-title-active');
-          neonTimer=setTimeout(()=>title.classList.remove('section-title-active'),1500);
-        }
-      }
-      if(menu && !menu.classList.contains('hidden')){
-        menu.classList.add('hidden');
-        iconOpen.classList.remove('hidden');
-        iconClose.classList.add('hidden');
-      }
-    });
-  });
-
-  // === СЛАЙДЕР НОВИН ===
-  const sc=document.getElementById('news-slider-container');
-  const dc=document.getElementById('news-dots-container');
-  if(sc && dc){
-    const slides=sc.querySelectorAll('.news-slide');
-    const per=window.innerWidth<640?1:2;
-    const total=Math.ceil(slides.length/per);
-    const dots=[];
-    for(let i=0;i<total;i++){
-      const d=document.createElement('button');
-      d.className='news-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500';
-      d.addEventListener('click',e=>{
-        e.preventDefault();
-        e.stopPropagation();
-        const s=slides[i*per];
-        if(s) s.scrollIntoView({behavior:'smooth',inline:'start'});
-      });
-      dc.appendChild(d);
-      dots.push(d);
     }
-    const upd=()=>{
-      const idx=Math.round(sc.scrollLeft/sc.clientWidth);
-      dots.forEach((dot,i)=>dot.classList.toggle('active',i===idx));
-    };
-    if(dots.length>0) dots[0].classList.add('active');
-    sc.addEventListener('scroll',upd,{passive:true});
-  }
 
-  // === ЧИТАТИ ДАЛІ (мале вікно) ===
-  const smallModal=document.getElementById('small-news-modal');
-  const btns=document.querySelectorAll('.open-small-modal-btn');
-  if(smallModal && btns.length){
-    const date=smallModal.querySelector('#small-news-date');
-    const title=smallModal.querySelector('#small-news-title');
-    const text=smallModal.querySelector('#small-news-modal-text');
-    btns.forEach(b=>{
-      b.addEventListener('click',e=>{
-        e.preventDefault();
-        date.textContent=b.dataset.date;
-        title.textContent=b.dataset.title;
-        text.textContent=b.dataset.text.replace(/\\n/g,'\n');
-        openModal('small-news-modal');
-      });
-    });
-  }
+    // --- 2. КНОПКА "НАГОРУ" ---
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    if (scrollToTopBtn) {
+        // Показати/приховати кнопку
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.classList.remove('hidden');
+            } else {
+                scrollToTopBtn.classList.add('hidden');
+            }
+        };
+        // Прокрутити нагору при кліку
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 
-  // === ВКЛАДКИ КАФЕДРИ ===
-  const kaf=document.getElementById('kafedra-modal');
-  if(kaf){
-    kaf.querySelectorAll('.modal-tab').forEach(t=>{
-      t.addEventListener('click',()=>{
-        activateTab(kaf,t.dataset.tab);
-      });
-    });
-  }
-
-  // === МОБІЛЬНІ ПІДМЕНЮ ===
-  document.querySelectorAll('.mobile-dropdown-toggle').forEach(t=>{
-    t.addEventListener('click',e=>{
-      e.preventDefault();
-      const id=t.dataset.dropdownId;
-      const m=document.getElementById(id);
-      if(m){
-        m.classList.toggle('open');
-        t.querySelector('svg').classList.toggle('rotate-180');
-      }
-    });
-  });
-
-  // === ДЕТАЛІ ВИКЛАДАЧІВ ===
-  const detailModal=document.getElementById('staff-detail-modal');
-  if(detailModal){
-    const name=detailModal.querySelector('#staff-detail-name');
-    const title=detailModal.querySelector('#staff-detail-title');
-    const img=detailModal.querySelector('#staff-detail-img');
-    const det=detailModal.querySelector('#staff-detail-details');
-    const linksEl=detailModal.querySelector('#staff-detail-links');
-    const disc=detailModal.querySelector('#staff-detail-disciplines');
-    const bio=detailModal.querySelector('#staff-detail-bio');
-
-    document.querySelectorAll('.staff-card').forEach(card=>{
-      card.addEventListener('click',()=>{
-        const id=card.dataset.staffId;
-        if(window.staffDetailsData && staffDetailsData[id]){
-          const d=staffDetailsData[id];
-          name.textContent=d.name;
-          title.textContent=d.title;
-          img.src=card.querySelector('img').src;
-          det.innerHTML=d.details||'';
-          bio.innerHTML=d.bio||'';
-          disc.innerHTML='';
-          if(d.disciplines?.length)
-            d.disciplines.forEach(x=>{
-              const li=document.createElement('li');
-              li.textContent=x;
-              disc.appendChild(li);
+    // --- 3. АНІМАЦІЯ ПОЯВИ ЕЛЕМЕНТІВ ПРИ СКРОЛІ ---
+    const revealElements = document.querySelectorAll('.reveal');
+    if (revealElements.length > 0) {
+        // Створюємо "спостерігача", який стежить за появою елементів
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Коли елемент з'являється на екрані
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-          linksEl.innerHTML='';
-          if(d.links?.length)
-            d.links.forEach(l=>{
-              const a=document.createElement('a');
-              a.href=l.url; a.target='_blank';
-              a.textContent=l.name;
-              a.className='text-sky-400 hover:text-sky-300 block truncate';
-              linksEl.appendChild(a);
-            });
-        }else{
-          name.textContent=card.querySelector('h3').textContent;
-          title.textContent=card.querySelector('p').textContent;
-          img.src=card.querySelector('img').src;
-          det.innerHTML='<p>Деталі буде додано.</p>';
-          bio.innerHTML='<p>Біографія буде додана.</p>';
-          disc.innerHTML='<li>Інформація відсутня.</li>';
-          linksEl.innerHTML='<p class="text-sm text-slate-400">Посилання відсутні.</p>';
+        }, {
+            threshold: 0.1 // Спрацювати, коли видно 10% елемента
+        });
+        // "Спостерігати" за кожним елементом
+        revealElements.forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    // --- 4. КНОПКА "ПОКАЗАТИ ВСІХ" (у вкладці Персонал) ---
+    const toggleStaffBtn = document.getElementById('toggle-staff-btn');
+    const hiddenStaff = document.getElementById('hidden-staff');
+    const toggleStaffText = document.getElementById('toggle-staff-text');
+    const toggleStaffIcon = document.getElementById('toggle-staff-icon');
+
+    if (toggleStaffBtn) {
+        toggleStaffBtn.addEventListener('click', () => {
+            const isHidden = hiddenStaff.classList.toggle('hidden');
+            toggleStaffIcon.classList.toggle('rotate-180');
+            if (isHidden) {
+                toggleStaffText.textContent = 'Показати всіх';
+            } else {
+                toggleStaffText.textContent = 'Згорнути';
+            }
+        });
+    }
+    
+    // --- 5. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН ---
+    
+    // 5.1. Функція ВІДКРИТТЯ модального вікна
+    function openModal(modalId) {
+        const targetModal = document.getElementById(modalId);
+        if (targetModal) {
+            // 1. Показати темний фон
+            modalOverlay.classList.remove('hidden');
+            // 2. Показати вікно (воно ще прозоре)
+            targetModal.classList.remove('hidden');
+            
+            // 3. Зробити фон і вікно видимими (це запускає CSS анімацію)
+            setTimeout(() => {
+                modalOverlay.style.opacity = '1';
+                targetModal.classList.add('modal-visible');
+            }, 10); // Маленька затримка для плавності
+            
+            // 4. Заблокувати прокрутку сторінки позаду
+            htmlEl.classList.add('modal-open');
+
+            // 5. Якщо це вікно "Кафедра", скинути його на вкладку "Історія"
+            if (modalId === 'kafedra-modal') {
+                resetKafedraTabs();
+            }
         }
-        openModal('staff-detail-modal');
-      });
-    });
-  }
+    }
 
-  // === СПЕЦІАЛЬНА ЛОГІКА ДЛЯ "НАВЧАЛЬНІ ДИСЦИПЛІНИ" ===
-  const disciplineTriggers=document.querySelectorAll('[data-modal-id="discipline-modal"]');
-  disciplineTriggers.forEach(btn=>{
-    btn.addEventListener('click',e=>{
-      e.preventDefault();
-      e.stopPropagation();
-      openModal('discipline-modal');
+    // 5.2. Функція ЗАКРИТТЯ модального вікна
+    function closeModal(modal) {
+        if (!modal) return;
+        
+        // 1. Зробити вікно прозорим
+        modal.classList.remove('modal-visible');
+        
+        // 2. Зачекати 300ms (час анімації), перш ніж приховати його
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            
+            // 3. Перевірити, чи залишились ще *інші* відкриті вікна
+            const anyModalStillVisible = document.querySelector('.modal-base.modal-visible');
+            
+            // 4. Якщо це було ОСТАННЄ вікно - приховати фон і розблокувати скрол
+            if (!anyModalStillVisible) {
+                modalOverlay.style.opacity = '0';
+                htmlEl.classList.remove('modal-open');
+                setTimeout(() => {
+                    modalOverlay.classList.add('hidden');
+                }, 300); // Чекаємо анімацію фону
+            }
+            
+        }, 300); 
+    }
+
+    // 5.3. Налаштування кнопок закриття (хрестики)
+    document.querySelectorAll('.modal-close-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            // Знайти найближче вікно і закрити його
+            const modalToClose = e.target.closest('.modal-base');
+            closeModal(modalToClose);
+        });
     });
-  });
+
+    // 5.4. Закриття по кліку на темний фон
+    modalOverlay.addEventListener('click', () => {
+        // Закрити всі відкриті вікна
+        document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
+             closeModal(modal);
+        });
+    });
+
+    // 5.5. Закриття по клавіші "Escape"
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") {
+            // Шукаємо найвище вікно (деталі про викладача)
+            const topModal = document.querySelector('#staff-detail-modal.modal-visible');
+            if (topModal) {
+                closeModal(topModal); // Закриваємо тільки його
+            } else {
+                // Інакше закриваємо всі інші
+                document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
+                     closeModal(modal);
+                });
+            }
+        }
+    });
+
+    // --- 6. ЛОГІКА НАВІГАЦІЇ (Меню та Неон) ---
+    allNavLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            
+            const modalId = this.dataset.modalId; // Яке вікно відкрити?
+            const targetId = this.dataset.targetId; // Який заголовок підсвітити?
+            const tabTarget = this.dataset.tabTarget; // Яку вкладку активувати?
+            
+            // A. Якщо це посилання ВІДКРИВАЄ МОДАЛЬНЕ ВІКНО
+            if (modalId) {
+                e.preventDefault(); // Не переходити по посиланню
+                e.stopPropagation(); // Не дати кліку "провалитися" на фон
+                
+                // Закрити всі інші вікна (якщо вони є)
+                document.querySelectorAll('.modal-base.modal-visible').forEach(m => {
+                    if (m.id !== modalId) {
+                        closeModal(m);
+                    }
+                });
+
+                // Відкрити наше вікно
+                openModal(modalId);
+                
+                // Активувати потрібну вкладку (якщо ми натиснули "Освітні програми")
+                if (tabTarget) {
+                    const targetModal = document.getElementById(modalId);
+                    if (targetModal) {
+                        activateTab(targetModal, tabTarget);
+                    }
+                }
+            }
+            // B. Якщо це звичайне посилання-ЯКІР (наприклад, "Спеціальності")
+            else {
+                // Просто закрити всі вікна
+                document.querySelectorAll('.modal-base.modal-visible').forEach(m => closeModal(m));
+            }
+            
+            // C. Логіка НЕОНОВОЇ ПІДСВІТКИ заголовка
+            if (targetId) {
+                let targetTitle;
+                
+                // Якщо це модалка, шукаємо заголовок всередині неї
+                if(modalId) {
+                    const targetModal = document.getElementById(modalId);
+                    if(targetModal) {
+                         targetTitle = targetModal.querySelector('.section-title');
+                    }
+                } 
+                // Якщо це якір, шукаємо на сторінці
+                else {
+                    const targetSection = document.getElementById(targetId);
+                    if(targetSection) {
+                         targetTitle = targetSection.querySelector('.section-title');
+                    } else if (targetId === 'hero-section') {
+                         targetTitle = document.getElementById('hero-section').querySelector('.section-title');
+                    }
+                }
+
+                // Запускаємо неон
+                if (targetTitle) {
+                    if (neonTimer) clearTimeout(neonTimer); // Скинути старий таймер
+                    
+                    // Зняти підсвітку з інших
+                    document.querySelectorAll('.section-title-active').forEach(el => {
+                        el.classList.remove('section-title-active');
+                    });
+                    
+                    // Увімкнути
+                    targetTitle.classList.add('section-title-active');
+                    
+                    // Вимкнути через 1.5 секунди
+                    neonTimer = setTimeout(() => {
+                        targetTitle.classList.remove('section-title-active');
+                    }, 1500); 
+                }
+            }
+
+            // D. Закрити мобільне меню після кліку
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                menuOpenIcon.classList.remove('hidden');
+                menuCloseIcon.classList.add('hidden');
+            }
+        });
+    });
+
+    // --- 7. ЛОГІКА СЛАЙДЕРА НОВИН ---
+    const sliderContainer = document.getElementById('news-slider-container');
+    const dotsContainer = document.getElementById('news-dots-container');
+    
+    if (sliderContainer && dotsContainer) {
+        const slides = sliderContainer.querySelectorAll('.news-slide');
+        const dots = [];
+        // Визначаємо, скільки слайдів видно (1 на моб, 2 на ПК)
+        const slidesPerView = window.innerWidth < 640 ? 1 : 2; 
+        const totalDots = Math.ceil(slides.length / slidesPerView);
+
+        // Створюємо "горошинки"
+        for (let i = 0; i < totalDots; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'news-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500';
+            dot.setAttribute('aria-label', `Перейти до новини ${i + 1}`);
+            dot.addEventListener('click', () => {
+                // Прокрутити до потрібного набору слайдів
+                const slideToScroll = slides[i * slidesPerView];
+                if (slideToScroll) {
+                    slideToScroll.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                }
+            });
+            dotsContainer.appendChild(dot);
+            dots.push(dot);
+        }
+
+        // Функція, що оновлює активну "горошинку"
+        const updateDots = () => {
+            const scrollLeft = sliderContainer.scrollLeft;
+            const containerWidth = sliderContainer.clientWidth;
+            let activeDotIndex = Math.round(scrollLeft / containerWidth);
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeDotIndex);
+            });
+        };
+
+        if (dots.length > 0) dots[0].classList.add('active'); // Перша активна
+        sliderContainer.addEventListener('scroll', updateDots, { passive: true });
+    }
+
+    // --- 8. ЛОГІКА "ЧИТАТИ ДАЛІ" (Маленьке вікно новин) ---
+    const openSmallModalButtons = document.querySelectorAll('.open-small-modal-btn');
+    const smallModal = document.getElementById('small-news-modal');
+    
+    if (smallModal && openSmallModalButtons.length > 0) {
+        // Знаходимо елементи маленького вікна
+        const modalDate = document.getElementById('small-news-date');
+        const modalTitle = document.getElementById('small-news-title');
+        const modalText = document.getElementById('small-news-modal-text');
+
+        openSmallModalButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation(); // Не закривати велике вікно
+
+                // Заповнюємо даними з кнопки
+                modalDate.textContent = this.dataset.date;
+                modalTitle.textContent = this.dataset.title;
+                modalText.textContent = this.dataset.text.replace(/\\n/g, '\n'); 
+
+                openModal('small-news-modal'); // Використовуємо нашу функцію
+            });
+        });
+    }
+    
+    // --- 9. ЛОГІКА ВКЛАДОК (Tabs) у модалці "Кафедра" (ВИПРАВЛЕНО) ---
+    const kafedraModal = document.getElementById('kafedra-modal');
+    if (kafedraModal) {
+        const tabButtons = kafedraModal.querySelectorAll('.modal-tab');
+        const tabContents = kafedraModal.querySelectorAll('.modal-tab-pane');
+
+        // Функція для активації вкладки
+        function activateTab(modal, tabId) {
+            const tabButtons = modal.querySelectorAll('.modal-tab');
+            const tabContents = modal.querySelectorAll('.modal-tab-pane');
+            
+            const targetContent = document.getElementById(tabId);
+            const targetButton = modal.querySelector(`.modal-tab[data-tab="${tabId}"]`);
+            
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            if (targetButton) targetButton.classList.add('active');
+            if (targetContent) targetContent.classList.add('active');
+        }
+
+        // Функція для скидання вкладок до "Історії"
+        function resetKafedraTabs() {
+            activateTab(kafedraModal, 'tab-history');
+        }
+
+        // Навішуємо слухачі на кнопки вкладок
+        tabButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation(); // !! ВИПРАВЛЕННЯ: Зупинити "провалювання" кліку
+                
+                const targetTabId = button.dataset.tab; // Яку вкладку відкрити
+                const modalIdToOpen = button.dataset.modalId; // Чи треба відкрити інше вікно?
+
+                if (modalIdToOpen) {
+                    // Це кнопка "Персонал"
+                    openModal(modalIdToOpen);
+                    // Підсвічуємо заголовок
+                    const staffTitle = document.getElementById('staff-title');
+                    if (staffTitle) {
+                         if (neonTimer) clearTimeout(neonTimer);
+                         staffTitle.classList.add('section-title-active');
+                         neonTimer = setTimeout(() => {
+                            staffTitle.classList.remove('section-title-active');
+                         }, 1500);
+                    }
+                } else if (targetTabId) {
+                    // Це звичайна вкладка ("Історія", "Освітні програми"...)
+                    activateTab(kafedraModal, targetTabId);
+                }
+            });
+        });
+    }
+
+    // --- 10. ЛОГІКА ВИПАДАЮЧИХ МЕНЮ (для мобільних) ---
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+    mobileDropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // !! ВИПРАВЛЕННЯ: Зупинити "провалювання" кліку
+            const menuId = toggle.dataset.dropdownId;
+            const menu = document.getElementById(menuId);
+            if (menu) {
+                menu.classList.toggle('open');
+                toggle.querySelector('svg').classList.toggle('rotate-180');
+            }
+        });
+    });
+
+    // --- 11. ЛОГІКА "ДЕТАЛІ ПРО ВИКЛАДАЧА" (з staff_data.js) ---
+    const staffDetailModal = document.getElementById('staff-detail-modal');
+    if (staffDetailModal) {
+        // Знаходимо елементи у вікні деталей
+        const detailName = document.getElementById('staff-detail-name');
+        const detailTitle = document.getElementById('staff-detail-title');
+        const detailImg = document.getElementById('staff-detail-img');
+        const detailDetails = document.getElementById('staff-detail-details');
+        const detailLinks = document.getElementById('staff-detail-links');
+        const detailDisciplines = document.getElementById('staff-detail-disciplines');
+        const detailBio = document.getElementById('staff-detail-bio');
+
+        // "Слухаємо" кліки на всі картки викладачів
+        document.querySelectorAll('.staff-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.stopPropagation(); // Не закривати вікно "Кафедра"
+                const staffId = card.dataset.staffId;
+                
+                // Перевіряємо, чи є файл staff_data.js і чи є в ньому цей викладач
+                if (typeof staffDetailsData !== 'undefined' && staffDetailsData[staffId]) {
+                    const data = staffDetailsData[staffId];
+
+                    // 1. Заповнюємо базові дані
+                    detailName.textContent = data.name;
+                    detailTitle.textContent = data.title;
+                    detailImg.src = card.querySelector('img').src; 
+                    detailImg.alt = `Фото ${data.name}`;
+                    
+                    // 2. Заповнюємо деталі (Посада, ступінь, звання)
+                    detailDetails.innerHTML = data.details || '';
+                    
+                    // 3. Заповнюємо біографію
+                    detailBio.innerHTML = data.bio || '<p>Біографічна довідка буде додана згодом.</p>';
+                    
+                    // 4. Заповнюємо дисципліни
+                    detailDisciplines.innerHTML = ''; // Очищуємо
+                    if (data.disciplines && data.disciplines.length > 0) {
+                        const ul = document.createElement('ul');
+                        ul.className = 'list-disc pl-5 space-y-1';
+                        data.disciplines.forEach(disc => {
+                            const li = document.createElement('li');
+                            li.textContent = disc;
+                            ul.appendChild(li);
+                        });
+                        detailDisciplines.appendChild(ul);
+                    } else {
+                        detailDisciplines.innerHTML = '<li>Інформація про дисципліни відсутня.</li>';
+                    }
+                    
+                    // 5. Заповнюємо посилання
+                    detailLinks.innerHTML = ''; // Очищуємо
+                    if (data.links && data.links.length > 0) {
+                         const ul = document.createElement('ul');
+                         ul.className = 'list-none pl-0 space-y-1 link-list'; 
+                         data.links.forEach(link => {
+                            const li = document.createElement('li');
+                            const a = document.createElement('a');
+                            a.href = link.url;
+                            a.target = '_blank';
+                            a.rel = 'noopener noreferrer';
+                            a.className = 'text-sky-400 hover:text-sky-300 block truncate';
+                            a.textContent = link.name;
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                        });
+                        detailLinks.appendChild(ul);
+                    } else {
+                        const p = document.createElement('p');
+                        p.className = 'text-sm text-slate-400';
+                        p.textContent = 'Посилання відсутні.';
+                        detailLinks.appendChild(p);
+                    }
+
+                    // Відкриваємо вікно деталей
+                    openModal('staff-detail-modal');
+                    
+                } else {
+                    // Заглушка, якщо дані не знайдені
+                    console.warn(`Дані для викладача з ID: ${staffId} не знайдені у staff_data.js`);
+                    detailName.textContent = card.querySelector('h3').textContent || "Інформація відсутня";
+                    detailTitle.textContent = card.querySelector('p').textContent || "";
+                    detailImg.src = card.querySelector('img').src;
+                    detailDetails.innerHTML = "<p>Детальна інформація про цього викладача буде додана незабаром.</p>";
+                    detailLinks.innerHTML = '<p class="text-sm text-slate-400">Посилання відсутні.</p>';
+                    detailDisciplines.innerHTML = '<li>Інформація про дисципліни відсутня.</li>';
+                    detailBio.innerHTML = '<p>Біографічна довідка буде додана згодом.</p>';
+                    
+                    openModal('staff-detail-modal');
+                }
+            });
+        });
+    }
+
 });
