@@ -411,3 +411,29 @@ html.modal-open {
     height: 100%;
     border: none;
 }
+
+
+#mobile-menu {
+    position: fixed;
+    top: 96px; /* 6rem or h-24 (висота нашої шапки) */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    /* Ефект розмиття (БЛЮР) */
+    background-color: rgba(15, 23, 42, 0.9); /* Трохи темніше */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    overflow-y: auto; /* Дозволяє прокручувати меню, якщо воно довге */
+    
+    /* Анімація появи */
+    transition: opacity 0.3s ease-out;
+    opacity: 0; /* Початково прозоре */
+}
+
+/* Коли скрипт додає клас 'open' */
+#mobile-menu.open {
+    opacity: 1; /* Стає видимим */
+}
+/* === КІНЕЦЬ НОВИХ СТИЛІВ === */
