@@ -449,4 +449,9 @@ body {
     z-index: 50;
     transition: opacity 0.3s ease-in-out;
 }
+.mobile-menu::after {
+    content: "";
+    display: block;
+    height: 250px; /* збільши якщо треба більше */
+}
 
