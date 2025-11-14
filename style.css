@@ -436,3 +436,17 @@ body {
 }
 
 
+
+
+
+/* Глобальний блюр фону при відкритті модалки */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45); /* затемнення */
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    z-index: 50;
+    transition: opacity 0.3s ease-in-out;
+}
+
