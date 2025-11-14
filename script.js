@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // --- 1. ЛОГІКА МОБІЛЬНОГО МЕНЮ ("БУРГЕР") ---
+    // Цей код відповідає за кнопку-хрестик (відкрити/закрити)
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const menuOpenIcon = document.getElementById('menu-open-icon');
@@ -119,9 +120,10 @@ document.addEventListener('DOMContentLoaded', function() {
             htmlEl.classList.add('modal-open');
 
             // 5. Якщо це вікно "Кафедра", скинути його на вкладку "Історія"
-            if (modalId === 'kafedra-modal') {
-                resetKafedraTabs();
-            }
+            // (Виправлено, щоб не конфліктувати з вибором вкладки)
+            // if (modalId === 'kafedra-modal') {
+            //     resetKafedraTabs();
+            // }
         }
     }
 
@@ -207,10 +209,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Відкрити наше вікно
                 openModal(modalId);
                 
+                // **ВИПРАВЛЕННЯ ТУТ:**
                 // Активувати потрібну вкладку (якщо ми натиснули "Освітні програми")
                 if (tabTarget) {
                     const targetModal = document.getElementById(modalId);
                     if (targetModal) {
+                        // Ми активуємо вкладку ПІСЛЯ того, як вікно відкрилося
                         activateTab(targetModal, tabTarget);
                     }
                 }
@@ -262,11 +266,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // D. Закрити мобільне меню після кліку
+            // !!! ВИПРАВЛЕННЯ: Я видалив цей блок коду на ваше прохання !!!
+            // Тепер меню буде закриватися ТІЛЬКИ по "хрестику"
+            /*
             if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
                 mobileMenu.classList.add('hidden');
                 menuOpenIcon.classList.remove('hidden');
                 menuCloseIcon.classList.add('hidden');
             }
+            */
         });
     });
 
@@ -338,53 +346,46 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // --- 9. ЛОГІКА ВКЛАДОК (Tabs) у модалці "Кафедра" (ВИПРАВЛЕНО) ---
+    
+    // 9.1. Функція для активації вкладки
+    function activateTab(modal, tabId) {
+        if (!modal) return;
+        
+        const tabButtons = modal.querySelectorAll('.modal-tab');
+        const tabContents = modal.querySelectorAll('.modal-tab-pane');
+        const targetContent = document.getElementById(tabId);
+        const targetButton = modal.querySelector(`.modal-tab[data-tab="${tabId}"]`);
+        
+        // Деактивувати всі
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Активувати потрібні
+        if (targetButton) targetButton.classList.add('active');
+        if (targetContent) targetContent.classList.add('active');
+    }
+
+    // 9.2. Функція для скидання вкладок до "Історії"
+    function resetKafedraTabs() {
+        const kafedraModal = document.getElementById('kafedra-modal');
+        if (kafedraModal) {
+            activateTab(kafedraModal, 'tab-history');
+        }
+    }
+
+    // 9.3. Навішуємо слухачі на кнопки вкладок
     const kafedraModal = document.getElementById('kafedra-modal');
     if (kafedraModal) {
         const tabButtons = kafedraModal.querySelectorAll('.modal-tab');
-        const tabContents = kafedraModal.querySelectorAll('.modal-tab-pane');
-
-        // Функція для активації вкладки
-        function activateTab(modal, tabId) {
-            const tabButtons = modal.querySelectorAll('.modal-tab');
-            const tabContents = modal.querySelectorAll('.modal-tab-pane');
-            
-            const targetContent = document.getElementById(tabId);
-            const targetButton = modal.querySelector(`.modal-tab[data-tab="${tabId}"]`);
-            
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-            
-            if (targetButton) targetButton.classList.add('active');
-            if (targetContent) targetContent.classList.add('active');
-        }
-
-        // Функція для скидання вкладок до "Історії"
-        function resetKafedraTabs() {
-            activateTab(kafedraModal, 'tab-history');
-        }
-
-        // Навішуємо слухачі на кнопки вкладок
+        
         tabButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 e.stopPropagation(); // !! ВИПРАВЛЕННЯ: Зупинити "провалювання" кліку
                 
                 const targetTabId = button.dataset.tab; // Яку вкладку відкрити
-                const modalIdToOpen = button.dataset.modalId; // Чи треба відкрити інше вікно?
 
-                if (modalIdToOpen) {
-                    // Це кнопка "Персонал"
-                    openModal(modalIdToOpen);
-                    // Підсвічуємо заголовок
-                    const staffTitle = document.getElementById('staff-title');
-                    if (staffTitle) {
-                         if (neonTimer) clearTimeout(neonTimer);
-                         staffTitle.classList.add('section-title-active');
-                         neonTimer = setTimeout(() => {
-                            staffTitle.classList.remove('section-title-active');
-                         }, 1500);
-                    }
-                } else if (targetTabId) {
-                    // Це звичайна вкладка ("Історія", "Освітні програми"...)
+                // Звичайна логіка перемикання вкладок
+                if (targetTabId) {
                     activateTab(kafedraModal, targetTabId);
                 }
             });
@@ -407,6 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- 11. ЛОГІКА "ДЕТАЛІ ПРО ВИКЛАДАЧА" (з staff_data.js) ---
+    // (Переконайтеся, що файл staff_data.js підключено у index.html ПЕРЕД цим скриптом)
     const staffDetailModal = document.getElementById('staff-detail-modal');
     if (staffDetailModal) {
         // Знаходимо елементи у вікні деталей
