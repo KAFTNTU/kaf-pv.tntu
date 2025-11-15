@@ -111,19 +111,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetModal = document.getElementById(modalId);
         if (targetModal) {
             
-            // ОНОВЛЕНО: Логіка блюру (v2 - перевірка по ID)
+            // ОНОВЛЕНО: Логіка блюру (v3 - ТІЛЬКИ z-index)
             // Це вікно, що має бути "поверх" (z-60)?
             const isTopModal = (modalId === 'staff-detail-modal' || modalId === 'small-news-modal');
             
             if (isTopModal) {
-                // 1. Заблюрити всі модалки, що ВЖЕ відкриті
-                document.querySelectorAll('.modal-base.modal-visible').forEach(m => {
-                    // Переконатися, що не блюримо самі себе (хоча це і неможливо, бо .modal-visible ще не додано)
-                    if(m.id !== modalId) { 
-                        m.classList.add('modal-blurred');
-                    }
-                });
-                // 2. Підняти оверлей (фон)
+                // 1. Підняти оверлей (фон), щоб він опинився МІЖ двома модалками
                 modalOverlay.classList.add('modal-overlay-top'); // z-55
             } else {
                 // Це звичайна модалка (z-50), переконатися, що оверлей на z-40
@@ -155,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeModal(modal) {
         if (!modal) return;
         
-        // ОНОВЛЕНО: Перевіряємо, чи ми закриваємо вікно "поверх" (v2 - перевірка по ID)
+        // ОНОВЛЕНО: Перевіряємо, чи ми закриваємо вікно "поверх"
         const isTopModal = (modal.id === 'staff-detail-modal' || modal.id === 'small-news-modal');
 
         // 1. Зробити вікно прозорим
@@ -184,10 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
             else if (isTopModal && anyModalStillVisible) {
                  // 1. Повернути фон на стандартний z-index (z-40)
                  modalOverlay.classList.remove('modal-overlay-top');
-                 // 2. Зняти блюр з усіх модалок
-                 document.querySelectorAll('.modal-blurred').forEach(m => {
-                     m.classList.remove('modal-blurred');
-                 });
             }
             
         }, 300); 
