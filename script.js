@@ -303,16 +303,24 @@ document.addEventListener('DOMContentLoaded', function() {
             // D. Закрити мобільне меню після кліку
             // ОНОВЛЕНО: Перевіряємо клас .open
             if (mobileMenu && mobileMenu.classList.contains('open')) {
-                mobileMenu.classList.remove('open'); // <--- Змінено
-                menuOpenIcon.classList.remove('hidden');
-                menuCloseIcon.classList.add('hidden');
                 
-                // ОНОВЛЕНО: Розблокувати скрол
-                // (Якщо це було посилання-якір, скрол і так розблокується, 
-                // але якщо це посилання відкрило модалку, скрол залишиться заблокованим (це вірно))
-                if (!modalId) {
-                     htmlEl.classList.remove('modal-open');
+                // !!! НОВЕ ВИПРАВЛЕННЯ: !!!
+                // Перевіряємо, чи є у натиснутого елемента клас 'mobile-dropdown-toggle'
+                const isDropdownToggle = this.classList.contains('mobile-dropdown-toggle');
+
+                // Закриваємо меню, ТІЛЬКИ ЯКЩО це НЕ кнопка випадаючого меню
+                if (!isDropdownToggle) { 
+                    mobileMenu.classList.remove('open'); 
+                    menuOpenIcon.classList.remove('hidden');
+                    menuCloseIcon.classList.add('hidden');
+                    
+                    // ОНОВЛЕНО: Розблокувати скрол
+                    if (!modalId) {
+                         htmlEl.classList.remove('modal-open');
+                    }
                 }
+                // Якщо це isDropdownToggle, то нічого не робимо,
+                // і логіка з (Section 10) сама відкриє/закриє підменю.
             }
         });
     });
