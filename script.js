@@ -1,6 +1,6 @@
 /*
 ================================================================
-ГОЛОВНИЙ СКРИПТ САЙТУ (script.js)
+ГОЛОВНИЙ СКРИПТ САЙТУ
 ================================================================
 Тут знаходиться вся інтерактивна логіка:
 - Відкриття/закриття модальних вікон
@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // --- 1. ЛОГІКА МОБІЛЬНОГО МЕНЮ ("БУРГЕР") ---
-    // Цей код відповідає за кнопку-хрестик (відкрити/закрити)
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const menuOpenIcon = document.getElementById('menu-open-icon');
@@ -38,7 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if(mobileMenuButton) {
         mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            // ОНОВЛЕНО: Перемикаємо клас .open замість .hidden для анімації блюру
+            const isOpen = mobileMenu.classList.toggle('open');
+            
+            // ОНОВЛЕНО: Блокуємо/розблокуємо скрол сторінки
+            htmlEl.classList.toggle('modal-open', isOpen);
+            
+            // Перемикаємо іконки
             menuOpenIcon.classList.toggle('hidden');
             menuCloseIcon.classList.toggle('hidden');
         });
@@ -105,6 +110,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function openModal(modalId) {
         const targetModal = document.getElementById(modalId);
         if (targetModal) {
+            
+            // ОНОВЛЕНО: Логіка z-index для блюру
+            // Якщо вікно має z-index 60 (тобто, .z-[60] з Tailwind)
+            if (targetModal.classList.contains('z-[60]')) {
+                // Перемістити фон НАД іншими модалками (z-50), але ПІД цим (z-60)
+                modalOverlay.classList.add('modal-overlay-top'); // Додаємо z-55
+            } else {
+                // Стандартна поведінка для z-50
+                modalOverlay.classList.remove('modal-overlay-top'); // Прибираємо z-55
+            }
+
             // 1. Показати темний фон
             modalOverlay.classList.remove('hidden');
             // 2. Показати вікно (воно ще прозоре)
@@ -120,10 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
             htmlEl.classList.add('modal-open');
 
             // 5. Якщо це вікно "Кафедра", скинути його на вкладку "Історія"
-            // (Виправлено, щоб не конфліктувати з вибором вкладки)
-            // if (modalId === 'kafedra-modal') {
-            //     resetKafedraTabs();
-            // }
+            if (modalId === 'kafedra-modal') {
+                resetKafedraTabs();
+            }
         }
     }
 
@@ -131,6 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeModal(modal) {
         if (!modal) return;
         
+        // ОНОВЛЕNO: Перевіряємо, чи ми закриваємо вікно z-60
+        const isTopModal = modal.classList.contains('z-[60]');
+
         // 1. Зробити вікно прозорим
         modal.classList.remove('modal-visible');
         
@@ -142,12 +160,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const anyModalStillVisible = document.querySelector('.modal-base.modal-visible');
             
             // 4. Якщо це було ОСТАННЄ вікно - приховати фон і розблокувати скрол
-            if (!anyModalStillVisible) {
+            // ОНОВЛЕНО: Перевіряємо, чи не відкрите мобільне меню
+            if (!anyModalStillVisible && !mobileMenu.classList.contains('open')) {
                 modalOverlay.style.opacity = '0';
                 htmlEl.classList.remove('modal-open');
                 setTimeout(() => {
                     modalOverlay.classList.add('hidden');
+                    // Скидаємо z-index фону про всяк випадок
+                    modalOverlay.classList.remove('modal-overlay-top');
                 }, 300); // Чекаємо анімацію фону
+            } 
+            // ОНОВЛЕНО: Якщо ми закрили ВЕРХНЄ вікно (z-60),
+            // але нижнє (z-50) ще відкрите
+            else if (isTopModal && anyModalStillVisible) {
+                 // Повернути фон на стандартний z-index (z-40)
+                 modalOverlay.classList.remove('modal-overlay-top');
             }
             
         }, 300); 
@@ -183,6 +210,14 @@ document.addEventListener('DOMContentLoaded', function() {
                      closeModal(modal);
                 });
             }
+            
+            // ОНОВЛЕНО: Закриваємо мобільне меню по Escape
+            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                mobileMenu.classList.remove('open');
+                menuOpenIcon.classList.remove('hidden');
+                menuCloseIcon.classList.add('hidden');
+                htmlEl.classList.remove('modal-open');
+            }
         }
     });
 
@@ -209,12 +244,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Відкрити наше вікно
                 openModal(modalId);
                 
-                // **ВИПРАВЛЕННЯ ТУТ:**
                 // Активувати потрібну вкладку (якщо ми натиснули "Освітні програми")
                 if (tabTarget) {
                     const targetModal = document.getElementById(modalId);
                     if (targetModal) {
-                        // Ми активуємо вкладку ПІСЛЯ того, як вікно відкрилося
                         activateTab(targetModal, tabTarget);
                     }
                 }
@@ -266,15 +299,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // D. Закрити мобільне меню після кліку
-            // !!! ВИПРАВЛЕННЯ: Я видалив цей блок коду на ваше прохання !!!
-            // Тепер меню буде закриватися ТІЛЬКИ по "хрестику"
-            /*
-            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
+            // ОНОВЛЕНО: Перевіряємо клас .open
+            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                mobileMenu.classList.remove('open'); // <--- Змінено
                 menuOpenIcon.classList.remove('hidden');
                 menuCloseIcon.classList.add('hidden');
+                
+                // ОНОВЛЕНО: Розблокувати скрол
+                // (Якщо це було посилання-якір, скрол і так розблокується, 
+                // але якщо це посилання відкрило модалку, скрол залишиться заблокованим (це вірно))
+                if (!modalId) {
+                     htmlEl.classList.remove('modal-open');
+                }
             }
-            */
         });
     });
 
@@ -346,46 +383,53 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // --- 9. ЛОГІКА ВКЛАДОК (Tabs) у модалці "Кафедра" (ВИПРАВЛЕНО) ---
-    
-    // 9.1. Функція для активації вкладки
-    function activateTab(modal, tabId) {
-        if (!modal) return;
-        
-        const tabButtons = modal.querySelectorAll('.modal-tab');
-        const tabContents = modal.querySelectorAll('.modal-tab-pane');
-        const targetContent = document.getElementById(tabId);
-        const targetButton = modal.querySelector(`.modal-tab[data-tab="${tabId}"]`);
-        
-        // Деактивувати всі
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-        
-        // Активувати потрібні
-        if (targetButton) targetButton.classList.add('active');
-        if (targetContent) targetContent.classList.add('active');
-    }
-
-    // 9.2. Функція для скидання вкладок до "Історії"
-    function resetKafedraTabs() {
-        const kafedraModal = document.getElementById('kafedra-modal');
-        if (kafedraModal) {
-            activateTab(kafedraModal, 'tab-history');
-        }
-    }
-
-    // 9.3. Навішуємо слухачі на кнопки вкладок
     const kafedraModal = document.getElementById('kafedra-modal');
     if (kafedraModal) {
         const tabButtons = kafedraModal.querySelectorAll('.modal-tab');
-        
+        const tabContents = kafedraModal.querySelectorAll('.modal-tab-pane');
+
+        // Функція для активації вкладки
+        function activateTab(modal, tabId) {
+            const tabButtons = modal.querySelectorAll('.modal-tab');
+            const tabContents = modal.querySelectorAll('.modal-tab-pane');
+            
+            const targetContent = document.getElementById(tabId);
+            const targetButton = modal.querySelector(`.modal-tab[data-tab="${tabId}"]`);
+            
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            if (targetButton) targetButton.classList.add('active');
+            if (targetContent) targetContent.classList.add('active');
+        }
+
+        // Функція для скидання вкладок до "Історії"
+        function resetKafedraTabs() {
+            activateTab(kafedraModal, 'tab-history');
+        }
+
+        // Навішуємо слухачі на кнопки вкладок
         tabButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 e.stopPropagation(); // !! ВИПРАВЛЕННЯ: Зупинити "провалювання" кліку
                 
                 const targetTabId = button.dataset.tab; // Яку вкладку відкрити
+                const modalIdToOpen = button.dataset.modalId; // Чи треба відкрити інше вікно?
 
-                // Звичайна логіка перемикання вкладок
-                if (targetTabId) {
+                if (modalIdToOpen) {
+                    // Це кнопка "Персонал"
+                    openModal(modalIdToOpen);
+                    // Підсвічуємо заголовок
+                    const staffTitle = document.getElementById('staff-title');
+                    if (staffTitle) {
+                         if (neonTimer) clearTimeout(neonTimer);
+                         staffTitle.classList.add('section-title-active');
+                         neonTimer = setTimeout(() => {
+                            staffTitle.classList.remove('section-title-active');
+                         }, 1500);
+                    }
+                } else if (targetTabId) {
+                    // Це звичайна вкладка ("Історія", "Освітні програми"...)
                     activateTab(kafedraModal, targetTabId);
                 }
             });
@@ -408,7 +452,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- 11. ЛОГІКА "ДЕТАЛІ ПРО ВИКЛАДАЧА" (з staff_data.js) ---
-    // (Переконайтеся, що файл staff_data.js підключено у index.html ПЕРЕД цим скриптом)
     const staffDetailModal = document.getElementById('staff-detail-modal');
     if (staffDetailModal) {
         // Знаходимо елементи у вікні деталей
