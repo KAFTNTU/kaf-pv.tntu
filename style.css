@@ -101,13 +101,14 @@ body {
     z-index: 55; /* z-50 (modal) < 55 < 60 (top modal) */
 }
 
-/* ОНОВЛЕНО: Новий клас для блюру фонової модалки */
+/* ОНОВЛЕНО: Новий клас для блюру фонової модалки (ВИДАЛЕНО) */
+/*
 .modal-blurred {
     filter: blur(5px);
     transition: filter 0.3s ease;
-    /* Не дати заблюреній модалці приймати кліки */
     pointer-events: none; 
 }
+*/
 
 /* Базовий стиль для всіх модальних вікон */
 .modal-base {
@@ -192,7 +193,8 @@ body {
 /* Спеціальний фікс для заголовка "Кафедра", бо він не по центру */
 #kafedra-modal .modal-header {
     border-bottom: none;
-    padding-bottom: 0;
+    /* ОНОВЛЕНО: Повертаємо невеликий відступ, щоб неон не обрізався */
+    padding-bottom: 0.5rem; /* 8px */
 }
 /* Кнопка закриття */
 .modal-close-btn {
@@ -289,7 +291,8 @@ html.modal-open {
 
 /* === Вкладки (Tabs) у Модалці "Кафедра" === */
 .modal-tabs-container {
-    border-bottom: 2px solid #334155; /* border-slate-700 */
+    /* ОНОВЛЕНО: Прибираємо border-bottom, щоб не було подвійної лінії */
+    /* border-bottom: 2px solid #334155; */ /* border-slate-700 */
     display: flex;
     overflow-x: auto; /* Для мобільних */
     background-color: #1e293b; /* bg-slate-800 */
