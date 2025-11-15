@@ -197,21 +197,15 @@ body {
     flex-grow: 1; /* Займати весь доступний простір */
     padding: 1.5rem; /* p-6 */
 }
-
-/* === ОНОВЛЕННЯ ДЛЯ СКРОЛБАРУ В МОДАЛЦІ КАФЕДРИ === */
 /* Спеціальні відступи для вкладок (де заголовок окремо) */
 #kafedra-modal .modal-scroll-content {
-    /* Додаємо відступ СПРАВА, щоб "відсунути" скролбар від краю */
-    padding: 0 0.5rem 0 0; /* 8px padding-right */
+    /* ОНОВЛЕНО: Повертаємо padding: 0, скролбар більше не потрібен */
+    padding: 0;
 }
-/* Виправляємо помилку (було .tab-content) і додаємо відступи */
 #kafedra-modal .modal-tab-pane {
+    /* ОНОВЛЕНО: Повертаємо відступи для контенту */
     padding: 1.5rem; /* p-6 */
-    /* Додаємо відступ справа, щоб текст не прилипав до скролбару */
-    padding-right: 1rem; 
 }
-/* === КІНЕЦЬ ОНОВЛЕННЯ === */
-
 
 /*
 ============================================
@@ -290,17 +284,22 @@ html.modal-open {
     padding: 0.75rem 1rem; /* py-3 px-4 */
     font-weight: 600; /* font-semibold */
     color: #94a3b8; /* text-slate-400 */
-    border-bottom: 3px solid transparent;
-    margin-bottom: -2px; /* Накладання на нижню рамку */
     white-space: nowrap;
     transition: all 0.2s ease;
+    /* ОНОВЛЕНО: Прибрано border та margin, що створювали прокрутку */
+    /* border-bottom: 3px solid transparent; */
+    /* margin-bottom: -2px; */ 
 }
 .modal-tab:hover {
     color: #e2e8f0; /* text-slate-200 */
 }
 .modal-tab.active {
     color: #38bdf8; /* text-sky-400 */
-    border-bottom-color: #38bdf8; /* border-sky-400 */
+    /* ОНОВЛЕНО: Прибрано border */
+    /* border-bottom-color: #38bdf8; */ 
+    
+    /* ОНОВЛЕНО: Додано світіння (неон) */
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
 }
 .modal-tab-pane {
     display: none; /* Сховано за замовчуванням */
