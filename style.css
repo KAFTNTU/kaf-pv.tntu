@@ -10,7 +10,7 @@ body {
 }
 
 /* Custom scrollbar for a modern look */
-/* ЦЕЙ СКРОЛБАР - ДЛЯ ВСІЄЇ СТОРІНКИ (ЗОВНІШНІЙ) */
+/* ЦЕЙ СКРОЛБАР - ДЛЯ ВСІЄЇ СТИРІНКИ (ЗОВНІШНІЙ) */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -412,4 +412,34 @@ html.modal-open {
     border: none;
 }
 
-
+/* ============================================
+!!! ВАШЕ ВИПРАВЛЕННЯ ТУТ (МОБІЛЬНЕ МЕНЮ) !!!
+============================================
+*/
+#mobile-menu {
+    /* Позиціонуємо його на весь екран, ПІД шапкою */
+    position: fixed;
+    top: 6rem; /* 96px - висота нашої шапки h-24 */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    /* Ефект розмиття */
+    background-color: rgba(15, 23, 42, 0.85); /* Трохи темніше, щоб текст було видно */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* Плавна анімація появи */
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    
+    /* Додаємо скрол, якщо посилань багато */
+    overflow-y: auto;
+    padding-bottom: 2rem; /* Відступ знизу */
+}
+/* Цей клас 'open' додає/видаляє script.js для анімації */
+#mobile-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+}
