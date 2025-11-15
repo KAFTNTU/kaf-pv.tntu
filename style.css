@@ -466,7 +466,17 @@ html.modal-open {
     
     /* ОНОВЛЕНО: Блокуємо кліки, коли меню невидиме */
     pointer-events: none;
+
+    /* НОВЕ: Приховуємо скролбар, але залишаємо прокрутку */
+    -ms-overflow-style: none;  /* IE та Edge */
+    scrollbar-width: none;  /* Firefox */
 }
+
+/* НОВЕ: Приховуємо скролбар для Webkit (Chrome, Safari) */
+#mobile-menu::-webkit-scrollbar {
+    display: none;
+}
+
 /* Цей клас 'open' додає/видаляє script.js для анімації */
 #mobile-menu.open {
     opacity: 1;
