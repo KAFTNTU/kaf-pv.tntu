@@ -71,6 +71,7 @@ body {
     padding: 0.75rem 1rem; /* py-3 px-4 */
     border-radius: 0.375rem; /* rounded-md */
     font-weight: 500; /* medium */
+    color: #cbd5e1; /* text-slate-300 */
     transition: color 0.3s ease, text-shadow 0.3s ease, background-color 0.3s ease;
 }
 .nav-link-mobile:hover {
@@ -265,6 +266,7 @@ body {
 .news-dot {
     transition: all 0.3s ease;
 }
+/* ОНОВЛЕНО: Повертаємо червоний неон для крапок, він виглядає краще */
 .news-dot.active {
     background-color: #ef4444; /* bg-red-500 */
     transform: scale(1.25);
@@ -297,22 +299,20 @@ html.modal-open {
     padding: 0.75rem 1rem; /* py-3 px-4 */
     font-weight: 600; /* font-semibold */
     color: #94a3b8; /* text-slate-400 */
+    /* ОНОВЛЕНО: Прибираємо border, щоб не було скролу */
+    /* border-bottom: 3px solid transparent; */
+    /* margin-bottom: -2px; */
     white-space: nowrap;
     transition: all 0.2s ease;
-    /* ОНОВЛЕНО: Прибрано border та margin, що створювали прокрутку */
-    /* border-bottom: 3px solid transparent; */
-    /* margin-bottom: -2px; */ 
 }
 .modal-tab:hover {
     color: #e2e8f0; /* text-slate-200 */
 }
 .modal-tab.active {
     color: #38bdf8; /* text-sky-400 */
-    /* ОНОВЛЕНО: Прибрано border */
-    /* border-bottom-color: #38bdf8; */ 
-    
-    /* ОНОВЛЕНО: Додано світіння (неон) */
-    text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+    /* ОНОВЛЕНО: Замінюємо border на світіння */
+    /* border-bottom-color: #38bdf8; */
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.6); /* Блакитний неон */
 }
 .modal-tab-pane {
     display: none; /* Сховано за замовчуванням */
