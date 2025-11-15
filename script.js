@@ -111,13 +111,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetModal = document.getElementById(modalId);
         if (targetModal) {
             
-            // ОНОВЛЕНО: Логіка z-index для блюру
-            if (targetModal.classList.contains('z-[60]')) {
-                // 1. Заблюрити всі модалки z-50, що вже відкриті
-                document.querySelectorAll('.modal-base.modal-visible:not(.z-\[60\])').forEach(m => {
-                    m.classList.add('modal-blurred');
+            // ОНОВЛЕНО: Логіка блюру (v2 - перевірка по ID)
+            // Це вікно, що має бути "поверх" (z-60)?
+            const isTopModal = (modalId === 'staff-detail-modal' || modalId === 'small-news-modal');
+            
+            if (isTopModal) {
+                // 1. Заблюрити всі модалки, що ВЖЕ відкриті
+                document.querySelectorAll('.modal-base.modal-visible').forEach(m => {
+                    // Переконатися, що не блюримо самі себе (хоча це і неможливо, бо .modal-visible ще не додано)
+                    if(m.id !== modalId) { 
+                        m.classList.add('modal-blurred');
+                    }
                 });
-                // 2. Підняти оверлей, щоб він був НАД заблюреними модалками (z-50), але ПІД новою (z-60)
+                // 2. Підняти оверлей (фон)
                 modalOverlay.classList.add('modal-overlay-top'); // z-55
             } else {
                 // Це звичайна модалка (z-50), переконатися, що оверлей на z-40
@@ -149,8 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeModal(modal) {
         if (!modal) return;
         
-        // ОНОВЛЕNO: Перевіряємо, чи ми закриваємо вікно z-60
-        const isTopModal = modal.classList.contains('z-[60]');
+        // ОНОВЛЕНО: Перевіряємо, чи ми закриваємо вікно "поверх" (v2 - перевірка по ID)
+        const isTopModal = (modal.id === 'staff-detail-modal' || modal.id === 'small-news-modal');
 
         // 1. Зробити вікно прозорим
         modal.classList.remove('modal-visible');
@@ -173,10 +179,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     modalOverlay.classList.remove('modal-overlay-top');
                 }, 300); // Чекаємо анімацію фону
             } 
-            // ОНОВЛЕНО: Якщо ми закрили ВЕРХНЄ вікно (z-60),
-            // але нижнє (z-50) ще відкрите
+            // ОНОВЛЕНО: Якщо ми закрили ВЕРХНЄ вікно (isTopModal),
+            // але нижнє (anyModalStillVisible) ще відкрите
             else if (isTopModal && anyModalStillVisible) {
-                 // 1. Повернути фон на стандартний z-index (z-40) (позаду z-50)
+                 // 1. Повернути фон на стандартний z-index (z-40)
                  modalOverlay.classList.remove('modal-overlay-top');
                  // 2. Зняти блюр з усіх модалок
                  document.querySelectorAll('.modal-blurred').forEach(m => {
