@@ -335,6 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Створюємо "горошинки"
         for (let i = 0; i < totalDots; i++) {
+            // ОНОВЛЕНО: Колір крапок відповідає "синій" темі
             const dot = document.createElement('button');
             dot.className = 'news-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500';
             dot.setAttribute('aria-label', `Перейти до новини ${i + 1}`);
@@ -518,6 +519,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             a.href = link.url;
                             a.target = '_blank';
                             a.rel = 'noopener noreferrer';
+                            // ОНОВЛЕНО: Колір посилань відповідає "синій" темі
                             a.className = 'text-sky-400 hover:text-sky-300 block truncate';
                             a.textContent = link.name;
                             li.appendChild(a);
@@ -526,6 +528,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         detailLinks.appendChild(ul);
                     } else {
                         const p = document.createElement('p');
+                        // ОНОВЛЕНО: Колір тексту
                         p.className = 'text-sm text-slate-400';
                         p.textContent = 'Посилання відсутні.';
                         detailLinks.appendChild(p);
@@ -541,6 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     detailTitle.textContent = card.querySelector('p').textContent || "";
                     detailImg.src = card.querySelector('img').src;
                     detailDetails.innerHTML = "<p>Детальна інформація про цього викладача буде додана незабаром.</p>";
+                    // ОНОВЛЕНО: Колір тексту
                     detailLinks.innerHTML = '<p class="text-sm text-slate-400">Посилання відсутні.</p>';
                     detailDisciplines.innerHTML = '<li>Інформація про дисципліни відсутня.</li>';
                     detailBio.innerHTML = '<p>Біографічна довідка буде додана згодом.</p>';
