@@ -1,6 +1,6 @@
 /*
 ================================================================
-ГОЛОВНИЙ СКРИПТ САЙТУ
+ГОЛОВНИЙ СКРИПТ САЙТУ (script.js)
 ================================================================
 Тут знаходиться вся інтерактивна логіка:
 - Відкриття/закриття модальних вікон
@@ -112,13 +112,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (targetModal) {
             
             // ОНОВЛЕНО: Логіка z-index для блюру
-            // Якщо вікно має z-index 60 (тобто, .z-[60] з Tailwind)
             if (targetModal.classList.contains('z-[60]')) {
-                // Перемістити фон НАД іншими модалками (z-50), але ПІД цим (z-60)
-                modalOverlay.classList.add('modal-overlay-top'); // Додаємо z-55
+                // 1. Заблюрити всі модалки z-50, що вже відкриті
+                document.querySelectorAll('.modal-base.modal-visible:not(.z-\[60\])').forEach(m => {
+                    m.classList.add('modal-blurred');
+                });
+                // 2. Підняти оверлей, щоб він був НАД заблюреними модалками (z-50), але ПІД новою (z-60)
+                modalOverlay.classList.add('modal-overlay-top'); // z-55
             } else {
-                // Стандартна поведінка для z-50
-                modalOverlay.classList.remove('modal-overlay-top'); // Прибираємо z-55
+                // Це звичайна модалка (z-50), переконатися, що оверлей на z-40
+                modalOverlay.classList.remove('modal-overlay-top');
             }
 
             // 1. Показати темний фон
@@ -173,8 +176,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // ОНОВЛЕНО: Якщо ми закрили ВЕРХНЄ вікно (z-60),
             // але нижнє (z-50) ще відкрите
             else if (isTopModal && anyModalStillVisible) {
-                 // Повернути фон на стандартний z-index (z-40)
+                 // 1. Повернути фон на стандартний z-index (z-40) (позаду z-50)
                  modalOverlay.classList.remove('modal-overlay-top');
+                 // 2. Зняти блюр з усіх модалок
+                 document.querySelectorAll('.modal-blurred').forEach(m => {
+                     m.classList.remove('modal-blurred');
+                 });
             }
             
         }, 300); 
