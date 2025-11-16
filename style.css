@@ -189,15 +189,11 @@ body {
 .modal-scroll-content {
     overflow-y: auto;
     flex-grow: 1;
-    /* ОНОВЛЕНО: p-6 тепер знаходиться у файлах контенту */
-    /* padding: 1.5rem; */ 
+    /* p-6 тепер знаходиться у файлах контенту */
 }
-/* Спеціальні відступи для вкладок (де заголовок окремо) */
+/* Спеціальні відступи для вкладок */
 #kafedra-modal .modal-scroll-content {
     padding: 0;
-}
-#kafedra-modal .modal-tab-pane {
-    /* Відступи тепер у файлах .html (p-6), тут вони не потрібні */
 }
 
 /* Скролбар всередині модальних вікон */
@@ -254,7 +250,6 @@ html.modal-open {
 
 /* === Вкладки (Tabs) у Модалці "Кафедра" === */
 .modal-tabs-container {
-    /* border-bottom: 2px solid #334155; */ /* Прибрано, щоб не було подвійної лінії */
     display: flex;
     overflow-x: auto;
     background-color: #1e293b;
@@ -264,8 +259,6 @@ html.modal-open {
     padding: 0.75rem 1rem;
     font-weight: 600;
     color: #94a3b8;
-    /* border-bottom: 3px solid transparent; */ /* Прибрано, щоб не було скролу */
-    /* margin-bottom: -2px; */
     white-space: nowrap;
     transition: all 0.2s ease;
 }
@@ -274,7 +267,6 @@ html.modal-open {
 }
 .modal-tab.active {
     color: #38bdf8;
-    /* border-bottom-color: #38bdf8; */ /* Замінено на світіння */
     text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
 }
 .modal-tab-pane {
@@ -355,7 +347,6 @@ html.modal-open {
 }
 
 /* --- Логіка для "Деталі про Викладача" --- */
-/* Стиль .staff-card тепер у staff.html, але ми залишимо :hover тут */
 .staff-card {
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -417,12 +408,12 @@ html.modal-open {
     pointer-events: auto;
 }
 
-/* ОНОВЛЕНО: Стилі для завантажувача контенту (Spinner) */
+/* Стилі для завантажувача контенту (Spinner) */
 .content-loader-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 300px; /* Мінімальна висота, поки контент вантажиться */
+    min-height: 300px;
 }
 .content-loader {
     width: 3rem; /* w-12 */
