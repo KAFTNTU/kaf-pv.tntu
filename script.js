@@ -25,7 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if(mobileMenuButton) {
         mobileMenuButton.addEventListener('click', () => {
             const isOpen = mobileMenu.classList.toggle('open');
-            htmlEl.classList.toggle('modal-open', isOpen);
+            // Блокуємо скрол сторінки, якщо меню відкрите
+            // АЛЕ: не блокуємо, якщо вже відкрито модальне вікно
+            if (!document.body.classList.contains('modal-open')) {
+                 htmlEl.classList.toggle('modal-open', isOpen);
+            }
             menuOpenIcon.classList.toggle('hidden');
             menuCloseIcon.classList.toggle('hidden');
         });
@@ -47,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- 3. АНІМАЦІЯ ПОЯВИ ЕЛЕМЕНТІВ ПРИ СКРОЛІ ---
-    // Ця функція тепер також викликатиметься для динамічно завантаженого контенту
     function initializeRevealObserver(container) {
         const revealElements = container.querySelectorAll('.reveal');
         if (revealElements.length > 0) {
@@ -55,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        // observer.unobserve(entry.target); // Можна розкоментувати, якщо анімація має бути один раз
                     }
                 });
             }, {
@@ -66,20 +68,15 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-    // Запускаємо для контенту, що вже є на сторінці
     initializeRevealObserver(document.body);
 
 
     // --- 4. КНОПКА "ПОКАЗАТИ ВСІХ" (у вкладці Персонал) ---
-    // ОНОВЛЕНО: Ця логіка тепер має спрацьовувати ПІСЛЯ завантаження контенту.
-    // Ми делегуємо слухач на рівень модального вікна.
     const kafedraModalForStaff = document.getElementById('kafedra-modal');
     if (kafedraModalForStaff) {
         kafedraModalForStaff.addEventListener('click', function(e) {
-            // Перевіряємо, чи клікнули ми саме на кнопку 'toggle-staff-btn' або її дочірні елементи
             const toggleBtn = e.target.closest('#toggle-staff-btn');
             if (toggleBtn) {
-                // Знаходимо 'hidden-staff' відносно кнопки
                 const staffTab = toggleBtn.closest('#tab-staff');
                 if (!staffTab) return;
 
@@ -102,39 +99,31 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // --- 5. ЛОГІКА ДИНАМІЧНОГО ЗАВАНТАЖЕННЯ КОНТЕНТУ (LAZY LOAD) ---
     async function loadDynamicContent(targetContainer) {
-        // Перевіряємо, чи є URL
         const url = targetContainer.dataset.contentUrl;
         if (!url) return;
 
-        // Перевіряємо, чи контент ВЖЕ завантажено (або вантажиться)
         if (targetContainer.dataset.loaded === 'true' || targetContainer.dataset.loading === 'true') {
             return;
         }
 
-        // Позначаємо, що почалося завантаження
         targetContainer.dataset.loading = 'true';
         
         try {
-            const response = await fetch(url);
+            // ВИПРАВЛЕНО: Додаємо cache: 'no-cache' щоб уникнути проблем з кешуванням
+            const response = await fetch(url, { cache: 'no-cache' });
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status} (File: ${url})`);
             }
             const html = await response.text();
             
-            // Вставляємо HTML
             targetContainer.innerHTML = html;
-            
-            // Позначаємо, що контент завантажено
             targetContainer.dataset.loaded = 'true';
             targetContainer.dataset.loading = 'false';
 
-            // ОНОВЛЕНО: Якщо ми завантажили вкладку 'Персонал' (tab-staff),
-            // нам потрібно "оживити" картки викладачів, які щойно з'явилися.
             if (targetContainer.id === 'tab-staff') {
                 activateStaffCards(targetContainer);
             }
 
-            // ОНОВЛЕНО: Запускаємо анімацію 'reveal' для нового контенту
             initializeRevealObserver(targetContainer);
             
         } catch (error) {
@@ -146,27 +135,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- 6. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН ---
     
-    // 6.1. Функція ВІДКРИТТЯ модального вікна
     function openModal(modalId) {
         const targetModal = document.getElementById(modalId);
         if (targetModal) {
             
-            // ОНОВЛЕНО: Логіка блюру (v3)
             const isTopModal = (modalId === 'staff-detail-modal' || modalId === 'small-news-modal');
             
             if (isTopModal) {
-                modalOverlay.classList.add('modal-overlay-top'); // z-55
+                modalOverlay.classList.add('modal-overlay-top');
             } else {
                 modalOverlay.classList.remove('modal-overlay-top');
             }
 
-            // ОНОВЛЕНО: Перевіряємо, чи треба завантажити контент для цієї модалки
-            // (data-content-url знаходиться на самій модалці)
+            // Перевіряємо, чи треба завантажити контент
             if (targetModal.dataset.contentUrl) {
-                // Модалка (наприклад, "Бланки") має свій .modal-scroll-content
                 const contentContainer = targetModal.querySelector('.modal-scroll-content');
                 if(contentContainer) {
-                    // Передаємо URL з модалки в контейнер (якщо його там ще немає)
                     if (!contentContainer.dataset.contentUrl) {
                         contentContainer.dataset.contentUrl = targetModal.dataset.contentUrl;
                     }
@@ -182,16 +166,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 targetModal.classList.add('modal-visible');
             }, 10); 
             
+            // Блокуємо скрол сторінки
             htmlEl.classList.add('modal-open');
 
-            // Якщо це "Кафедра", активуємо першу вкладку (яка сама завантажить контент)
             if (modalId === 'kafedra-modal') {
                 resetKafedraTabs();
             }
         }
     }
 
-    // 6.2. Функція ЗАКРИТТЯ модального вікна
     function closeModal(modal) {
         if (!modal) return;
         
@@ -205,9 +188,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const anyModalStillVisible = document.querySelector('.modal-base.modal-visible');
             
             // Якщо це було ОСТАННЄ вікно
+            // І мобільне меню теж закрите
             if (!anyModalStillVisible && !mobileMenu.classList.contains('open')) {
                 modalOverlay.style.opacity = '0';
-                htmlEl.classList.remove('modal-open');
+                htmlEl.classList.remove('modal-open'); // Розблокувати скрол
                 setTimeout(() => {
                     modalOverlay.classList.add('hidden');
                     modalOverlay.classList.remove('modal-overlay-top');
@@ -221,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300); 
     }
 
-    // 6.3. Налаштування кнопок закриття (хрестики)
     document.querySelectorAll('.modal-close-btn').forEach(button => {
         button.addEventListener('click', (e) => {
             const modalToClose = e.target.closest('.modal-base');
@@ -229,33 +212,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 6.4. Закриття по кліку на темний фон
     modalOverlay.addEventListener('click', () => {
         document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
              closeModal(modal);
         });
     });
 
-    // 6.5. Закриття по клавіші "Escape"
     document.addEventListener('keydown', (e) => {
         if (e.key === "Escape") {
-            // Шукаємо найвище вікно
             const topModal = document.querySelector('#staff-detail-modal.modal-visible') || document.querySelector('#small-news-modal.modal-visible');
             if (topModal) {
                 closeModal(topModal); 
             } else {
-                // Інакше закриваємо всі інші
                 document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
                      closeModal(modal);
                 });
             }
             
-            // Закриваємо мобільне меню
             if (mobileMenu && mobileMenu.classList.contains('open')) {
                 mobileMenu.classList.remove('open');
                 menuOpenIcon.classList.remove('hidden');
                 menuCloseIcon.classList.add('hidden');
-                htmlEl.classList.remove('modal-open');
+                // Розблокуємо скрол, якщо модалки не відкриті
+                if (!document.querySelector('.modal-base.modal-visible')) {
+                    htmlEl.classList.remove('modal-open');
+                }
             }
         }
     });
@@ -268,22 +249,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.dataset.targetId; 
             const tabTarget = this.dataset.tabTarget; 
             
-            // A. Якщо це посилання ВІДКРИВАЄ МОДАЛЬНЕ ВІКНО
             if (modalId) {
                 e.preventDefault(); 
                 e.stopPropagation(); 
                 
-                // Закрити всі інші вікна
                 document.querySelectorAll('.modal-base.modal-visible').forEach(m => {
                     if (m.id !== modalId) {
                         closeModal(m);
                     }
                 });
 
-                // Відкрити наше вікно
                 openModal(modalId);
                 
-                // Активувати потрібну вкладку
                 if (tabTarget) {
                     const targetModal = document.getElementById(modalId);
                     if (targetModal) {
@@ -291,12 +268,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             }
-            // B. Якщо це звичайне посилання-ЯКІР
             else {
                 document.querySelectorAll('.modal-base.modal-visible').forEach(m => closeModal(m));
             }
             
-            // C. Логіка НЕОНОВОЇ ПІДСВІТКИ
             if (targetId) {
                 let targetTitle;
                 
@@ -315,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-                // Запускаємо неон
                 if (targetTitle) {
                     if (neonTimer) clearTimeout(neonTimer); 
                     
@@ -331,10 +305,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
-            // D. Закрити мобільне меню після кліку
+            // Закрити мобільне меню після кліку
             if (mobileMenu && mobileMenu.classList.contains('open')) {
                 
-                // Фікс: Не закривати, якщо це кнопка випадаючого меню
                 const isDropdownToggle = this.classList.contains('mobile-dropdown-toggle');
 
                 if (!isDropdownToggle) { 
@@ -361,9 +334,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const slidesPerView = window.innerWidth < 640 ? 1 : 2; 
         const totalDots = Math.ceil(slides.length / slidesPerView);
 
-        // Створюємо "горошинки"
         for (let i = 0; i < totalDots; i++) {
             const dot = document.createElement('button');
+            // ОНОВЛЕНО: Колір крапок
             dot.className = 'news-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500';
             dot.setAttribute('aria-label', `Перейти до новини ${i + 1}`);
             dot.addEventListener('click', () => {
@@ -376,11 +349,11 @@ document.addEventListener('DOMContentLoaded', function() {
             dots.push(dot);
         }
 
-        // Функція, що оновлює активну "горошинку"
         const updateDots = () => {
             const scrollLeft = sliderContainer.scrollLeft;
             const containerWidth = sliderContainer.clientWidth;
-            let activeDotIndex = Math.round(scrollLeft / containerWidth);
+            // ОНОВЛЕНО: Виправлено логіку для 2+ слайдів
+            let activeDotIndex = Math.floor( (scrollLeft + containerWidth / 3) / containerWidth );
             
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === activeDotIndex);
@@ -392,7 +365,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- 9. ЛОГІКА "ЧИТАТИ ДАЛІ" (Маленьке вікно новин) ---
-    // ОНОВЛЕНО: Ми делегуємо слухач на випадок, якщо новини теж будуть динамічними
     document.body.addEventListener('click', function(e) {
         const openBtn = e.target.closest('.open-small-modal-btn');
         if (openBtn) {
@@ -414,7 +386,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // --- 10. ЛОГІКА ВКЛАДОК (Tabs) ---
-    // Ця функція використовується у openModal та allNavLinks
     function activateTab(modal, tabId) {
         const tabButtons = modal.querySelectorAll('.modal-tab');
         const tabContents = modal.querySelectorAll('.modal-tab-pane');
@@ -429,14 +400,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (targetContent) {
             targetContent.classList.add('active');
             
-            // ОНОВЛЕНО: Завантажуємо контент для вкладки
+            // Завантажуємо контент для вкладки
             loadDynamicContent(targetContent);
         }
     }
 
-    // Функція для скидання вкладок до "Історії"
     function resetKafedraTabs() {
-        // Запускаємо activateTab для 'tab-history' при відкритті 'kafedra-modal'
         if (kafedraModal) {
             activateTab(kafedraModal, 'tab-history');
         }
@@ -446,7 +415,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (kafedraModal) {
         const tabButtons = kafedraModal.querySelectorAll('.modal-tab');
         
-        // Навішуємо слухачі на кнопки вкладок
         tabButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 e.stopPropagation(); 
@@ -455,10 +423,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const modalIdToOpen = button.dataset.modalId; 
 
                 if (modalIdToOpen) {
-                    // (Ця логіка для кнопки "Персонал", яку ми прибрали, але хай буде)
                     openModal(modalIdToOpen);
                 } else if (targetTabId) {
-                    // Це звичайна вкладка
                     activateTab(kafedraModal, targetTabId);
                 }
             });
@@ -481,12 +447,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- 12. ЛОГІКА "ДЕТАЛІ ПРО ВИКЛАДАЧА" (з staff_data.js) ---
-    // ОНОВЛЕНО: Ця функція тепер викликається вручну ПІСЛЯ завантаження вкладки 'tab-staff'
     function activateStaffCards(container) {
         const staffDetailModal = document.getElementById('staff-detail-modal');
         if (!staffDetailModal) return;
 
-        // Знаходимо елементи у вікні деталей
         const detailName = document.getElementById('staff-detail-name');
         const detailTitle = document.getElementById('staff-detail-title');
         const detailImg = document.getElementById('staff-detail-img');
@@ -495,10 +459,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const detailDisciplines = document.getElementById('staff-detail-disciplines');
         const detailBio = document.getElementById('staff-detail-bio');
 
-        // "Слухаємо" кліки на всі картки викладачів УСЕРЕДИНІ наданого контейнера
         container.querySelectorAll('.staff-card').forEach(card => {
             card.addEventListener('click', (e) => {
-                e.stopPropagation(); // Не закривати вікно "Кафедра"
+                e.stopPropagation();
                 const staffId = card.dataset.staffId;
                 
                 if (typeof staffDetailsData !== 'undefined' && staffDetailsData[staffId]) {
@@ -536,6 +499,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             a.href = link.url;
                             a.target = '_blank';
                             a.rel = 'noopener noreferrer';
+                            // ОНОВЛЕНО: Колір посилань
                             a.className = 'text-sky-400 hover:text-sky-300 block truncate';
                             a.textContent = link.name;
                             li.appendChild(a);
