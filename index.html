@@ -359,10 +359,9 @@
             </div>
             
             <div class="modal-tabs-container">
-                <!-- ОНОВЛЕНО: Додано data-content-url для динамічного завантаження -->
-                <button class="modal-tab active" data-tab="tab-history" data-content-url="content/history.html">Історія</button>
-                <button class="modal-tab" data-tab="tab-staff" data-content-url="content/staff.html">Персонал кафедри</button>
-                <button class="modal-tab" data-tab="tab-programs" data-content-url="content/programs.html">Освітні програми</button>
+                <button class="modal-tab active" data-tab="tab-history">Історія</button>
+                <button class="modal-tab" data-tab="tab-staff">Персонал кафедри</button>
+                <button class="modal-tab" data-tab="tab-programs">Освітні програми</button>
                 <button class="modal-tab" data-tab="tab-plan">Навчальний план</button>
                 <button class="modal-tab" data-tab="tab-graduates">Випускники кафедри</button>
             </div>
@@ -370,7 +369,7 @@
             <!-- Контент Вкладок -->
             <div class="modal-scroll-content max-h-[70vh]">
                 
-                <!-- ОНОВЛЕНО: Вкладка 1 (Історія) - тепер завантажується динамічно -->
+                <!-- Вкладка 1: Історія -->
                 <div id="tab-history" class="modal-tab-pane active" data-content-url="content/history.html">
                     <!-- Спіннер завантаження -->
                     <div class="content-loader-container">
@@ -378,14 +377,14 @@
                     </div>
                 </div>
                 
-                <!-- ОНОВЛЕНО: Вкладка 2 (Персонал) - тепер завантажується динамічно -->
+                <!-- Вкладка 2: Персонал -->
                 <div id="tab-staff" class="modal-tab-pane" data-content-url="content/staff.html">
                     <div class="content-loader-container">
                         <svg class="content-loader" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                     </div>
                 </div>
                 
-                <!-- ОНОВЛЕНО: Вкладка 3 (Програми) - тепер завантажується динамічно -->
+                <!-- Вкладка 3: Освітні програми -->
                 <div id="tab-programs" class="modal-tab-pane" data-content-url="content/programs.html">
                     <div class="content-loader-container">
                         <svg class="content-loader" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
@@ -414,11 +413,11 @@
     </div>
 </div>
 
+
 <!-- 3. Модальне вікно "Новини" (z-50) -->
 <div id="news-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="news-title" role="dialog" aria-modal="true">
     <div class="modal-content-container max-w-4xl w-full neon-border-box">
         <div class="modal-content-inner">
-            <!-- Заголовок -->
             <div class="modal-header">
                 <h2 class="text-3xl lg:text-4xl font-extrabold text-white section-title text-center" id="news-title">Останні новини</h2>
                 <button class="modal-close-btn">
@@ -635,8 +634,9 @@
     </div>
 </div>
 
-<!-- ОНОВЛЕНО: Вікно "Бланки" (z-50) - тепер завантажується динамічно -->
-<div id="student-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="student-title" role="dialog" aria-modal="true" data-content-url="content/blanks.html">
+<!-- ОНОВЛЕНО: Вікно "Бланки" (z-50) -->
+<!-- ВИПРАВЛЕНО: data-content-url="content/blank.html" (без 's') -->
+<div id="student-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="student-title" role="dialog" aria-modal="true" data-content-url="content/blank.html">
     <div class="modal-content-container max-w-4xl w-full neon-border-box">
         <div class="modal-content-inner">
             <div class="modal-header">
@@ -656,7 +656,7 @@
     </div>
 </div>
 
-<!-- ОНОВЛЕНО: Вікно "Дисципліни" (z-50) - тепер завантажується динамічно -->
+<!-- ОНОВЛЕНО: Вікно "Дисципліни" (z-50) -->
 <div id="disciplines-modal" class="modal-base hidden fixed inset-0 z-50" aria-labelledby="disciplines-title" role="dialog" aria-modal="true" data-content-url="content/disciplines.html">
     <div class="modal-content-container max-w-4xl w-full neon-border-box">
         <div class="modal-content-inner">
@@ -703,7 +703,9 @@
 </button>
 
 <!-- Підключення скриптів -->
+<!-- 1. Наш файл з даними про викладачів -->
 <script src="staff_data.js" defer></script>
+<!-- 2. Наш головний скрипт (з логікою завантаження) -->
 <script src="script.js" defer></script>
 
 </body>
