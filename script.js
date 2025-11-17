@@ -2,9 +2,8 @@
 ================================================================
 ГОЛОВНИЙ СКРИПТ САЙТУ (script.js)
 ================================================================
-Версія 3.0 (з "Лінивим Завантаженням")
-- Завантажує модальні вікна та контакти з папки /modal/
-- Включає всі попередні фікси (блюр, неон, меню, скролбари)
+Версія 3.1 (Виправлено "Гонку завантаження" (Race Condition))
+- openModal тепер чекає, доки modals.html не завантажиться
 ================================================================
 */
 
@@ -14,14 +13,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const htmlEl = document.documentElement; 
     const modalOverlay = document.getElementById('modal-overlay'); 
     let neonTimer = null; 
+
+    // ОНОВЛЕНО: Створюємо "сигнал" (Promise), який повідомить, коли модалки завантажено
+    let modalsLoadedPromise = new Promise((resolve, reject) => {
+        // Ми "підмішаємо" resolve/reject у callback-функцію завантажувача
+        document.body.addEventListener('modalsLoaded', () => resolve(true));
+        document.body.addEventListener('modalsFailed', (e) => reject(e.detail));
+    });
     
     // --- 1. ЛОГІКА ДИНАМІЧНОГО ЗАВАНТАЖЕННЯ (LAZY LOAD) ---
     
     /**
      * Асинхронно завантажує HTML-контент з файлу і вставляє його в контейнер.
-     * @param {string} containerId - ID елемента, куди вставити контент.
-     * @param {string} url - Шлях до .html файлу.
-     * @param {function} [callback] - (Опціонально) Функція, яка виконається ПІСЛЯ завантаження.
      */
     async function loadDynamicContent(containerId, url, callback) {
         const targetContainer = document.getElementById(containerId);
@@ -43,32 +46,32 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const html = await response.text();
             
-            // Вставляємо контент
             targetContainer.innerHTML = html;
-            targetContainer.dataset.loaded = 'true'; // Позначаємо, що контент завантажено
+            targetContainer.dataset.loaded = 'true';
             
-            // Запускаємо анімації для нового контенту
+            // ОНОВЛЕНО: Посилаємо сигнал про успішне завантаження
+            if (containerId === 'modal-container') {
+                document.body.dispatchEvent(new Event('modalsLoaded'));
+            }
+
             initializeRevealObserver(targetContainer);
             
-            // Викликаємо callback (якщо він є)
             if (callback) callback(targetContainer);
 
         } catch (error) {
             console.error(`Помилка завантаження контенту для #${containerId} з ${url}:`, error);
-            // Виводимо помилку користувачу
+            
+            // ОНОВЛЕНО: Посилаємо сигнал про помилку
+            if (containerId === 'modal-container') {
+                // Передаємо деталі помилки
+                document.body.dispatchEvent(new CustomEvent('modalsFailed', { detail: error }));
+            }
+
             targetContainer.innerHTML = `<div class="p-6 text-center text-red-400">Помилка завантаження контенту. Будь ласка, спробуйте пізніше.</div>`;
         }
     }
 
-    // 1.1. Завантажуємо ВЕСЬ вміст модальних вікон (з /modal/modals.html)
-    // Це робиться один раз при завантаженні сторінки
-    loadDynamicContent('modal-container', 'modal/modals.html', () => {
-        console.log('Модальні вікна завантажено.');
-        // Після завантаження модалок, ми повинні "навісити" на них слухачі
-        initializeModalListeners();
-    });
-
-    // 1.2. Завантажуємо секцію "Контакти" (з /modal/contacts.html)
+    // 1.1. Завантажуємо ВЕСЬ вміст модальних вікон
     // Це теж робиться один раз при завантаженні сторінки
     loadDynamicContent('contacts-container', 'modal/contacts.html', () => {
         console.log('Секцію "Контакти" завантажено.');
@@ -132,8 +135,20 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // --- 5. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН ---
     
-    // 5.1. Функція ВІДКРИТТЯ модального вікна
-    function openModal(modalId) {
+    // 5.1. Функція ВІДКРИТТЯ модального вікна (ОНОВЛЕНО: стала async)
+    async function openModal(modalId) {
+
+        // ОНОВЛЕНО: Чекаємо, доки модалки не будуть завантажені
+        try {
+            await modalsLoadedPromise;
+        } catch (error) {
+            console.error("Не вдалося відкрити модальне вікно, оскільки вони не завантажились.", error);
+            // Використовуємо кастомний бокс замість alert()
+            showErrorModal("Помилка завантаження. Спробуйте оновити сторінку.");
+            return;
+        }
+
+        // Тепер ми ВПЕВНЕНІ, що getElementById знайде вікно
         const targetModal = document.getElementById(modalId);
         if (targetModal) {
             
@@ -163,6 +178,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (modalId === 'news-modal') {
                 initializeNewsSlider(targetModal);
             }
+        } else {
+            console.error(`Модальне вікно з ID #${modalId} не знайдено, хоча modals.html мав бути завантажений.`);
         }
     }
 
@@ -187,39 +204,40 @@ document.addEventListener('DOMContentLoaded', function() {
                     modalOverlay.classList.remove('modal-overlay-top');
                 }, 300); 
             } 
-            else if (isTopModal && anyModalStillVisible) {
-                 modalOverlay.classList.remove('modal-overlay-top');
-            }
+    // 5.5. Кастомне вікно помилок (замість alert)
+    function showErrorModal(message) {
+        let errorModal = document.getElementById('error-modal');
+        if (!errorModal) {
+            // Створюємо вікно, якщо його немає
+            errorModal = document.createElement('div');
+            errorModal.id = 'error-modal';
+            errorModal.className = 'modal-base fixed inset-0 z-[99]'; // Найвищий z-index
+            errorModal.innerHTML = `
+                <div class="modal-content-container max-w-sm w-full neon-border-box">
+                    <div class="modal-content-inner">
+                        <div class="modal-header">
+                            <h2 class="text-2xl font-bold text-red-400 section-title">Помилка</h2>
+                            <button class="modal-close-btn" data-close-id="error-modal">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </div>
+                        <div class="modal-scroll-content p-6">
+                            <p class="text-slate-300" id="error-modal-text"></p>
+                        </div>
+                    </div>
+                </div>`;
+            document.body.appendChild(errorModal);
             
-        }, 300); 
+            // Навішуємо слухач на кнопку закриття
+            errorModal.querySelector('.modal-close-btn').addEventListener('click', () => {
+                closeModal(errorModal);
+            });
+        }
+        
+        document.getElementById('error-modal-text').textContent = message;
+        openModal('error-modal');
     }
 
-    // 5.3. Закриття по клавіші "Escape"
-    document.addEventListener('keydown', (e) => {
-        if (e.key === "Escape") {
-            const topModal = document.querySelector('#staff-detail-modal.modal-visible') || document.querySelector('#small-news-modal.modal-visible');
-            if (topModal) {
-                closeModal(topModal); 
-            } else {
-                document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
-                     closeModal(modal);
-                });
-            }
-            if (mobileMenu && mobileMenu.classList.contains('open')) {
-                mobileMenu.classList.remove('open');
-                menuOpenIcon.classList.remove('hidden');
-                menuCloseIcon.classList.add('hidden');
-                htmlEl.classList.remove('modal-open');
-            }
-        }
-    });
-    
-    // 5.4. Закриття по кліку на темний фон
-    modalOverlay.addEventListener('click', () => {
-        document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
-             closeModal(modal);
-        });
-    });
 
     // --- 6. ЛОГІКА НАВІГАЦІЇ (Меню та Неон) ---
     // Ця функція "слухає" кліки на всі посилання в хедері та мобільному меню
