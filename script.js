@@ -2,7 +2,13 @@
 ================================================================
 ГОЛОВНИЙ СКРИПТ САЙТУ (script.js)
 ================================================================
-ОНОВЛЕНО: Додано логіку динамічного завантаження контенту (Lazy Loading)
+Версія 2.0 (Стабільна, без "лінивого завантаження")
+Включає всі виправлення:
+- Блюр модалок
+- Фікс неону
+- Фікс мобільного меню
+- Фікс скролбару вкладок
+- Прихований скролбар мобільного меню
 ================================================================
 */
 
@@ -25,9 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if(mobileMenuButton) {
         mobileMenuButton.addEventListener('click', () => {
             const isOpen = mobileMenu.classList.toggle('open');
-            // Блокуємо скрол сторінки, якщо меню відкрите
-            // АЛЕ: не блокуємо, якщо вже відкрито модальне вікно
-            if (!document.body.classList.contains('modal-open')) {
+            
+            // Блокуємо скрол, тільки якщо модалка НЕ відкрита
+            const modalIsOpen = document.querySelector('.modal-base.modal-visible');
+            if (!modalIsOpen) {
                  htmlEl.classList.toggle('modal-open', isOpen);
             }
             menuOpenIcon.classList.toggle('hidden');
@@ -51,111 +58,54 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- 3. АНІМАЦІЯ ПОЯВИ ЕЛЕМЕНТІВ ПРИ СКРОЛІ ---
-    function initializeRevealObserver(container) {
-        const revealElements = container.querySelectorAll('.reveal');
-        if (revealElements.length > 0) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1
+    const revealElements = document.querySelectorAll('.reveal');
+    if (revealElements.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-            revealElements.forEach(el => {
-                observer.observe(el);
-            });
-        }
+        }, {
+            threshold: 0.1
+        });
+        revealElements.forEach(el => {
+            observer.observe(el);
+        });
     }
-    initializeRevealObserver(document.body);
-
 
     // --- 4. КНОПКА "ПОКАЗАТИ ВСІХ" (у вкладці Персонал) ---
-    const kafedraModalForStaff = document.getElementById('kafedra-modal');
-    if (kafedraModalForStaff) {
-        kafedraModalForStaff.addEventListener('click', function(e) {
-            const toggleBtn = e.target.closest('#toggle-staff-btn');
-            if (toggleBtn) {
-                const staffTab = toggleBtn.closest('#tab-staff');
-                if (!staffTab) return;
+    const toggleStaffBtn = document.getElementById('toggle-staff-btn');
+    const hiddenStaff = document.getElementById('hidden-staff');
+    const toggleStaffText = document.getElementById('toggle-staff-text');
+    const toggleStaffIcon = document.getElementById('toggle-staff-icon');
 
-                const hiddenStaff = staffTab.querySelector('#hidden-staff');
-                const toggleStaffText = toggleBtn.querySelector('#toggle-staff-text');
-                const toggleStaffIcon = toggleBtn.querySelector('#toggle-staff-icon');
-
-                if (hiddenStaff && toggleStaffText && toggleStaffIcon) {
-                    const isHidden = hiddenStaff.classList.toggle('hidden');
-                    toggleStaffIcon.classList.toggle('rotate-180');
-                    if (isHidden) {
-                        toggleStaffText.textContent = 'Показати всіх';
-                    } else {
-                        toggleStaffText.textContent = 'Згорнути';
-                    }
-                }
+    if (toggleStaffBtn) {
+        toggleStaffBtn.addEventListener('click', () => {
+            const isHidden = hiddenStaff.classList.toggle('hidden');
+            toggleStaffIcon.classList.toggle('rotate-180');
+            if (isHidden) {
+                toggleStaffText.textContent = 'Показати всіх';
+            } else {
+                toggleStaffText.textContent = 'Згорнути';
             }
         });
     }
     
-    // --- 5. ЛОГІКА ДИНАМІЧНОГО ЗАВАНТАЖЕННЯ КОНТЕНТУ (LAZY LOAD) ---
-    async function loadDynamicContent(targetContainer) {
-        const url = targetContainer.dataset.contentUrl;
-        if (!url) return;
-
-        if (targetContainer.dataset.loaded === 'true' || targetContainer.dataset.loading === 'true') {
-            return;
-        }
-
-        targetContainer.dataset.loading = 'true';
-        
-        try {
-            // ВИПРАВЛЕНО: Додаємо cache: 'no-cache' щоб уникнути проблем з кешуванням
-            const response = await fetch(url, { cache: 'no-cache' });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status} (File: ${url})`);
-            }
-            const html = await response.text();
-            
-            targetContainer.innerHTML = html;
-            targetContainer.dataset.loaded = 'true';
-            targetContainer.dataset.loading = 'false';
-
-            if (targetContainer.id === 'tab-staff') {
-                activateStaffCards(targetContainer);
-            }
-
-            initializeRevealObserver(targetContainer);
-            
-        } catch (error) {
-            console.error("Помилка завантаження контенту:", error);
-            targetContainer.innerHTML = `<p class="p-6 text-red-400">Помилка завантаження контенту. Будь ласка, спробуйте пізніше.</p>`;
-            targetContainer.dataset.loading = 'false';
-        }
-    }
-
-    // --- 6. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН ---
+    // --- 5. ЗАГАЛЬНА ЛОГІКА МОДАЛЬНИХ ВІКОН ---
     
+    // 5.1. Функція ВІДКРИТТЯ модального вікна
     function openModal(modalId) {
         const targetModal = document.getElementById(modalId);
         if (targetModal) {
             
+            // Логіка блюру (v3 - фікс)
             const isTopModal = (modalId === 'staff-detail-modal' || modalId === 'small-news-modal');
             
             if (isTopModal) {
-                modalOverlay.classList.add('modal-overlay-top');
+                modalOverlay.classList.add('modal-overlay-top'); // z-55
             } else {
                 modalOverlay.classList.remove('modal-overlay-top');
-            }
-
-            // Перевіряємо, чи треба завантажити контент
-            if (targetModal.dataset.contentUrl) {
-                const contentContainer = targetModal.querySelector('.modal-scroll-content');
-                if(contentContainer) {
-                    if (!contentContainer.dataset.contentUrl) {
-                        contentContainer.dataset.contentUrl = targetModal.dataset.contentUrl;
-                    }
-                    loadDynamicContent(contentContainer);
-                }
             }
 
             modalOverlay.classList.remove('hidden');
@@ -166,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 targetModal.classList.add('modal-visible');
             }, 10); 
             
-            // Блокуємо скрол сторінки
             htmlEl.classList.add('modal-open');
 
             if (modalId === 'kafedra-modal') {
@@ -175,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // 5.2. Функція ЗАКРИТТЯ модального вікна
     function closeModal(modal) {
         if (!modal) return;
         
@@ -188,10 +138,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const anyModalStillVisible = document.querySelector('.modal-base.modal-visible');
             
             // Якщо це було ОСТАННЄ вікно
-            // І мобільне меню теж закрите
             if (!anyModalStillVisible && !mobileMenu.classList.contains('open')) {
                 modalOverlay.style.opacity = '0';
-                htmlEl.classList.remove('modal-open'); // Розблокувати скрол
+                htmlEl.classList.remove('modal-open');
                 setTimeout(() => {
                     modalOverlay.classList.add('hidden');
                     modalOverlay.classList.remove('modal-overlay-top');
@@ -205,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300); 
     }
 
+    // 5.3. Налаштування кнопок закриття (хрестики)
     document.querySelectorAll('.modal-close-btn').forEach(button => {
         button.addEventListener('click', (e) => {
             const modalToClose = e.target.closest('.modal-base');
@@ -212,36 +162,38 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // 5.4. Закриття по кліку на темний фон
     modalOverlay.addEventListener('click', () => {
         document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
              closeModal(modal);
         });
     });
 
+    // 5.5. Закриття по клавіші "Escape"
     document.addEventListener('keydown', (e) => {
         if (e.key === "Escape") {
+            // Шукаємо найвище вікно
             const topModal = document.querySelector('#staff-detail-modal.modal-visible') || document.querySelector('#small-news-modal.modal-visible');
             if (topModal) {
                 closeModal(topModal); 
             } else {
+                // Інакше закриваємо всі інші
                 document.querySelectorAll('.modal-base.modal-visible').forEach(modal => {
                      closeModal(modal);
                 });
             }
             
+            // Закриваємо мобільне меню
             if (mobileMenu && mobileMenu.classList.contains('open')) {
                 mobileMenu.classList.remove('open');
                 menuOpenIcon.classList.remove('hidden');
                 menuCloseIcon.classList.add('hidden');
-                // Розблокуємо скрол, якщо модалки не відкриті
-                if (!document.querySelector('.modal-base.modal-visible')) {
-                    htmlEl.classList.remove('modal-open');
-                }
+                htmlEl.classList.remove('modal-open');
             }
         }
     });
 
-    // --- 7. ЛОГІКА НАВІГАЦІЇ (Меню та Неон) ---
+    // --- 6. ЛОГІКА НАВІГАЦІЇ (Меню та Неон) ---
     allNavLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             
@@ -249,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.dataset.targetId; 
             const tabTarget = this.dataset.tabTarget; 
             
+            // A. Якщо це посилання ВІДКРИВАЄ МОДАЛЬНЕ ВІКНО
             if (modalId) {
                 e.preventDefault(); 
                 e.stopPropagation(); 
@@ -268,10 +221,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             }
+            // B. Якщо це звичайне посилання-ЯКІР
             else {
                 document.querySelectorAll('.modal-base.modal-visible').forEach(m => closeModal(m));
             }
             
+            // C. Логіка НЕОНОВОЇ ПІДСВІТКИ
             if (targetId) {
                 let targetTitle;
                 
@@ -305,9 +260,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
-            // Закрити мобільне меню після кліку
+            // D. Закрити мобільне меню після кліку
             if (mobileMenu && mobileMenu.classList.contains('open')) {
                 
+                // Фікс: Не закривати, якщо це кнопка випадаючого меню
                 const isDropdownToggle = this.classList.contains('mobile-dropdown-toggle');
 
                 if (!isDropdownToggle) { 
@@ -324,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- 8. ЛОГІКА СЛАЙДЕРА НОВИН ---
+    // --- 7. ЛОГІКА СЛАЙДЕРА НОВИН ---
     const sliderContainer = document.getElementById('news-slider-container');
     const dotsContainer = document.getElementById('news-dots-container');
     
@@ -336,7 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         for (let i = 0; i < totalDots; i++) {
             const dot = document.createElement('button');
-            // ОНОВЛЕНО: Колір крапок
             dot.className = 'news-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-500';
             dot.setAttribute('aria-label', `Перейти до новини ${i + 1}`);
             dot.addEventListener('click', () => {
@@ -352,8 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const updateDots = () => {
             const scrollLeft = sliderContainer.scrollLeft;
             const containerWidth = sliderContainer.clientWidth;
-            // ОНОВЛЕНО: Виправлено логіку для 2+ слайдів
-            let activeDotIndex = Math.floor( (scrollLeft + containerWidth / 3) / containerWidth );
+            let activeDotIndex = Math.round(scrollLeft / containerWidth);
             
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === activeDotIndex);
@@ -364,10 +318,9 @@ document.addEventListener('DOMContentLoaded', function() {
         sliderContainer.addEventListener('scroll', updateDots, { passive: true });
     }
 
-    // --- 9. ЛОГІКА "ЧИТАТИ ДАЛІ" (Маленьке вікно новин) ---
-    document.body.addEventListener('click', function(e) {
-        const openBtn = e.target.closest('.open-small-modal-btn');
-        if (openBtn) {
+    // --- 8. ЛОГІКА "ЧИТАТИ ДАЛІ" (Маленьке вікно новин) ---
+    document.querySelectorAll('.open-small-modal-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation(); 
 
@@ -377,15 +330,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const modalText = document.getElementById('small-news-modal-text');
 
             if (smallModal && modalDate && modalTitle && modalText) {
-                modalDate.textContent = openBtn.dataset.date;
-                modalTitle.textContent = openBtn.dataset.title;
-                modalText.textContent = openBtn.dataset.text.replace(/\\n/g, '\n'); 
+                modalDate.textContent = this.dataset.date;
+                modalTitle.textContent = this.dataset.title;
+                modalText.textContent = this.dataset.text.replace(/\\n/g, '\n'); 
                 openModal('small-news-modal'); 
             }
-        }
+        });
     });
     
-    // --- 10. ЛОГІКА ВКЛАДОК (Tabs) ---
+    // --- 9. ЛОГІКА ВКЛАДОК (Tabs) ---
     function activateTab(modal, tabId) {
         const tabButtons = modal.querySelectorAll('.modal-tab');
         const tabContents = modal.querySelectorAll('.modal-tab-pane');
@@ -399,13 +352,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (targetButton) targetButton.classList.add('active');
         if (targetContent) {
             targetContent.classList.add('active');
-            
-            // Завантажуємо контент для вкладки
-            loadDynamicContent(targetContent);
         }
     }
 
     function resetKafedraTabs() {
+        const kafedraModal = document.getElementById('kafedra-modal');
         if (kafedraModal) {
             activateTab(kafedraModal, 'tab-history');
         }
@@ -431,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- 11. ЛОГІКА ВИПАДАЮЧИХ МЕНЮ (для мобільних) ---
+    // --- 10. ЛОГІКА ВИПАДАЮЧИХ МЕНЮ (для мобільних) ---
     const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
     mobileDropdownToggles.forEach(toggle => {
         toggle.addEventListener('click', (e) => {
@@ -446,11 +397,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- 12. ЛОГІКА "ДЕТАЛІ ПРО ВИКЛАДАЧА" (з staff_data.js) ---
-    function activateStaffCards(container) {
-        const staffDetailModal = document.getElementById('staff-detail-modal');
-        if (!staffDetailModal) return;
-
+    // --- 11. ЛОГІКА "ДЕТАЛІ ПРО ВИКЛАДАЧА" (з staff_data.js) ---
+    const staffDetailModal = document.getElementById('staff-detail-modal');
+    if (staffDetailModal) {
         const detailName = document.getElementById('staff-detail-name');
         const detailTitle = document.getElementById('staff-detail-title');
         const detailImg = document.getElementById('staff-detail-img');
@@ -459,9 +408,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const detailDisciplines = document.getElementById('staff-detail-disciplines');
         const detailBio = document.getElementById('staff-detail-bio');
 
-        container.querySelectorAll('.staff-card').forEach(card => {
+        document.querySelectorAll('.staff-card').forEach(card => {
             card.addEventListener('click', (e) => {
-                e.stopPropagation();
+                e.stopPropagation(); 
                 const staffId = card.dataset.staffId;
                 
                 if (typeof staffDetailsData !== 'undefined' && staffDetailsData[staffId]) {
@@ -499,7 +448,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             a.href = link.url;
                             a.target = '_blank';
                             a.rel = 'noopener noreferrer';
-                            // ОНОВЛЕНО: Колір посилань
                             a.className = 'text-sky-400 hover:text-sky-300 block truncate';
                             a.textContent = link.name;
                             li.appendChild(a);
