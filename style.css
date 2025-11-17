@@ -189,11 +189,13 @@ body {
 .modal-scroll-content {
     overflow-y: auto;
     flex-grow: 1;
-    /* p-6 тепер знаходиться у файлах контенту */
 }
-/* Спеціальні відступи для вкладок */
+/* Спеціальні відступи для вкладок (де заголовок окремо) */
 #kafedra-modal .modal-scroll-content {
     padding: 0;
+}
+#kafedra-modal .modal-tab-pane {
+    /* Відступи p-6 тепер вбудовані у HTML контент */
 }
 
 /* Скролбар всередині модальних вікон */
@@ -215,7 +217,6 @@ body {
      scrollbar-width: thin; 
      scrollbar-color: #38bdf8 #1e293b;
 }
-
 
 /* === Слайдер Новин (News Slider) === */
 .news-slider-container {
@@ -250,6 +251,7 @@ html.modal-open {
 
 /* === Вкладки (Tabs) у Модалці "Кафедра" === */
 .modal-tabs-container {
+    /* border-bottom: 2px solid #334155; */ /* Прибрано */
     display: flex;
     overflow-x: auto;
     background-color: #1e293b;
@@ -259,6 +261,7 @@ html.modal-open {
     padding: 0.75rem 1rem;
     font-weight: 600;
     color: #94a3b8;
+    /* border-bottom: 3px solid transparent; */ /* Прибрано */
     white-space: nowrap;
     transition: all 0.2s ease;
 }
@@ -395,7 +398,6 @@ html.modal-open {
     overflow-y: auto;
     padding-bottom: 2rem;
     pointer-events: none;
-    /* Приховуємо скролбар, але залишаємо прокрутку */
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -408,7 +410,7 @@ html.modal-open {
     pointer-events: auto;
 }
 
-/* Стилі для завантажувача контенту (Spinner) */
+/* Стилі для Спіннера завантаження (з минулого разу) */
 .content-loader-container {
     display: flex;
     justify-content: center;
