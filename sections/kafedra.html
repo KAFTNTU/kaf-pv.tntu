@@ -15,30 +15,27 @@
     <div class="bg-slate-800 rounded-2xl p-8 shadow-xl">
         <div class="grid md:grid-cols-2 gap-8 items-start mb-8">
             
-            <!-- ЛІВА КОЛОНКА (ФОТО + СТАТИСТИКА) -->
-            <div class="sticky top-20 self-start">
-                <!-- Контейнер relative для фото і накладених елементів -->
+            <!-- ЛІВА КОЛОНКА (ФОТО + СТАТИСТИКА ПІД НИМ) -->
+            <div class="sticky top-20 self-start space-y-4">
+                <!-- Фото -->
                 <div class="relative overflow-hidden rounded-xl shadow-2xl group">
                     <img src="ludipv.jpg" alt="Колектив кафедри" class="w-full object-cover transform group-hover:scale-105 transition duration-700" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Кафедра+ПВ'">
-                    
-                    <!-- Затемнення знизу -->
-                    <div class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent opacity-90"></div>
+                </div>
 
-                    <!-- Цифри (Статистика) - Тепер всередині, притиснуті до низу -->
-                    <div class="absolute bottom-0 left-0 right-0 p-3">
-                        <div class="grid grid-cols-2 gap-2 text-center">
-                            <div class="bg-slate-800/60 backdrop-blur-md p-3 rounded-lg border border-slate-600/30 hover:bg-slate-800/80 transition">
-                                <span class="block text-2xl font-bold text-sky-400">30</span>
-                                <span class="text-[10px] text-slate-200 uppercase font-bold tracking-wider">років досвіду</span>
-                            </div>
-                            <div class="bg-slate-800/60 backdrop-blur-md p-3 rounded-lg border border-slate-600/30 hover:bg-slate-800/80 transition">
-                                <span class="block text-2xl font-bold text-sky-400">1000+</span>
-                                <span class="text-[10px] text-slate-200 uppercase font-bold tracking-wider">випускників</span>
-                            </div>
-                            <div class="bg-slate-800/60 backdrop-blur-md p-3 rounded-lg border border-slate-600/30 hover:bg-slate-800/80 transition col-span-2">
-                                <span class="block text-2xl font-bold text-sky-400">15+</span>
-                                <span class="text-[10px] text-slate-200 uppercase font-bold tracking-wider">партнерів кафедри</span>
-                            </div>
+                <!-- Цифри (Статистика) - Тепер окремий блок під фото -->
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 backdrop-blur-sm">
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div class="p-2">
+                            <span class="block text-3xl font-bold text-sky-400">30</span>
+                            <span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">років досвіду</span>
+                        </div>
+                        <div class="p-2 border-l border-slate-700/50">
+                            <span class="block text-3xl font-bold text-sky-400">1000+</span>
+                            <span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">випускників</span>
+                        </div>
+                        <div class="col-span-2 border-t border-slate-700/50 pt-2 mt-2">
+                            <span class="block text-3xl font-bold text-sky-400">15+</span>
+                            <span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">партнерів кафедри</span>
                         </div>
                     </div>
                 </div>
@@ -89,7 +86,7 @@
 <!-- Staff Tab -->
 <div id="tab-staff" class="sub-tab-content hidden">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Palamar -->
+         <!-- Palamar -->
         <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card group" data-staff-id="palamar">
             <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4 group-hover:scale-105 transition duration-300" src="image/palamar.png" alt="Паламар М.І." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
             <h3 class="text-lg font-bold text-white">Паламар М.І.</h3>
