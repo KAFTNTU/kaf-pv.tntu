@@ -5,10 +5,10 @@
 ================================================================
 */
 
-// --- 1. ГЛОБАЛЬНІ ФУНКЦІЇ (Визначені одразу, щоб HTML бачив їх) ---
+// --- 1. ГЛОБАЛЬНІ ФУНКЦІЇ ---
 
 // Функція перемикання основних вкладок
-window.switchTab = function(tabId, scrollTargetId = null) {
+window.switchTab = function(tabId, scrollTargetId = null, subTabTarget = null) {
     // 1. Приховати всі секції
     document.querySelectorAll('.tab-content').forEach(el => {
         el.classList.add('hidden');
@@ -27,57 +27,53 @@ window.switchTab = function(tabId, scrollTargetId = null) {
     const targetSection = document.getElementById('tab-' + tabId);
     if (targetSection) {
         targetSection.classList.remove('hidden');
-        // Перезапуск анімації
         targetSection.classList.remove('fade-in');
         void targetSection.offsetWidth; // trigger reflow
         targetSection.classList.add('fade-in');
     } else {
-        // Fallback: якщо секції немає, показуємо Home
          const homeSection = document.getElementById('tab-home');
          if (homeSection) homeSection.classList.remove('hidden');
     }
 
-    // 4. Закрити мобільне меню (якщо відкрите)
+    // 4. Якщо передано під-вкладку (наприклад, для кафедри)
+    if (subTabTarget) {
+        switchSubTab(subTabTarget);
+    }
+
+    // 5. Закрити мобільне меню
     const mobileMenu = document.getElementById('mobile-menu');
     if (mobileMenu) {
         mobileMenu.classList.remove('translate-x-0');
         mobileMenu.classList.add('translate-x-full');
     }
 
-    // 5. Скрол
+    // 6. Скрол
     if (scrollTargetId) {
-        // Якщо є конкретний якір (наприклад контакти)
         setTimeout(() => {
             const el = document.getElementById(scrollTargetId);
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
     } else {
-        // Просто нагору
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 };
 
-// Функція перемикання під-вкладок (Кафедра -> Історія/Персонал)
+// Функція перемикання під-вкладок
 window.switchSubTab = function(subTabId) {
     const parentSection = document.getElementById('tab-kafedra'); 
     if (!parentSection) return;
 
-    // Приховати всі sub-tab-content
     parentSection.querySelectorAll('.sub-tab-content').forEach(el => {
          el.classList.add('hidden');
     });
     
-    // Деактивувати кнопки
     parentSection.querySelectorAll('.sub-tab-btn').forEach(btn => {
         btn.classList.remove('active');
     });
 
-    // Показати потрібний контент
     const targetSub = document.getElementById(subTabId);
     if (targetSub) targetSub.classList.remove('hidden');
     
-    // Активувати кнопку
-    // Шукаємо кнопку, яка викликає цей subTabId
     const btns = parentSection.querySelectorAll('.sub-tab-btn');
     btns.forEach(btn => {
         const onClickAttr = btn.getAttribute('onclick');
@@ -87,7 +83,7 @@ window.switchSubTab = function(subTabId) {
     });
 };
 
-// Функція відкриття модального вікна (Popups)
+// Функція відкриття модального вікна
 window.openModal = function(modalId) {
     const overlay = document.getElementById('modal-overlay');
     const modal = document.getElementById(modalId);
@@ -95,7 +91,6 @@ window.openModal = function(modalId) {
     if (overlay && modal) {
         overlay.classList.remove('hidden');
         modal.classList.remove('hidden');
-        // Анімація
         setTimeout(() => {
             overlay.classList.remove('opacity-0');
             modal.classList.remove('opacity-0', 'scale-95');
@@ -125,10 +120,9 @@ window.closeAllModals = function() {
     }
 };
 
-// --- 2. ІНІЦІАЛІЗАЦІЯ ПРИ ЗАВАНТАЖЕННІ ---
+// --- 2. ІНІЦІАЛІЗАЦІЯ ---
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Мобільне меню (кнопки)
     const mobileMenuBtn = document.getElementById('mobile-menu-button');
     const closeMobileBtn = document.getElementById('close-mobile-menu');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -146,21 +140,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Логіка карток персоналу (клік по картці)
+    // Staff Cards
     document.querySelectorAll('.staff-card').forEach(card => {
         card.addEventListener('click', () => {
             const staffId = card.dataset.staffId;
-            // Перевірка наявності даних (з файлу staff_data.js)
             if (typeof staffDetailsData !== 'undefined' && staffDetailsData[staffId]) {
                 const data = staffDetailsData[staffId];
                 
-                // Заповнення полів модального вікна
                 const nameEl = document.getElementById('staff-detail-name');
                 const titleEl = document.getElementById('staff-detail-title');
                 const imgEl = document.getElementById('staff-detail-img');
                 const detailsEl = document.getElementById('staff-detail-details');
                 const discContainer = document.getElementById('staff-detail-disciplines');
                 const linkContainer = document.getElementById('staff-detail-links');
+                const bioEl = document.getElementById('staff-detail-bio');
 
                 if(nameEl) nameEl.textContent = data.name;
                 if(titleEl) titleEl.textContent = data.title;
@@ -170,28 +163,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if(detailsEl) detailsEl.innerHTML = data.details;
                 
-                // Списки дисциплін
                 if(discContainer) {
                     discContainer.innerHTML = data.disciplines.length 
                         ? data.disciplines.map(d => `<div class="mb-1">• ${d}</div>`).join('') 
                         : 'Немає даних';
                 }
                 
-                // Посилання
                 if(linkContainer) {
                     linkContainer.innerHTML = data.links.length 
                         ? data.links.map(l => `<a href="${l.url}" target="_blank" class="block hover:underline mb-1 text-sky-400">${l.name}</a>`).join('') 
                         : 'Немає посилань';
                 }
 
+                if(bioEl) {
+                    bioEl.innerHTML = data.bio || '';
+                }
+
                 openModal('staff-detail-modal');
-            } else {
-                console.warn('Staff data not found for:', staffId);
             }
         });
     });
 
-    // Логіка "Читати далі" (Новини)
+    // News Read More
     document.querySelectorAll('.open-small-modal-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const titleEl = document.getElementById('small-news-title');
@@ -206,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Кнопка "Нагору"
+    // Scroll Top
     const scrollBtn = document.getElementById('scrollToTopBtn');
     if(scrollBtn) {
         window.addEventListener('scroll', () => {
@@ -218,6 +211,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Запуск: відкрити Home за замовчуванням
     switchTab('home');
 });
