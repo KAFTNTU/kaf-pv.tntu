@@ -21,7 +21,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* === Навігаційні кнопки (ТІЛЬКИ СВІТІННЯ, БЕЗ СМУЖОК) === */
+/* === Навігаційні кнопки === */
 .nav-btn {
     padding: 0.5rem 1rem;
     margin: 0 0.25rem;
@@ -41,13 +41,10 @@ body {
 
 .nav-btn.active {
     color: #38bdf8;
-    /* Лише світіння тексту */
     text-shadow: 0 0 15px rgba(56, 189, 248, 1), 0 0 30px rgba(56, 189, 248, 0.6);
 }
 
-/* Блок .nav-btn.active::after ПРИБРАНО, щоб не було смужки знизу */
-
-/* === Внутрішні вкладки (ТІЛЬКИ СВІТІННЯ, БЕЗ СМУЖОК) === */
+/* Внутрішні вкладки */
 .sub-tab-btn {
     padding: 0.5rem 1.25rem;
     font-size: 0.95rem;
@@ -55,7 +52,6 @@ body {
     color: #94a3b8;
     background-color: transparent;
     border: none;
-    /* Прибрано border-bottom */
     transition: all 0.3s;
 }
 
@@ -66,7 +62,6 @@ body {
 
 .sub-tab-btn.active {
     color: #38bdf8;
-    /* Прибрано border-bottom-color */
     text-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
 }
 
@@ -116,7 +111,7 @@ body {
     padding: 1rem 0;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #cbd5e1;
+    color: #ffffff; /* Білий колір */
     border-bottom: 1px solid #334155;
 }
 .mobile-link:hover, .mobile-link.active {
@@ -130,7 +125,7 @@ body {
     text-align: left;
     padding: 0.5rem 0;
     font-size: 1rem;
-    color: #94a3b8;
+    color: #e2e8f0; /* Світло-сірий/майже білий */
     transition: color 0.2s;
 }
 .mobile-sub-link:hover {
