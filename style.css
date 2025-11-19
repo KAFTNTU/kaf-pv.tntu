@@ -9,9 +9,10 @@ body {
 
 /* Frosted glass header */
 .frosted-glass {
-    background-color: rgba(15, 23, 42, 0.85);
+    background-color: rgba(15, 23, 42, 0.9);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.1);
 }
 
 /* Анімація появи вкладок */
@@ -30,32 +31,61 @@ body {
     }
 }
 
-/* Навігаційні кнопки (Вкладки) - НЕОНОВИЙ ЕФЕКТ */
+/* === Навігаційні кнопки (ТІЛЬКИ СВІТІННЯ) === */
 .nav-btn {
     padding: 0.5rem 1rem;
     margin: 0 0.25rem;
-    border-radius: 0.5rem;
     color: #94a3b8; /* slate-400 */
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.3s ease;
     position: relative;
-    border: 1px solid transparent; 
+    background: transparent;
+    border: none;
 }
 
 .nav-btn:hover {
     color: #7dd3fc; /* text-sky-300 */
-    background-color: rgba(14, 165, 233, 0.1);
-    text-shadow: 0 0 8px rgba(56, 189, 248, 0.6); /* Блакитний неон */
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.1);
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
+    transform: translateY(-1px);
 }
 
 .nav-btn.active {
     color: #38bdf8; /* sky-400 */
-    background-color: rgba(14, 165, 233, 0.15);
-    border-color: rgba(56, 189, 248, 0.4);
-    /* СИЛЬНИЙ НЕОН ДЛЯ АКТИВНОЇ ВКЛАДКИ */
-    text-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3), inset 0 0 5px rgba(56, 189, 248, 0.1);
+    text-shadow: 0 0 15px rgba(56, 189, 248, 1), 0 0 30px rgba(56, 189, 248, 0.6);
+}
+
+.nav-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background-color: #38bdf8;
+    box-shadow: 0 0 10px #38bdf8;
+    border-radius: 2px;
+}
+
+/* Внутрішні вкладки (Кафедра -> Історія/Персонал) */
+.sub-tab-btn {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #94a3b8;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+}
+.sub-tab-btn:hover {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+.sub-tab-btn.active {
+    color: #38bdf8;
+    border-bottom-color: #38bdf8;
+    text-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
 }
 
 /* Dropdown Styles */
@@ -67,12 +97,13 @@ body {
     border: 1px solid #334155; /* slate-700 */
     border-radius: 0.5rem;
     padding: 0.5rem;
-    width: 220px;
+    width: 240px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
     transition: all 0.2s ease;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    z-index: 60;
 }
 
 .dropdown-container:hover .dropdown-menu {
@@ -85,7 +116,7 @@ body {
     display: block;
     width: 100%;
     text-align: left;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1rem;
     border-radius: 0.375rem;
     color: #cbd5e1;
     font-size: 0.9rem;
@@ -93,9 +124,9 @@ body {
 }
 
 .dropdown-item:hover {
-    background-color: #334155;
-    color: #7dd3fc;
-    text-shadow: 0 0 5px rgba(56, 189, 248, 0.6);
+    background-color: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
 }
 
 /* Mobile Menu Links */
@@ -111,32 +142,21 @@ body {
 }
 .mobile-link:hover, .mobile-link.active {
     color: #38bdf8;
-    background-color: rgba(56, 189, 248, 0.1);
     text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
-    padding-left: 1rem; /* Ефект зсуву */
+    padding-left: 1rem;
 }
 
-/* Внутрішні вкладки (Кафедра -> Історія/Персонал) */
-.sub-tab-btn {
-    padding: 0.5rem 1.25rem;
-    border-radius: 9999px;
-    font-size: 0.9rem;
-    font-weight: 600;
+.mobile-sub-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 0;
+    font-size: 1rem;
     color: #94a3b8;
-    background-color: transparent;
-    border: 1px solid #334155;
-    transition: all 0.3s;
+    transition: color 0.2s;
 }
-.sub-tab-btn:hover {
-    border-color: #38bdf8;
-    color: #fff;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
-}
-.sub-tab-btn.active {
-    background-color: #0ea5e9; /* sky-500 */
-    color: #fff;
-    border-color: #0ea5e9;
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.6); /* Світіння кнопки */
+.mobile-sub-link:hover {
+    color: #38bdf8;
 }
 
 /* === Ефекти для карток спеціальностей (Neon Card) === */
@@ -146,9 +166,8 @@ body {
 }
 
 .specialty-card:hover {
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-5px) scale(1.01);
     border-color: #38bdf8; /* sky-400 */
-    /* Потужне світіння картки */
     box-shadow: 0 0 25px rgba(56, 189, 248, 0.25), inset 0 0 10px rgba(56, 189, 248, 0.05);
 }
 
@@ -161,6 +180,17 @@ body {
     background-color: rgba(56, 189, 248, 0.2);
     color: #38bdf8;
     box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+/* READ MORE STYLES */
+.text-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Показувати 4 рядки */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.text-expanded {
+    -webkit-line-clamp: unset; /* Розгорнути */
 }
 
 /* Рамка для модалок з неоном */
