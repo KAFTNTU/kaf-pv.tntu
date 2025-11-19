@@ -21,7 +21,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* === Навігаційні кнопки (Світіння) === */
+/* === Навігаційні кнопки (ТІЛЬКИ СВІТІННЯ, БЕЗ СМУЖОК) === */
 .nav-btn {
     padding: 0.5rem 1rem;
     margin: 0 0.25rem;
@@ -41,23 +41,13 @@ body {
 
 .nav-btn.active {
     color: #38bdf8;
+    /* Лише світіння тексту */
     text-shadow: 0 0 15px rgba(56, 189, 248, 1), 0 0 30px rgba(56, 189, 248, 0.6);
 }
 
-.nav-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 2px;
-    background-color: #38bdf8;
-    box-shadow: 0 0 10px #38bdf8;
-    border-radius: 2px;
-}
+/* Блок .nav-btn.active::after ПРИБРАНО, щоб не було смужки знизу */
 
-/* Внутрішні вкладки */
+/* === Внутрішні вкладки (ТІЛЬКИ СВІТІННЯ, БЕЗ СМУЖОК) === */
 .sub-tab-btn {
     padding: 0.5rem 1.25rem;
     font-size: 0.95rem;
@@ -65,16 +55,18 @@ body {
     color: #94a3b8;
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid transparent;
+    /* Прибрано border-bottom */
     transition: all 0.3s;
 }
+
 .sub-tab-btn:hover {
     color: #fff;
     text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
 }
+
 .sub-tab-btn.active {
     color: #38bdf8;
-    border-bottom-color: #38bdf8;
+    /* Прибрано border-bottom-color */
     text-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
 }
 
@@ -168,12 +160,12 @@ body {
 /* === READ MORE STYLES === */
 .text-clamp {
     display: -webkit-box;
-    -webkit-line-clamp: 4; /* Показувати 4 рядки */
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 .text-expanded {
-    -webkit-line-clamp: unset; /* Розгорнути */
+    -webkit-line-clamp: unset;
 }
 
 /* Popup Border */
