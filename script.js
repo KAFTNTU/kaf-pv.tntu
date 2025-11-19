@@ -1,7 +1,6 @@
 /*
 ================================================================
  SPA LOGIC (script.js)
- Перемикання вкладок замість модальних вікон
 ================================================================
 */
 
@@ -83,6 +82,39 @@ window.switchSubTab = function(subTabId) {
     });
 };
 
+// Функція розгортання підменю в мобільному (Аккордеон)
+window.toggleMobileSubmenu = function(id) {
+    const submenu = document.getElementById(id);
+    const icon = document.getElementById('icon-' + id);
+    
+    if (submenu) {
+        if (submenu.classList.contains('hidden')) {
+            submenu.classList.remove('hidden');
+            submenu.classList.add('flex');
+            if(icon) icon.classList.add('rotate-180');
+        } else {
+            submenu.classList.add('hidden');
+            submenu.classList.remove('flex');
+            if(icon) icon.classList.remove('rotate-180');
+        }
+    }
+};
+
+// Функція "Читати далі"
+window.toggleReadMore = function(btn, targetId) {
+    const container = document.getElementById(targetId);
+    if (container) {
+        container.classList.toggle('text-clamp');
+        container.classList.toggle('text-expanded');
+        
+        if (container.classList.contains('text-expanded')) {
+            btn.textContent = 'Згорнути';
+        } else {
+            btn.textContent = 'Читати далі';
+        }
+    }
+};
+
 // Функція відкриття модального вікна
 window.openModal = function(modalId) {
     const overlay = document.getElementById('modal-overlay');
@@ -140,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Staff Cards
+    // Staff Cards Logic
     document.querySelectorAll('.staff-card').forEach(card => {
         card.addEventListener('click', () => {
             const staffId = card.dataset.staffId;
@@ -184,21 +216,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // News Read More
-    document.querySelectorAll('.open-small-modal-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const titleEl = document.getElementById('small-news-title');
-            const dateEl = document.getElementById('small-news-date');
-            const textEl = document.getElementById('small-news-modal-text');
-
-            if(titleEl) titleEl.textContent = btn.dataset.title;
-            if(dateEl) dateEl.textContent = btn.dataset.date;
-            if(textEl) textEl.textContent = btn.dataset.text;
-            
-            openModal('small-news-modal');
-        });
-    });
-
     // Scroll Top
     const scrollBtn = document.getElementById('scrollToTopBtn');
     if(scrollBtn) {
@@ -211,5 +228,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Default open
     switchTab('home');
 });
