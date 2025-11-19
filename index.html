@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кафедра Приладів і Контрольно-Вимірювальних Систем | ТНТУ</title>
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased bg-slate-900 text-slate-300 flex flex-col min-h-screen">
@@ -115,19 +118,26 @@
     </button>
 </div>
 
-<!-- === ОСНОВНИЙ КОНТЕНТ === -->
+<!-- === ОСНОВНИЙ КОНТЕНТ (ВИПРАВЛЕНО) === -->
 <main class="pt-20 min-h-screen relative">
+    
+    <!-- Сторінка Home контролює свою ширину сама (щоб фон був на всю) -->
     <div id="tab-home" class="tab-content" data-src="sections/home.html"></div>
-    <div id="tab-kafedra" class="tab-content hidden" data-src="sections/kafedra.html"></div>
-    <div id="tab-labs" class="tab-content hidden" data-src="sections/labs.html"></div>
-    <div id="tab-science" class="tab-content hidden" data-src="sections/science.html"></div>
-    <div id="tab-international" class="tab-content hidden" data-src="sections/international.html"></div>
-    <div id="tab-student" class="tab-content hidden" data-src="sections/student.html"></div>
-    <div id="tab-disciplines" class="tab-content hidden" data-src="sections/disciplines.html"></div>
-    <div id="tab-entrant" class="tab-content hidden" data-src="sections/entrant.html"></div>
+
+    <!-- Всі інші сторінки тепер у контейнері, який центрує їх! -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div id="tab-kafedra" class="tab-content hidden" data-src="sections/kafedra.html"></div>
+        <div id="tab-labs" class="tab-content hidden" data-src="sections/labs.html"></div>
+        <div id="tab-science" class="tab-content hidden" data-src="sections/science.html"></div>
+        <div id="tab-international" class="tab-content hidden" data-src="sections/international.html"></div>
+        <div id="tab-student" class="tab-content hidden" data-src="sections/student.html"></div>
+        <div id="tab-disciplines" class="tab-content hidden" data-src="sections/disciplines.html"></div>
+        <div id="tab-entrant" class="tab-content hidden" data-src="sections/entrant.html"></div>
+    </div>
+
 </main>
 
-<!-- === POPUP: Staff Detail === -->
+<!-- === POPUPS === -->
 <div id="modal-overlay" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden transition-opacity duration-300 opacity-0" onclick="closeAllModals()"></div>
 
 <div id="staff-detail-modal" class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[60] w-full max-w-3xl p-4 hidden transition-all duration-300 scale-95 opacity-0">
