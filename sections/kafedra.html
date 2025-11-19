@@ -15,29 +15,36 @@
     <div class="bg-slate-800 rounded-2xl p-8 shadow-xl">
         <div class="grid md:grid-cols-2 gap-8 items-start mb-8">
             
-            <!-- PHOTO LEFT + STATS (STICKY) -->
-            <!-- sticky top-24: закріплює блок при скролі -->
-            <!-- self-start: важливе для роботи sticky всередині grid -->
-            <div class="sticky top-24 self-start">
-                <img src="ludipv.jpg" alt="Колектив кафедри" class="rounded-lg shadow-2xl w-full object-cover mb-6" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Кафедра+ПВ'">
-                
-                <div class="grid grid-cols-2 gap-3 text-center">
-                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 backdrop-blur-sm">
-                        <span class="block text-2xl font-bold text-sky-400">30</span>
-                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">років досвіду</span>
-                    </div>
-                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 backdrop-blur-sm">
-                        <span class="block text-2xl font-bold text-sky-400">1000+</span>
-                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">випускників</span>
-                    </div>
-                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 backdrop-blur-sm col-span-2">
-                        <span class="block text-2xl font-bold text-sky-400">15+</span>
-                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">партнерів кафедри</span>
+            <!-- ЛІВА КОЛОНКА (ФОТО + СТАТИСТИКА) - ЗАФІКСОВАНА -->
+            <!-- sticky top-24: фіксує весь цей блок при скролі -->
+            <div class="sticky top-24 self-start relative group">
+                <!-- Фото -->
+                <div class="relative overflow-hidden rounded-xl shadow-2xl">
+                     <img src="ludipv.jpg" alt="Колектив кафедри" class="w-full object-cover transform group-hover:scale-105 transition duration-700" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Кафедра+ПВ'">
+                     <!-- Затемнення знизу для цифр -->
+                     <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-slate-900 to-transparent opacity-90"></div>
+                </div>
+
+                <!-- Цифри (Статистика) - Накладені поверх фото знизу -->
+                <div class="absolute bottom-4 left-4 right-4">
+                    <div class="grid grid-cols-2 gap-2 text-center">
+                        <div class="bg-slate-800/80 backdrop-blur-md p-3 rounded-lg border border-slate-600/50">
+                            <span class="block text-2xl font-bold text-sky-400">30</span>
+                            <span class="text-[10px] text-slate-300 uppercase font-semibold tracking-wider">років досвіду</span>
+                        </div>
+                        <div class="bg-slate-800/80 backdrop-blur-md p-3 rounded-lg border border-slate-600/50">
+                            <span class="block text-2xl font-bold text-sky-400">1000+</span>
+                            <span class="text-[10px] text-slate-300 uppercase font-semibold tracking-wider">випускників</span>
+                        </div>
+                        <div class="bg-slate-800/80 backdrop-blur-md p-3 rounded-lg border border-slate-600/50 col-span-2">
+                            <span class="block text-2xl font-bold text-sky-400">15+</span>
+                            <span class="text-[10px] text-slate-300 uppercase font-semibold tracking-wider">партнерів кафедри</span>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- TEXT RIGHT -->
+            <!-- ПРАВА КОЛОНКА (ТЕКСТ) - СКРОЛИТЬСЯ -->
             <div class="prose prose-invert space-y-6">
                 <div>
                     <h3 class="text-lg font-bold text-white mb-2">Заснування та розвиток</h3>
