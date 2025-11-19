@@ -6,19 +6,24 @@
     <title>Кафедра Приладів і Контрольно-Вимірювальних Систем | ТНТУ</title>
     
     <meta property="og:title" content="Кафедра ПВ, ТНТУ ім. Івана Пулюя">
-    <meta property="og:description" content="Створюємо майбутнє вимірювальних технологій. Готуємо фахівців, здатних розробляти та експлуатувати найсучасніші прилади та системи.">
+    <meta property="og:description" content="Створюємо майбутнє вимірювальних технологій.">
     <meta property="og:type" content="website">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased bg-slate-900 text-slate-300">
 
 <!-- === HEADER === -->
-<header id="header" class="frosted-glass fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-slate-800">
+<header id="header" class="frosted-glass fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
             
@@ -36,11 +41,11 @@
             <!-- Desktop Nav -->
             <nav class="hidden md:flex items-center space-x-1">
                 <button onclick="switchTab('home')" class="nav-btn active" data-tab="home">Головна</button>
-                <button onclick="switchTab('news')" class="nav-btn" data-tab="news">Новини</button>
                 
+                <!-- Dropdown: Кафедра (Без стрілки) -->
                 <div class="dropdown-container relative group">
                     <button class="nav-btn flex items-center gap-1" onclick="switchTab('kafedra')" data-tab="kafedra">
-                        Кафедра <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        Кафедра
                     </button>
                     <div class="dropdown-menu">
                         <button onclick="switchTab('kafedra', null, 'tab-history')" class="dropdown-item">Історія кафедри</button>
@@ -56,6 +61,7 @@
                 <button onclick="switchTab('science')" class="nav-btn" data-tab="science">Наука</button>
                 <button onclick="switchTab('international')" class="nav-btn" data-tab="international">Міжнародні</button>
                 
+                <!-- Dropdown: Студенту -->
                 <div class="dropdown-container relative group">
                     <button class="nav-btn flex items-center gap-1" onclick="switchTab('student')" data-tab="student">
                         Студенту <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -82,19 +88,47 @@
     </div>
 </header>
 
-<!-- Mobile Menu -->
-<div id="mobile-menu" class="fixed inset-0 z-40 bg-slate-900/95 backdrop-blur-xl pt-24 px-6 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col overflow-y-auto">
-    <button onclick="switchTab('home')" class="mobile-link">Головна</button>
-    <button onclick="switchTab('news')" class="mobile-link">Новини</button>
-    <button onclick="switchTab('kafedra')" class="mobile-link">Кафедра (Історія/Персонал)</button>
-    <button onclick="switchTab('home', 'specialties')" class="mobile-link">Спеціальності</button>
-    <button onclick="switchTab('labs')" class="mobile-link">Лабораторії</button>
-    <button onclick="switchTab('science')" class="mobile-link">Наука</button>
-    <button onclick="switchTab('international')" class="mobile-link">Міжнародні зв'язки</button>
-    <button onclick="switchTab('student')" class="mobile-link">Студенту (Бланки)</button>
-    <button onclick="switchTab('disciplines')" class="mobile-link">Дисципліни</button>
-    <button onclick="switchTab('entrant')" class="mobile-link">Абітурієнту</button>
-    <button onclick="switchTab('home', 'contacts')" class="mobile-link">Контакти</button>
+<!-- Mobile Menu (ACCORDION) -->
+<div id="mobile-menu" class="fixed inset-0 z-40 bg-slate-900/98 backdrop-blur-xl pt-24 px-6 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col overflow-y-auto pb-10">
+    
+    <button onclick="switchTab('home')" class="mobile-link text-left">Головна</button>
+    
+    <!-- Кафедра Accordion -->
+    <div class="mobile-menu-group border-b border-slate-700">
+        <button class="mobile-link w-full flex justify-between items-center text-left" onclick="toggleMobileSubmenu('mob-kafedra')">
+            Кафедра 
+            <svg class="w-4 h-4 transition-transform duration-200" id="icon-mob-kafedra" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div id="mob-kafedra" class="hidden flex-col pl-4 pb-2 space-y-2 bg-slate-800/50 rounded-b-lg">
+            <button onclick="switchTab('kafedra', null, 'tab-history')" class="mobile-sub-link">Історія</button>
+            <button onclick="switchTab('kafedra', null, 'tab-staff')" class="mobile-sub-link">Персонал</button>
+            <button onclick="switchTab('kafedra', null, 'tab-programs')" class="mobile-sub-link">Освітні програми</button>
+            <button onclick="switchTab('kafedra', null, 'tab-plan')" class="mobile-sub-link">Навчальний план</button>
+            <button onclick="switchTab('kafedra', null, 'tab-graduates')" class="mobile-sub-link">Випускники</button>
+        </div>
+    </div>
+
+    <button onclick="switchTab('home', 'specialties')" class="mobile-link text-left">Спеціальності</button>
+    <button onclick="switchTab('labs')" class="mobile-link text-left">Лабораторії</button>
+    <button onclick="switchTab('science')" class="mobile-link text-left">Наука</button>
+    <button onclick="switchTab('international')" class="mobile-link text-left">Міжнародні зв'язки</button>
+    
+    <!-- Студенту Accordion -->
+    <div class="mobile-menu-group border-b border-slate-700">
+        <button class="mobile-link w-full flex justify-between items-center text-left" onclick="toggleMobileSubmenu('mob-student')">
+            Студенту 
+            <svg class="w-4 h-4 transition-transform duration-200" id="icon-mob-student" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div id="mob-student" class="hidden flex-col pl-4 pb-2 space-y-2 bg-slate-800/50 rounded-b-lg">
+            <button onclick="switchTab('student')" class="mobile-sub-link">Бланки</button>
+            <button onclick="switchTab('disciplines')" class="mobile-sub-link">Дисципліни</button>
+            <a href="https://tntu.edu.ua/?p=uk/schedule/" target="_blank" class="mobile-sub-link text-slate-400">Розклад</a>
+            <a href="https://dl.tntu.edu.ua/login.php" target="_blank" class="mobile-sub-link text-slate-400">Електронне навчання</a>
+        </div>
+    </div>
+
+    <button onclick="switchTab('entrant')" class="mobile-link text-left">Абітурієнту</button>
+    <button onclick="switchTab('home', 'contacts')" class="mobile-link text-left">Контакти</button>
     
     <button id="close-mobile-menu" class="absolute top-6 right-6 text-slate-400">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -130,32 +164,25 @@
             </div>
         </div>
 
-        <!-- Specialties (з неоновим ефектом) -->
+        <!-- Specialties -->
         <div id="specialties" class="py-20 max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Наші спеціальності</h2>
-                <p class="text-slate-400">Обери свій шлях в інженерії</p>
             </div>
-            
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Картка 1 -->
                 <div class="bg-slate-800/50 rounded-2xl p-8 cursor-pointer specialty-card">
                     <div class="w-14 h-14 bg-sky-500/20 text-sky-400 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 icon-bg">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg>
                     </div>
                     <h3 class="text-2xl font-bold text-white mb-2 transition-colors duration-300">175 - Інформаційно-вимірювальні технології</h3>
-                    <p class="text-sm text-sky-400 mb-4">Освітня програма: "Мехатроніка та інтелектуальні інформаційні системи"</p>
-                    <p class="text-slate-400">Ця спеціальність готує фахівців, здатних розробляти, програмувати та впроваджувати комп'ютеризовані вимірювальні системи, працювати з датчиками, Інтернетом речей (IoT) та системами обробки великих даних (Big Data).</p>
+                    <p class="text-slate-400">Розробка комп'ютеризованих систем, робота з датчиками, IoT та Big Data.</p>
                 </div>
-
-                <!-- Картка 2 -->
                 <div class="bg-slate-800/50 rounded-2xl p-8 cursor-pointer specialty-card">
                      <div class="w-14 h-14 bg-indigo-500/20 text-indigo-400 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 icon-bg">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     </div>
                     <h3 class="text-2xl font-bold text-white mb-2 transition-colors duration-300">176 - Мікро- та наносистемна техніка</h3>
-                    <p class="text-sm text-sky-400 mb-4">Освітня програма: "Проєктування мікроелектронних систем та пристроїв інтернету речей"</p>
-                    <p class="text-slate-400">Створення мікроелектронних пристроїв, нанотехнології в медицині та енергетиці. Студенти навчаються розробляти та застосовувати методи і прилади для діагностики матеріалів та конструкцій без їх руйнування.</p>
+                    <p class="text-slate-400">Створення мікроелектронних пристроїв, нанотехнології в медицині.</p>
                 </div>
             </div>
         </div>
@@ -165,7 +192,6 @@
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-white">Контакти</h2>
-                    <p class="text-slate-400 mt-4">Зв'яжіться з нами</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-12 items-start">
                     <div class="bg-slate-900 p-8 rounded-xl space-y-6">
@@ -193,7 +219,7 @@
                             </div>
                             <div>
                                 <h4 class="text-white font-semibold text-lg">Телефон</h4>
-                                <a href="tel:+380352253509" class="text-sky-400 hover:underline">+38 (0352) 25-35-09 (вн. 12-34)</a>
+                                <a href="tel:+380352253509" class="text-sky-400 hover:underline">+38 (0352) 25-35-09</a>
                             </div>
                         </div>
                     </div>
@@ -209,154 +235,143 @@
     <section id="tab-kafedra" class="tab-content hidden fade-in max-w-7xl mx-auto px-4 pb-20">
         <div class="mb-8 pt-8">
             <h2 class="text-3xl md:text-4xl font-bold text-white">Кафедра ПВ</h2>
-            <p class="text-slate-400 mt-2">Історія, люди, досягнення.</p>
         </div>
 
-        <!-- Internal Tabs -->
         <div class="flex flex-wrap gap-2 mb-8 border-b border-slate-700 pb-4">
             <button class="sub-tab-btn active" onclick="switchSubTab('tab-history')">Історія</button>
-            <button class="sub-tab-btn" onclick="switchSubTab('tab-staff')">Персонал кафедри</button>
+            <button class="sub-tab-btn" onclick="switchSubTab('tab-staff')">Персонал</button>
             <button class="sub-tab-btn" onclick="switchSubTab('tab-programs')">Освітні програми</button>
             <button class="sub-tab-btn" onclick="switchSubTab('tab-plan')">Навчальний план</button>
             <button class="sub-tab-btn" onclick="switchSubTab('tab-graduates')">Випускники</button>
         </div>
 
-        <!-- History Subtab (ПОВНИЙ ТЕКСТ) -->
+        <!-- History Subtab (With Read More) -->
         <div id="tab-history" class="sub-tab-content block">
             <div class="bg-slate-800 rounded-2xl p-8 shadow-xl">
                  <div class="grid md:grid-cols-2 gap-12 items-center mb-12">
-                    <img src="ludipv.jpg" alt="Лабораторія кафедри" class="rounded-xl shadow-2xl" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Кафедра+ПВ'">
-                    <div>
-                         <div class="grid grid-cols-3 gap-4 text-center mb-8">
-                            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
-                                <span class="block text-3xl font-bold text-sky-400">25+</span>
-                                <span class="text-xs text-slate-400">років досвіду</span>
-                            </div>
-                            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
-                                <span class="block text-3xl font-bold text-sky-400">1000+</span>
-                                <span class="text-xs text-slate-400">випускників</span>
-                            </div>
-                             <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
-                                <span class="block text-3xl font-bold text-sky-400">15+</span>
-                                <span class="text-xs text-slate-400">партнерів</span>
-                            </div>
+                    <img src="ludipv.jpg" alt="Лабораторія" class="rounded-xl shadow-2xl" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Кафедра+ПВ'">
+                    <div class="prose prose-invert">
+                        <h3>Заснування та розвиток</h3>
+                        <!-- Text Clamped Container -->
+                        <div class="text-clamp" id="history-text-1">
+                            <p class="mb-2">Кафедра ПВ утворилася у 1993 р. шляхом відокремлення від кафедри автоматизації технологічних процесів та виробництв з метою організації підготовки спеціалістів з профільної для тодішньому новоствореного Тернопільського державного приладобудівного інституту спеціальності – приладобудування.</p>
+                            <p class="mb-2">Базовою групою засновників кафедри була: доц. Рудник А. Г., доц. Рожук С. Г., доц. Куцевич А. В., та ст. викл. Лушпак В. Й. Згодом склад кафедри поповнився висококваліфікованими спеціалістами з інших вишів – проф. Кривень В. А., доц. Яворська М. І., (з НУ ЛП)) та з галузевих науково- дослідних інститутів – Паламар М. І., Умзар Ю. А., Зелінський І. М., Осов’як І.І., Дуда С. П.</p>
+                            <p>А також випускниками кафедри – Апостол Ю. О., Наконечний Ю. І., Новосад М. В., Ольшанський І. Є, Муха А. М., Шин О. Г., Нікулін Р. А., Дубиняк Т.С., а дещо пізніше випускниками аспірантури кафедри ПВ: Чайковський А.В., Пастернак Ю.В., Стрембіцький М.О., Кругльов В.В. Першим завідувачем кафедри був доц. Рудник Андрій Григорович.</p>
                         </div>
+                        <button class="read-more-btn text-sky-400 hover:underline mt-2 text-sm font-bold" onclick="toggleReadMore(this, 'history-text-1')">Читати далі</button>
+
+                        <h3 class="mt-6">Зміна спеціальностей</h3>
+                         <div class="text-clamp" id="history-text-2">
+                            <p class="mb-2">Підготовка фахівців на кафедрі велась за спеціальністю «Приладобудування». У 1993 році перейдено на багатоступеневу систему підготовки фахівців за схемою «бакалавр–спеціаліст–магістр» згідно Болонської системи. 1994 року відбувся перший випуск інженерів спеціальності 7.090901 «Приладобудування».</p>
+                            <p class="mb-2">Згодом з 2015 р. спеціальність «Прилади точної механіки» згідно нової кодифікації трансформувалась у спеціальність 152 «Метрологія та інформаційно-вимірювальна техніка». У 2017 р. було проведено ліцензування нового напряму підготовки бакалаврів за спеціальністю 153 «Мікро- та наносистемна техніка».</p>
+                            <p>З 2023 р. спеціальності кафедри перейшли до галузі знань 17 – «Електроніка, автоматизація та електронні комунікації», а на кафедрі ведеться підготовка за двома спеціальностями: 175 «Інформаційно-вимірювальні технології»; 176 «Мікро- та наносистемна техніка».</p>
+                        </div>
+                         <button class="read-more-btn text-sky-400 hover:underline mt-2 text-sm font-bold" onclick="toggleReadMore(this, 'history-text-2')">Читати далі</button>
+
+                        <h3 class="mt-6">Керівництво та сьогодення</h3>
+                         <div class="text-clamp" id="history-text-3">
+                             <p class="mb-2">Після трагічної смерті зав. каф. доц. Рудника А.Г. з 2004 р. по 2006 р обов’язки завідувача кафедри виконував тодішній декан факультету доц. Куцевич А.В. З 2006 р. кафедру очолює д.т.н., професор Паламар Михайло Іванович.</p>
+                             <p>На сьогоднішній день на кафедрі плідно працюють 1 професор, 5 доцентів, 2 старших викладачі, 1 асистент та 3 аспіранти. Кафедра активно працює в напрямку розвитку прогресивних форм навчання, зокрема, системи електронного навчання за допомогою Інтернет і мультимедіа-технологій.</p>
+                         </div>
+                         <button class="read-more-btn text-sky-400 hover:underline mt-2 text-sm font-bold" onclick="toggleReadMore(this, 'history-text-3')">Читати далі</button>
                     </div>
-                </div>
-                <div class="prose prose-invert max-w-none text-slate-300">
-                     <h3>Заснування та розвиток</h3>
-                     <p>Кафедра ПВ утворилася у 1993 р. шляхом відокремлення від кафедри автоматизації технологічних процесів та виробництв з метою організації підготовки спеціалістів з профільної для тодішньому новоствореного Тернопільського державного приладобудівного інституту спеціальності – приладобудування. Базовою групою засновників кафедри була: доц. Рудник А. Г., доц. Рожук С. Г., доц. Куцевич А. В., та ст. викл. Лушпак В. Й. Згодом склад кафедри поповнився висококваліфікованими спеціалістами з інших вишів – проф. Кривень В. А., доц. Яворська М. І., (з НУ ЛП)) та з галузевих науково- дослідних інститутів – Паламар М. І., Умзар Ю. А., Зелінський І. М., Осов’як І.І., Дуда С. П., а також випускниками кафедри – Апостол Ю. О., Наконечний Ю. І., Новосад М. В., Ольшанський І. Є, Муха А. М., Шин О. Г., Нікулін Р. А., Дубиняк Т.С., а дещо пізніше випускниками аспірантури кафедри ПВ: Чайковський А.В., Пастернак Ю.В., Стрембіцький М.О., Кругльов В.В.</p>
-                     <p>Першим завідувачем кафедри був доц. Рудник Андрій Григорович, з ініціативи якого була запроваджена антенна тематика робіт на кафедрі.</p>
-
-                     <h3>Зміна спеціальностей</h3>
-                     <p>Підготовка фахівців на кафедрі велась за спеціальністю «Приладобудування». У 1993 році перейдено на багатоступеневу систему підготовки фахівців за схемою «бакалавр–спеціаліст–магістр» згідно Болонської системи. 1994 року відбувся перший випуск інженерів спеціальності 7.090901 «Приладобудування».</p>
-                     <p>Згодом з 2015 р. спеціальність «Прилади точної механіки» згідно нової кодифікації трансформувалась у спеціальність 152 «Метрологія та інформаційно-вимірювальна техніка». У 2017 р. було проведено ліцензування нового напряму підготовки бакалаврів за спеціальністю 153 «Мікро- та наносистемна техніка».</p>
-                     <p>З 2023 р. спеціальності кафедри перейшли до галузі знань 17 – «Електроніка, автоматизація та електронні комунікації», а на кафедрі ведеться підготовка за двома спеціальностями: 175 «Інформаційно-вимірювальні технології»; 176 «Мікро- та наносистемна техніка».</p>
-
-                     <h3>Керівництво</h3>
-                     <p>Після трагічної смерті зав. каф. доц. Рудника А.Г. з 2004 р. по 2006 р обов’язки завідувача кафедри виконував тодішній декан факультету доц. Куцевич А.В.</p>
-                     <p>З 2006 р. кафедру очолює д.т.н., професор Паламар Михайло Іванович. У 2013 році Паламар М. І. захистив дисертацію на здобуття наукового ступеня доктора технічних наук.</p>
-                     
-                     <h3>Сьогодення кафедри</h3>
-                     <p>На сьогоднішній день на кафедрі плідно працюють 1 професор, 5 доцентів, 2 старших викладачі, 1 асистент та 3 аспіранти. Кафедра активно працює в напрямку розвитку прогресивних форм навчання, зокрема, системи електронного навчання за допомогою Інтернет і мультимедіа-технологій.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Staff Subtab (ВСІ ВИКЛАДАЧІ) -->
+        <!-- Staff Subtab (SQUARE IMAGES) -->
         <div id="tab-staff" class="sub-tab-content hidden">
              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Palamar -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="palamar">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/palamar.png" alt="Паламар М.І." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="palamar">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/palamar.png" alt="Паламар М.І." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Паламар М.І.</h3>
                     <p class="text-sky-400 text-sm">д.т.н., професор</p>
                 </div>
                 <!-- Yavorska -->
-                 <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="yavorska">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/yavorska.png" alt="Яворська М.І." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                 <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="yavorska">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/yavorska.png" alt="Яворська М.І." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Яворська М.І.</h3>
                     <p class="text-sky-400 text-sm">к.т.н., доцент</p>
                 </div>
-                <!-- Zelinskyi -->
-                 <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="zelinskyi">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/zelinskij.png" alt="Зелінський І.М." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                 <!-- Zelinskyi -->
+                 <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="zelinskyi">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/zelinskij.png" alt="Зелінський І.М." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Зелінський І.М.</h3>
                     <p class="text-sky-400 text-sm">к.ф.-м.н, доцент</p>
                 </div>
                 <!-- Nakonechnyi -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="nakonechnyi">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/305.png" alt="Наконечний Ю.І." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="nakonechnyi">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/305.png" alt="Наконечний Ю.І." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Наконечний Ю.І.</h3>
                     <p class="text-sky-400 text-sm">старший викладач</p>
                 </div>
                 <!-- Apostol -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="apostol">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/apostol.png" alt="Апостол Ю.О." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="apostol">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/apostol.png" alt="Апостол Ю.О." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Апостол Ю.О.</h3>
                     <p class="text-sky-400 text-sm">старший викладач</p>
                 </div>
                 <!-- Dubyniak -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="dubyniak">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/dybuniak.png" alt="Дубиняк Т.С." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="dubyniak">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/dybuniak.png" alt="Дубиняк Т.С." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Дубиняк Т.С.</h3>
                     <p class="text-sky-400 text-sm">к.т.н., доцент</p>
                 </div>
                 <!-- Chaikovskyi -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="chaikovskyi">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/chajkovskij.png" alt="Чайковський А.В." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="chaikovskyi">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/chajkovskij.png" alt="Чайковський А.В." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Чайковський А.В.</h3>
                     <p class="text-sky-400 text-sm">к.т.н., доцент</p>
                 </div>
                 <!-- Strembitskyi -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="strembitskyi">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/strembickij.jpg" alt="Стрембіцький М.О." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="strembitskyi">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/strembickij.jpg" alt="Стрембіцький М.О." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Стрембіцький М.О.</h3>
                     <p class="text-sky-400 text-sm">к.т.н., доцент</p>
                 </div>
-                <!-- Batiuk -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="batiuk">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/batuk.png" alt="Батюк В.В." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                 <!-- Batiuk -->
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="batiuk">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/batuk.png" alt="Батюк В.В." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Батюк В.В.</h3>
                     <p class="text-sky-400 text-sm">асистент</p>
                 </div>
                 <!-- Rafaliuk -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="rafaliuk">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/rafaluk.png" alt="Рафалюк О.О." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="rafaliuk">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/rafaluk.png" alt="Рафалюк О.О." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Рафалюк О.О.</h3>
                     <p class="text-sky-400 text-sm">асистент</p>
                 </div>
                 <!-- Kucevych -->
-                 <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="kucevych">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/kucevich.jpg" alt="Куцевич С.П." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                 <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="kucevych">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/kucevich.jpg" alt="Куцевич С.П." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Куцевич С.П.</h3>
                     <p class="text-sky-400 text-sm">НДП</p>
                 </div>
                  <!-- Rudnyk -->
-                 <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="rudnyk">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/rydnyk.png" alt="Рудник А.А." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                 <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="rudnyk">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/rydnyk.png" alt="Рудник А.А." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Рудник А.А.</h3>
                     <p class="text-sky-400 text-sm">НДП</p>
                 </div>
                 <!-- Ostafiichuk -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="ostafiichuk">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/ostafiychuk.jpg" alt="Остафійчук І.В." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="ostafiichuk">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/ostafiychuk.jpg" alt="Остафійчук І.В." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Остафійчук І.В.</h3>
                     <p class="text-sky-400 text-sm">НДП</p>
                 </div>
                 <!-- Paprotska -->
-                <div class="bg-slate-800 rounded-xl p-6 text-center hover:bg-slate-750 border border-slate-700 hover:border-sky-500 transition cursor-pointer group staff-card" data-staff-id="paprotska">
-                    <img class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-4 border-slate-600 group-hover:border-sky-500 transition" src="image/poprocka.jpg" alt="Папроцька О.В." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
+                <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card" data-staff-id="paprotska">
+                    <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4" src="image/poprocka.jpg" alt="Папроцька О.В." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
                     <h3 class="text-lg font-bold text-white">Папроцька О.В.</h3>
                     <p class="text-sky-400 text-sm">інженер</p>
                 </div>
             </div>
         </div>
-
-        <!-- Programs Subtab -->
+        
         <div id="tab-programs" class="sub-tab-content hidden">
-            <div class="space-y-4">
-                <h3 class="text-2xl font-bold text-white mt-8">Бакалавр</h3>
+             <div class="space-y-4 bg-slate-800 p-8 rounded-xl">
+                <h3 class="text-2xl font-bold text-white">Бакалавр</h3>
                 <ul class="space-y-2">
                     <li><a href="#" class="text-sky-400 hover:underline">Спеціальність: 153 "Мікро- та наносистемна техніка"</a></li>
                     <li><a href="#" class="text-sky-400 hover:underline">Спеціальність: 176 "Мікро- та наносистемна техніка"</a></li>
@@ -374,85 +389,21 @@
                 </ul>
             </div>
         </div>
-
-        <div id="tab-plan" class="sub-tab-content hidden">
-            <p class="text-slate-400">Тут буде розміщено інформацію про навчальні плани...</p>
-        </div>
-        <div id="tab-graduates" class="sub-tab-content hidden">
-             <p class="text-slate-400">Ми пишаємося нашими випускниками...</p>
-        </div>
+        <div id="tab-plan" class="sub-tab-content hidden"><p class="text-slate-400">Тут буде розміщено інформацію про навчальні плани...</p></div>
+        <div id="tab-graduates" class="sub-tab-content hidden"><p class="text-slate-400">Ми пишаємося нашими випускниками...</p></div>
     </section>
 
-    <!-- TAB 3: NEWS (ВСІ НОВИНИ) -->
+    <!-- TAB 3: NEWS (COMMENTED OUT AS REQUESTED) -->
+    <!-- 
     <section id="tab-news" class="tab-content hidden fade-in max-w-7xl mx-auto px-4 pb-20">
         <div class="mb-8 pt-8 text-center">
             <h2 class="text-3xl md:text-4xl font-bold text-white">Новини кафедри</h2>
-            <p class="text-slate-400 mt-2">Актуальні події та оголошення.</p>
         </div>
-        
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- News 1 -->
-            <div class="bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 flex flex-col h-full">
-                <img src="https://placehold.co/400x250/1e293b/38bdf8?text=AI+Робот" alt="News" class="w-full h-48 object-cover">
-                <div class="p-6 flex-1 flex flex-col">
-                    <span class="text-xs text-sky-400 font-bold mb-2">29.03.2024</span>
-                    <h3 class="text-xl font-bold text-white mb-3">Автономна машинка із елементами штучного інтелекту</h3>
-                    <p class="text-slate-400 text-sm mb-4 flex-1">Автономні роботи використовуються такими компаніями як Amazon а Нова Пошта...</p>
-                    <button class="mt-auto text-sky-400 font-semibold hover:text-white transition open-small-modal-btn" 
-                        data-title="Автономна машинка із елементами штучного інтелекту" 
-                        data-text="Автономні роботи використовуються такими компаніями як Amazon а Нова Пошта у своїх великих центрах сортування посилок..." 
-                        data-date="29.03.2024">
-                        Читати далі →
-                    </button>
-                </div>
-            </div>
-             <!-- News 2 -->
-             <div class="bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 flex flex-col h-full">
-                <img src="https://placehold.co/400x250/1e293b/38bdf8?text=Обладнання" alt="News" class="w-full h-48 object-cover">
-                <div class="p-6 flex-1 flex flex-col">
-                    <span class="text-xs text-sky-400 font-bold mb-2">05.10.2025</span>
-                    <h3 class="text-xl font-bold text-white mb-3">Модернізація лабораторії: нові горизонти</h3>
-                    <p class="text-slate-400 text-sm mb-4 flex-1">Лабораторія неруйнівного контролю поповнилася дефектоскопом "PhaseScan-3"...</p>
-                    <button class="mt-auto text-sky-400 font-semibold hover:text-white transition open-small-modal-btn"
-                        data-title="Модернізація лабораторії: нові горизонти для навчання" 
-                        data-text="Лабораторія неруйнівного контролю поповнилася дефектоскопом 'PhaseScan-3' та ПЗ для 3D-візуалізації." 
-                        data-date="05.10.2025">
-                        Читати далі →
-                    </button>
-                </div>
-            </div>
-            <!-- News 3 -->
-            <div class="bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 flex flex-col h-full">
-                <img src="https://placehold.co/400x250/1e293b/38bdf8?text=Партнерство" alt="News" class="w-full h-48 object-cover">
-                <div class="p-6 flex-1 flex flex-col">
-                    <span class="text-xs text-sky-400 font-bold mb-2">28.09.2025</span>
-                    <h3 class="text-xl font-bold text-white mb-3">Стратегічне партнерство з "Техно-Індастрі"</h3>
-                    <p class="text-slate-400 text-sm mb-4 flex-1">Укладено договір про співпрацю з провідною IT-компанією...</p>
-                    <button class="mt-auto text-sky-400 font-semibold hover:text-white transition open-small-modal-btn"
-                        data-title="Стратегічне партнерство з 'Техно-Індастрі'" 
-                        data-text="Укладено договір про співпрацю з провідною IT-компанією. Договір передбачає стажування кращих студентів." 
-                        data-date="28.09.2025">
-                        Читати далі →
-                    </button>
-                </div>
-            </div>
-             <!-- News 4 -->
-             <div class="bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 flex flex-col h-full">
-                <img src="https://placehold.co/400x250/1e293b/38bdf8?text=Онлайн" alt="News" class="w-full h-48 object-cover">
-                <div class="p-6 flex-1 flex flex-col">
-                    <span class="text-xs text-sky-400 font-bold mb-2">20.09.2025</span>
-                    <h3 class="text-xl font-bold text-white mb-3">День відкритих дверей у форматі онлайн</h3>
-                    <p class="text-slate-400 text-sm mb-4 flex-1">Запрошуємо абітурієнтів та їх батьків на віртуальну екскурсію кафедрою...</p>
-                    <button class="mt-auto text-sky-400 font-semibold hover:text-white transition open-small-modal-btn"
-                        data-title="День відкритих дверей у форматі онлайн" 
-                        data-text="Запрошуємо абітурієнтів та їх батьків на віртуальну екскурсію кафедрою та спілкування з викладачами." 
-                        data-date="20.09.2025">
-                        Читати далі →
-                    </button>
-                </div>
-            </div>
+             ... content ...
         </div>
     </section>
+    -->
 
     <!-- TAB 4: LABS -->
     <section id="tab-labs" class="tab-content hidden fade-in max-w-7xl mx-auto px-4 pb-20">
@@ -475,11 +426,16 @@
         <div class="grid md:grid-cols-2 gap-8">
             <div class="bg-slate-800 p-8 rounded-2xl border-t-4 border-sky-500">
                 <h3 class="text-2xl font-bold text-white mb-4">Напрямки досліджень</h3>
-                <ul class="space-y-3 text-slate-300">
-                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Дистанційне зондування Землі</li>
-                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Інформаційно-вимірювальні системи</li>
-                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Системи штучного інтелекту</li>
-                </ul>
+                <div class="text-clamp" id="science-text-1">
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Дистанційне зондування Землі</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Інформаційно-вимірювальні системи</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Системи штучного інтелекту</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Розробка лазерних вимірювальних систем</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Автоматизація контролю якості промислової продукції</li>
+                    </ul>
+                </div>
+                <button class="read-more-btn text-sky-400 hover:underline mt-2 text-sm font-bold" onclick="toggleReadMore(this, 'science-text-1')">Читати далі</button>
             </div>
              <div class="bg-slate-800 p-8 rounded-2xl">
                 <h3 class="text-2xl font-bold text-white mb-4">Аспірантура</h3>
@@ -494,37 +450,66 @@
             <h2 class="text-3xl font-bold text-white">Міжнародні зв'язки</h2>
         </div>
         <div class="bg-slate-800 p-8 rounded-2xl text-center">
-             <p class="text-slate-300">Інформація про міжнародну співпрацю, проєкти та стажування буде додана тут незабаром...</p>
+             <div class="text-clamp" id="inter-text-1">
+                <p class="text-slate-300">Кафедра активно співпрацює з провідними університетами Європи та світу. Студенти та викладачі беруть участь у програмах академічної мобільності, стажуваннях та спільних наукових проєктах. Партнерами кафедри є університети Польщі, Німеччини, Литви та інших країн.</p>
+             </div>
+             <button class="read-more-btn text-sky-400 hover:underline mt-2 text-sm font-bold" onclick="toggleReadMore(this, 'inter-text-1')">Читати далі</button>
         </div>
     </section>
 
-     <!-- TAB 7: STUDENT (Forms) -->
+     <!-- TAB 7: STUDENT (One List) -->
      <section id="tab-student" class="tab-content hidden fade-in max-w-7xl mx-auto px-4 pb-20">
         <div class="mb-8 pt-8">
              <h2 class="text-3xl font-bold text-white">Бланки документів</h2>
         </div>
         <div class="bg-slate-800 rounded-2xl p-8">
-            <h3 class="text-xl font-bold text-white mb-6">Необхідні документи для дипломного та курсового проектування</h3>
-            <div class="grid md:grid-cols-2 gap-4">
-                <a href="blank/vidhuk_magistr.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-700 transition group">
-                    <svg class="w-8 h-8 text-sky-500 group-hover:text-white mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    <span class="text-slate-300 group-hover:text-white">Відгук на дипломну роботу магістра</span>
+            <h3 class="text-xl font-bold text-white mb-6">Необхідні документи</h3>
+            
+            <!-- SINGLE COLUMN LIST -->
+            <div class="flex flex-col gap-3">
+                <a href="blank/vidhuk_magistr.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Відгук на дипломну роботу магістра</span>
                 </a>
-                <a href="blank/vidhuk_spetsialist.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-700 transition group">
-                    <svg class="w-8 h-8 text-sky-500 group-hover:text-white mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    <span class="text-slate-300 group-hover:text-white">Відгук на дипломний проект спеціаліста</span>
+                <a href="blank/vidhuk_spetsialist.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Відгук на дипломний проект спеціаліста</span>
                 </a>
-                <a href="blank/retsenziya_magistr.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-700 transition group">
-                    <svg class="w-8 h-8 text-sky-500 group-hover:text-white mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    <span class="text-slate-300 group-hover:text-white">Рецензія на дипломну роботу магістра</span>
+                <a href="blank/retsenziya_magistr.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Рецензія на дипломну роботу магістра</span>
                 </a>
-                 <a href="blank/zavdannya_dp.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-700 transition group">
-                    <svg class="w-8 h-8 text-sky-500 group-hover:text-white mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    <span class="text-slate-300 group-hover:text-white">Завдання на дипломний проект</span>
+                <a href="blank/retsenziya_spetsialist.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Рецензія на дипломну роботу спеціаліста</span>
                 </a>
-                 <a href="blank/tytul_kp_kr.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-700 transition group">
-                    <svg class="w-8 h-8 text-sky-500 group-hover:text-white mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    <span class="text-slate-300 group-hover:text-white">Титульна сторінка КП</span>
+                 <a href="blank/zavdannya_dp.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Завдання на дипломний проект</span>
+                </a>
+                <a href="blank/zavdannya_dp_spetsialist.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Завдання на дипломний проект (роботу) спеціаліста (магістра)</span>
+                </a>
+                <a href="blank/zavdannya_kp_spetsialist_magistr.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Завдання на курсовий проект спеціаліста(магістра)</span>
+                </a>
+                <a href="blank/zavdannya_kp_bakalavr.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Завдання на курсовий проект бакалавра</span>
+                </a>
+                <a href="blank/zavdannya_kr_bakalavr.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Завдання на курсову роботу бакалавра</span>
+                </a>
+                 <a href="blank/tytul_kp_kr.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Титульна сторінка КП</span>
+                </a>
+                 <a href="blank/tytul_dp.doc" class="flex items-center p-4 bg-slate-900 rounded-lg hover:bg-slate-750 transition group border border-slate-700 hover:border-sky-500">
+                    <svg class="w-6 h-6 text-sky-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="text-slate-300 group-hover:text-white font-medium">Титульна сторінка дипломного проекту (роботи)</span>
                 </a>
             </div>
         </div>
@@ -616,7 +601,7 @@
         </div>
         <div class="p-6 overflow-y-auto">
             <div class="flex flex-col md:flex-row gap-6">
-                <img id="staff-detail-img" src="" class="w-32 h-32 rounded-xl object-cover" alt="Staff">
+                <img id="staff-detail-img" src="" class="w-32 h-32 rounded-lg object-cover" alt="Staff">
                 <div>
                      <p id="staff-detail-title" class="text-sky-400 font-semibold mb-4 text-lg">Посада</p>
                      <div id="staff-detail-details" class="text-slate-300 text-sm space-y-4"></div>
@@ -624,7 +609,10 @@
             </div>
             <div class="mt-6 pt-6 border-t border-slate-700">
                 <h4 class="font-bold text-white mb-2">Дисципліни</h4>
-                <div id="staff-detail-disciplines" class="text-slate-400 text-sm"></div>
+                <div class="text-clamp" id="staff-detail-disciplines-container">
+                     <div id="staff-detail-disciplines" class="text-slate-400 text-sm"></div>
+                </div>
+                <button class="read-more-btn text-sky-400 hover:underline mt-2 text-sm font-bold" onclick="toggleReadMore(this, 'staff-detail-disciplines-container')">Читати далі</button>
             </div>
              <div class="mt-6">
                 <h4 class="font-bold text-white mb-2">Посилання</h4>
@@ -632,7 +620,10 @@
             </div>
             <div class="mt-6 pt-6 border-t border-slate-700">
                 <h4 class="font-bold text-white mb-2">Біографія</h4>
-                <div id="staff-detail-bio" class="text-slate-400 text-sm"></div>
+                <div class="text-clamp" id="staff-detail-bio-container">
+                     <div id="staff-detail-bio" class="text-slate-400 text-sm"></div>
+                </div>
+                <button class="read-more-btn text-sky-400 hover:underline mt-2 text-sm font-bold" onclick="toggleReadMore(this, 'staff-detail-bio-container')">Читати далі</button>
             </div>
         </div>
     </div>
