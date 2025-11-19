@@ -1,3 +1,9 @@
+/*
+================================================================
+ SPA LOGIC (script.js)
+================================================================
+*/
+
 // --- 1. ФУНКЦІЯ ЗАВАНТАЖЕННЯ HTML ---
 async function loadSections() {
     const contents = document.querySelectorAll('.tab-content[data-src]');
@@ -19,13 +25,19 @@ async function loadSections() {
 }
 
 // --- 2. ГЛОБАЛЬНІ ФУНКЦІЇ ---
+
+// Функція перемикання вкладок
 window.switchTab = function(tabId, scrollTargetId = null, subTabTarget = null) {
+    // 1. Приховати всі секції
     document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    
+    // 2. Активувати кнопки
     document.querySelectorAll('.nav-btn, .mobile-link').forEach(btn => {
         btn.classList.remove('active');
         if (btn.dataset.tab === tabId) btn.classList.add('active');
     });
 
+    // 3. Показати цільову секцію
     const targetSection = document.getElementById('tab-' + tabId);
     if (targetSection) {
         targetSection.classList.remove('hidden');
@@ -34,14 +46,13 @@ window.switchTab = function(tabId, scrollTargetId = null, subTabTarget = null) {
         targetSection.classList.add('fade-in');
     }
 
+    // 4. Якщо є під-вкладка
     if (subTabTarget) switchSubTab(subTabTarget);
 
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (mobileMenu) {
-        mobileMenu.classList.remove('translate-x-0');
-        mobileMenu.classList.add('translate-x-full');
-    }
+    // 5. ЗАКРИТИ МОБІЛЬНЕ МЕНЮ (якщо відкрите)
+    closeMobileMenu();
 
+    // 6. Скрол
     if (scrollTargetId) {
         setTimeout(() => {
             const el = document.getElementById(scrollTargetId);
@@ -51,6 +62,28 @@ window.switchTab = function(tabId, scrollTargetId = null, subTabTarget = null) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 };
+
+// Функція закриття мобільного меню (і розблокування скролу)
+function closeMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenu && mobileMenu.classList.contains('translate-x-0')) {
+        mobileMenu.classList.remove('translate-x-0');
+        mobileMenu.classList.add('translate-x-full');
+        // Розблокувати скрол тіла сторінки
+        document.body.classList.remove('overflow-hidden');
+    }
+}
+
+// Функція відкриття мобільного меню
+function openMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenu) {
+        mobileMenu.classList.remove('translate-x-full');
+        mobileMenu.classList.add('translate-x-0');
+        // Заблокувати скрол тіла сторінки
+        document.body.classList.add('overflow-hidden');
+    }
+}
 
 window.switchSubTab = function(subTabId) {
     const parentSection = document.getElementById('tab-kafedra'); 
@@ -107,6 +140,7 @@ window.openModal = function(modalId) {
             modal.classList.remove('opacity-0', 'scale-95');
             modal.classList.add('scale-100');
         }, 10);
+        document.body.classList.add('overflow-hidden'); // Блокуємо скрол при відкритті модалки
     }
 };
 
@@ -120,7 +154,10 @@ window.closeAllModals = function() {
     });
     if (overlay) {
         overlay.classList.add('opacity-0');
-        setTimeout(() => overlay.classList.add('hidden'), 300);
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden'); // Розблокуємо скрол
+        }, 300);
     }
 };
 
@@ -130,16 +167,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     const mobileMenuBtn = document.getElementById('mobile-menu-button');
     const closeMobileBtn = document.getElementById('close-mobile-menu');
-    const mobileMenu = document.getElementById('mobile-menu');
 
-    if(mobileMenuBtn) mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('translate-x-full');
-        mobileMenu.classList.add('translate-x-0');
-    });
-    if(closeMobileBtn) closeMobileBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('translate-x-0');
-        mobileMenu.classList.add('translate-x-full');
-    });
+    // Використовуємо нові функції
+    if(mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
+    if(closeMobileBtn) closeMobileBtn.addEventListener('click', closeMobileMenu);
 
     document.body.addEventListener('click', function(e) {
         const card = e.target.closest('.staff-card');
