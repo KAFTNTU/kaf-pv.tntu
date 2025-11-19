@@ -1,8 +1,8 @@
-<div class="mb-8 pt-8">
+<div class="mb-4 pt-4">
     <h2 class="text-3xl md:text-4xl font-bold text-white">Кафедра ПВ</h2>
 </div>
 
-<div class="flex flex-wrap gap-2 mb-8 border-b border-slate-700 pb-4">
+<div class="flex flex-wrap gap-2 mb-4 border-b border-slate-700 pb-4">
     <button class="sub-tab-btn active" onclick="switchSubTab('tab-history')">Історія</button>
     <button class="sub-tab-btn" onclick="switchSubTab('tab-staff')">Персонал</button>
     <button class="sub-tab-btn" onclick="switchSubTab('tab-programs')">Освітні програми</button>
@@ -13,16 +13,34 @@
 <!-- History Tab -->
 <div id="tab-history" class="sub-tab-content block">
     <div class="bg-slate-800 rounded-2xl p-8 shadow-xl">
-        <div class="grid md:grid-cols-2 gap-12 items-start mb-12">
-            <!-- PHOTO LEFT -->
-            <div class="sticky top-24">
-                <img src="ludipv.jpg" alt="Колектив кафедри" class="rounded-xl shadow-2xl w-full object-cover" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Кафедра+ПВ'">
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-8">
+            
+            <!-- PHOTO LEFT + STATS (STICKY) -->
+            <!-- sticky top-24: закріплює блок при скролі -->
+            <!-- self-start: важливе для роботи sticky всередині grid -->
+            <div class="sticky top-24 self-start">
+                <img src="ludipv.jpg" alt="Колектив кафедри" class="rounded-lg shadow-2xl w-full object-cover mb-6" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Кафедра+ПВ'">
+                
+                <div class="grid grid-cols-2 gap-3 text-center">
+                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 backdrop-blur-sm">
+                        <span class="block text-2xl font-bold text-sky-400">30</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">років досвіду</span>
+                    </div>
+                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 backdrop-blur-sm">
+                        <span class="block text-2xl font-bold text-sky-400">1000+</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">випускників</span>
+                    </div>
+                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/50 backdrop-blur-sm col-span-2">
+                        <span class="block text-2xl font-bold text-sky-400">15+</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">партнерів кафедри</span>
+                    </div>
+                </div>
             </div>
             
-            <!-- TEXT RIGHT (With Read More) -->
-            <div class="prose prose-invert space-y-8">
+            <!-- TEXT RIGHT -->
+            <div class="prose prose-invert space-y-6">
                 <div>
-                    <h3 class="text-xl font-bold text-white mb-2">Заснування та розвиток</h3>
+                    <h3 class="text-lg font-bold text-white mb-2">Заснування та розвиток</h3>
                     <div class="text-clamp text-slate-300 text-sm leading-relaxed" id="hist-1">
                         <p class="mb-2">Кафедра ПВ утворилася у 1993 р. шляхом відокремлення від кафедри автоматизації технологічних процесів та виробництв з метою організації підготовки спеціалістів з профільної для тодішньому новоствореного Тернопільського державного приладобудівного інституту спеціальності – приладобудування.</p>
                         <p class="mb-2">Базовою групою засновників кафедри була: доц. Рудник А. Г., доц. Рожук С. Г., доц. Куцевич А. В., та ст. викл. Лушпак В. Й. Згодом склад кафедри поповнився висококваліфікованими спеціалістами з інших вишів – проф. Кривень В. А., доц. Яворська М. І., (з НУ ЛП)) та з галузевих науково- дослідних інститутів – Паламар М. І., Умзар Ю. А., Зелінський І. М., Осов’як І.І., Дуда С. П.</p>
@@ -30,9 +48,8 @@
                     </div>
                     <button class="text-sky-400 hover:text-sky-300 font-semibold text-sm mt-1" onclick="toggleReadMore(this, 'hist-1')">Читати далі</button>
                 </div>
-
                 <div>
-                    <h3 class="text-xl font-bold text-white mb-2">Зміна спеціальностей</h3>
+                    <h3 class="text-lg font-bold text-white mb-2">Зміна спеціальностей</h3>
                     <div class="text-clamp text-slate-300 text-sm leading-relaxed" id="hist-2">
                         <p class="mb-2">Підготовка фахівців на кафедрі велась за спеціальністю «Приладобудування». У 1993 році перейдено на багатоступеневу систему підготовки фахівців за схемою «бакалавр–спеціаліст–магістр» згідно Болонської системи. 1994 року відбувся перший випуск інженерів спеціальності 7.090901 «Приладобудування».</p>
                         <p class="mb-2">Згодом з 2015 р. спеціальність «Прилади точної механіки» згідно нової кодифікації трансформувалась у спеціальність 152 «Метрологія та інформаційно-вимірювальна техніка». У 2017 р. було проведено ліцензування нового напряму підготовки бакалаврів за спеціальністю 153 «Мікро- та наносистемна техніка».</p>
@@ -40,9 +57,8 @@
                     </div>
                     <button class="text-sky-400 hover:text-sky-300 font-semibold text-sm mt-1" onclick="toggleReadMore(this, 'hist-2')">Читати далі</button>
                 </div>
-
                 <div>
-                    <h3 class="text-xl font-bold text-white mb-2">Керівництво та сьогодення</h3>
+                    <h3 class="text-lg font-bold text-white mb-2">Керівництво та сьогодення</h3>
                     <div class="text-clamp text-slate-300 text-sm leading-relaxed" id="hist-3">
                         <p class="mb-2">Після трагічної смерті зав. каф. доц. Рудника А.Г. з 2004 р. по 2006 р обов’язки завідувача кафедри виконував тодішній декан факультету доц. Куцевич А.В. З 2006 р. кафедру очолює д.т.н., професор Паламар Михайло Іванович.</p>
                         <p>На сьогоднішній день на кафедрі плідно працюють 1 професор, 5 доцентів, 2 старших викладачі, 1 асистент та 3 аспіранти. Кафедра активно працює в напрямку розвитку прогресивних форм навчання.</p>
@@ -54,10 +70,10 @@
     </div>
 </div>
 
-<!-- Staff Tab (SQUARE PHOTOS) -->
+<!-- Staff Tab -->
 <div id="tab-staff" class="sub-tab-content hidden">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Palamar -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+         <!-- Palamar -->
         <div class="bg-slate-800 rounded-xl p-6 text-center border border-slate-700 hover:border-sky-500 transition cursor-pointer staff-card group" data-staff-id="palamar">
             <img class="w-32 h-32 mx-auto rounded-lg object-cover mb-4 group-hover:scale-105 transition duration-300" src="image/palamar.png" alt="Паламар М.І." onerror="this.src='https://placehold.co/150x150/1e293b/ffffff?text=Фото'">
             <h3 class="text-lg font-bold text-white">Паламар М.І.</h3>
@@ -144,6 +160,7 @@
     </div>
 </div>
 
+<!-- Programs, Plan, Graduates Tabs (content placeholder) -->
 <div id="tab-programs" class="sub-tab-content hidden">
     <div class="space-y-4 bg-slate-800 p-8 rounded-xl">
         <h3 class="text-2xl font-bold text-white">Бакалавр</h3>
