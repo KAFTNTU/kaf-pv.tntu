@@ -21,20 +21,23 @@
     </div>
 </div>
 
-<div id="specialties" class="py-20 max-w-7xl mx-auto px-4">
-    <div class="text-center mb-16">
+<div id="specialties" class="py-10 max-w-7xl mx-auto px-4">
+    <div class="text-center mb-10">
         <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Наші спеціальності</h2>
     </div>
     
     <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-slate-800/50 rounded-2xl p-8 cursor-pointer specialty-card" onclick="switchTab('home')"> 
+        <!-- ВИПРАВЛЕНО: Прибрано onclick="switchTab('home')" та cursor-pointer -->
+        <div class="bg-slate-800/50 rounded-2xl p-8 specialty-card">
             <div class="w-14 h-14 bg-sky-500/20 text-sky-400 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 icon-bg">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg>
             </div>
             <h3 class="text-2xl font-bold text-white mb-2 transition-colors duration-300">175 - Інформаційно-вимірювальні технології</h3>
             <p class="text-slate-400">Розробка комп'ютеризованих систем, робота з датчиками, IoT та Big Data.</p>
         </div>
-        <div class="bg-slate-800/50 rounded-2xl p-8 cursor-pointer specialty-card">
+
+        <!-- ВИПРАВЛЕНО: Прибрано cursor-pointer -->
+        <div class="bg-slate-800/50 rounded-2xl p-8 specialty-card">
              <div class="w-14 h-14 bg-indigo-500/20 text-indigo-400 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 icon-bg">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
             </div>
@@ -44,9 +47,9 @@
     </div>
 </div>
 
-<div id="contacts" class="bg-slate-800 py-20">
+<div id="contacts" class="bg-slate-800 py-10">
     <div class="max-w-7xl mx-auto px-4">
-        <div class="text-center mb-16">
+        <div class="text-center mb-10">
             <h2 class="text-3xl font-bold text-white">Контакти</h2>
         </div>
         <div class="grid md:grid-cols-2 gap-12 items-start">
