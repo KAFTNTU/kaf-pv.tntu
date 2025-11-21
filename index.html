@@ -30,6 +30,7 @@
             <nav class="hidden md:flex items-center space-x-1 text-sm">
                 <button onclick="switchTab('home')" class="nav-btn active" data-tab="home">Головна</button>
                 
+                <!-- Кафедра Dropdown -->
                 <div class="dropdown-container relative group">
                     <button class="nav-btn flex items-center gap-1" onclick="switchTab('kafedra')" data-tab="kafedra">
                         Кафедра
@@ -43,11 +44,23 @@
                     </div>
                 </div>
 
-                <button onclick="switchTab('home', 'specialties')" class="nav-btn">Спеціальності</button>
+                <!-- Спеціальності Dropdown (НОВЕ) -->
+                <div class="dropdown-container relative group">
+                    <button class="nav-btn flex items-center gap-1" data-tab="specialties">
+                        Спеціальності
+                    </button>
+                    <div class="dropdown-menu">
+                        <button onclick="switchTab('home', 'specialties')" class="dropdown-item">Загальна інформація</button>
+                        <button onclick="switchTab('spec1')" class="dropdown-item">Спеціальність 1</button>
+                        <button onclick="switchTab('spec2')" class="dropdown-item">Спеціальність 2</button>
+                    </div>
+                </div>
+
                 <button onclick="switchTab('labs')" class="nav-btn" data-tab="labs">Лабораторії</button>
                 <button onclick="switchTab('science')" class="nav-btn" data-tab="science">Наука</button>
                 <button onclick="switchTab('international')" class="nav-btn" data-tab="international">Міжнародні</button>
                 
+                <!-- Студенту Dropdown -->
                 <div class="dropdown-container relative group">
                     <button class="nav-btn flex items-center gap-1" onclick="switchTab('student')" data-tab="student">
                         Студенту <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -66,7 +79,7 @@
 
             <!-- Mobile Button -->
             <div class="md:hidden flex items-center">
-                <button id="mobile-menu-button" class="p-2 text-slate-400 hover:text-white" onclick="openMobileMenu()">
+                <button id="mobile-menu-button" class="p-2 text-slate-400 hover:text-white">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
                 </button>
             </div>
@@ -74,16 +87,16 @@
     </div>
 </header>
 
-<!-- Mobile Menu (z-index збільшено до 60, щоб бути над шапкою) -->
+<!-- Mobile Menu -->
 <div id="mobile-menu" class="fixed inset-0 z-[60] bg-slate-900/98 backdrop-blur-xl pt-20 px-6 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col overflow-y-auto pb-10">
     
-    <!-- Кнопка закриття (тепер точно зверху) -->
     <button id="close-mobile-menu" class="absolute top-5 right-6 text-white p-2" onclick="closeMobileMenu()">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
 
     <button onclick="switchTab('home')" class="mobile-link text-left text-white mt-8">Головна</button>
     
+    <!-- Кафедра Mobile -->
     <div class="mobile-menu-group border-b border-slate-700">
         <button class="mobile-link w-full flex justify-between items-center text-left text-white" onclick="toggleMobileSubmenu('mob-kafedra')">
             Кафедра <svg class="w-4 h-4 transition-transform" id="icon-mob-kafedra" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -97,11 +110,23 @@
         </div>
     </div>
 
-    <button onclick="switchTab('home', 'specialties')" class="mobile-link text-left text-white">Спеціальності</button>
+    <!-- Спеціальності Mobile (НОВЕ) -->
+    <div class="mobile-menu-group border-b border-slate-700">
+        <button class="mobile-link w-full flex justify-between items-center text-left text-white" onclick="toggleMobileSubmenu('mob-specialties')">
+            Спеціальності <svg class="w-4 h-4 transition-transform" id="icon-mob-specialties" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div id="mob-specialties" class="hidden flex-col pl-4 pb-2 space-y-2">
+            <button onclick="switchTab('home', 'specialties')" class="mobile-sub-link text-slate-200 hover:text-white">Загальна інформація</button>
+            <button onclick="switchTab('spec1')" class="mobile-sub-link text-slate-200 hover:text-white">Спеціальність 1</button>
+            <button onclick="switchTab('spec2')" class="mobile-sub-link text-slate-200 hover:text-white">Спеціальність 2</button>
+        </div>
+    </div>
+
     <button onclick="switchTab('labs')" class="mobile-link text-left text-white">Лабораторії</button>
     <button onclick="switchTab('science')" class="mobile-link text-left text-white">Наука</button>
     <button onclick="switchTab('international')" class="mobile-link text-left text-white">Міжнародні</button>
     
+    <!-- Студенту Mobile -->
     <div class="mobile-menu-group border-b border-slate-700">
         <button class="mobile-link w-full flex justify-between items-center text-left text-white" onclick="toggleMobileSubmenu('mob-student')">
             Студенту <svg class="w-4 h-4 transition-transform" id="icon-mob-student" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -125,6 +150,11 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div id="tab-kafedra" class="tab-content hidden" data-src="sections/kafedra.html"></div>
+        
+        <!-- НОВІ ВКЛАДКИ СПЕЦІАЛЬНОСТЕЙ -->
+        <div id="tab-spec1" class="tab-content hidden" data-src="sections/spec1.html"></div>
+        <div id="tab-spec2" class="tab-content hidden" data-src="sections/spec2.html"></div>
+
         <div id="tab-labs" class="tab-content hidden" data-src="sections/labs.html"></div>
         <div id="tab-science" class="tab-content hidden" data-src="sections/science.html"></div>
         <div id="tab-international" class="tab-content hidden" data-src="sections/international.html"></div>
@@ -135,9 +165,8 @@
 
 </main>
 
-<!-- === POPUPS === -->
+<!-- === POPUPS (Без змін) === -->
 <div id="modal-overlay" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden transition-opacity duration-300 opacity-0" onclick="closeAllModals()"></div>
-
 <div id="staff-detail-modal" class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[60] w-full max-w-3xl p-4 hidden transition-all duration-300 scale-95 opacity-0">
     <div class="bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 overflow-hidden max-h-[80vh] flex flex-col neon-border-box">
         <div class="p-6 border-b border-slate-700 flex justify-between items-center">
@@ -172,7 +201,7 @@
     </div>
 </div>
 
-<!-- Footer -->
+<!-- Footer (Без змін) -->
 <footer class="bg-slate-900 border-t border-slate-800 py-10 mt-auto">
     <div class="max-w-7xl mx-auto px-4 text-center">
         <p class="text-slate-500">&copy; 2025 Кафедра Приладів та Контрольно-Вимірювальних Систем, ТНТУ.</p>
