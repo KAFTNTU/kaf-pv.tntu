@@ -18,7 +18,7 @@
             <!-- Logo -->
             <div class="flex-shrink-0 cursor-pointer" onclick="switchTab('home')">
                 <div class="flex items-center space-x-3">
-                    <svg class="h-9 w-9 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0v-1.5m6 1.5v-1.5m0 0l.415-.207a.75.75 0 011.085.67V10.5m-6-3h6m-6 3a.75.75 0 01-.75-.75V7.5m7.5 3a.75.75 0 00-.75-.75V7.5m-6 3h.008v.008H8.25v-.008zm5.25 0h.008v.008H13.5v-.008zm2.25 0h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-6-6h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008z" /></svg>
+                    <svg class="h-9 w-9 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0v-1.5m6 1.5v-1.5m0 0l.415-.207a.75.75 0 011.085.67V10.5m-6-3h6m-6 3a.75.75 0 01-.75-.75V7.5m7.5 3a.75.75 0 00-.75-.75V7.5m-6 3h.008v.008H8.25v-.008zm5.25 0h.008v.008H13.5v-.008zm2.25 0h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-6-6h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008zm2.25 3h.008v.008H7.5v-.008zm2.25 0h.008v.008H9.75v-.008zm2.25 0h.008v.008H12v-.008zm2.25 0h.008v.008H14.25v-.008zm-2.25 3h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008z" /></svg>
                     <div class="flex flex-col">
                         <span class="font-bold text-lg text-white leading-tight">Кафедра ПВ</span>
                         <span class="text-[10px] text-slate-400 leading-tight">ТНТУ ім. Івана Пулюя</span>
@@ -83,17 +83,19 @@
     </div>
 </header>
 
-<!-- === MOBILE MENU === -->
-<div id="mobile-menu" class="fixed inset-0 z-[60] bg-slate-900/80 backdrop-blur-xl transform translate-x-full transition-transform duration-300 md:hidden flex flex-col overflow-y-auto">
+<!-- === MOBILE MENU (ОНОВЛЕНИЙ ДИЗАЙН) === -->
+<div id="mobile-menu" class="fixed inset-0 z-[60] bg-slate-900/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 md:hidden flex flex-col overflow-y-auto">
+    
+    <!-- Шапка меню (Лого + Кнопка закриття) -->
     <div class="flex justify-between items-center p-6 border-b border-slate-700/50">
         <div class="flex items-center space-x-3">
-            <svg class="h-8 w-8 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0v-1.5m6 1.5v-1.5m0 0l.415-.207a.75.75 0 011.085.67V10.5m-6-3h6m-6 3a.75.75 0 01-.75-.75V7.5m7.5 3a.75.75 0 00-.75-.75V7.5m-6 3h.008v.008H8.25v-.008zm5.25 0h.008v.008H13.5v-.008zm2.25 0h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-6-6h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008z" /></svg>
+            <svg class="h-8 w-8 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0v-1.5m6 1.5v-1.5m0 0l.415-.207a.75.75 0 011.085.67V10.5m-6-3h6m-6 3a.75.75 0 01-.75-.75V7.5m7.5 3a.75.75 0 00-.75-.75V7.5m-6 3h.008v.008H8.25v-.008zm5.25 0h.008v.008H13.5v-.008zm2.25 0h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-2.25 3h.008v.008H15.75v-.008zm2.25 0h.008v.008H18v-.008zm-6-6h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008zm2.25 3h.008v.008H7.5v-.008zm2.25 0h.008v.008H9.75v-.008zm2.25 0h.008v.008H12v-.008zm2.25 0h.008v.008H14.25v-.008zm-2.25 3h.008v.008H12v-.008zm-2.25 0h.008v.008H9.75v-.008zm-2.25 0h.008v.008H7.5v-.008zm-2.25 0h.008v.008H5.25v-.008z" /></svg>
             <div class="flex flex-col">
                 <span class="font-bold text-lg text-white leading-tight">Кафедра ПВ</span>
                 <span class="text-[10px] text-slate-400 leading-tight">ТНТУ ім. Івана Пулюя</span>
             </div>
         </div>
-        <!-- Кнопка закриття (квадратна з рамкою) -->
+        <!-- Кнопка закриття -->
         <button id="close-mobile-menu" class="text-white p-2 border-2 border-sky-500 rounded-md hover:bg-sky-500/20 transition" onclick="closeMobileMenu()">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
@@ -101,14 +103,16 @@
 
     <!-- Список пунктів меню -->
     <div class="p-6 space-y-4">
-        <!-- Новин немає -->
         
+        <!-- Головна (НОВИЙ РОЗДІЛ) -->
+        <button onclick="switchTab('home')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full border-b border-slate-700/50">Головна</button>
+
         <!-- Кафедра -->
-        <div class="mobile-menu-group">
+        <div class="mobile-menu-group border-b border-slate-700/50">
             <button class="mobile-link w-full flex justify-between items-center text-left text-white text-lg font-medium py-2" onclick="toggleMobileSubmenu('mob-kafedra')">
                 Кафедра <svg class="w-5 h-5 transition-transform" id="icon-mob-kafedra" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="mob-kafedra" class="hidden flex-col pl-4 pt-2 space-y-3">
+            <div id="mob-kafedra" class="hidden flex-col pl-4 pt-2 space-y-3 pb-2">
                 <button onclick="switchTab('kafedra', null, 'tab-history')" class="mobile-sub-link text-slate-300 hover:text-white block text-base">Історія</button>
                 <button onclick="switchTab('kafedra', null, 'tab-staff')" class="mobile-sub-link text-slate-300 hover:text-white block text-base">Персонал</button>
                 <button onclick="switchTab('kafedra', null, 'tab-programs')" class="mobile-sub-link text-slate-300 hover:text-white block text-base">Освітні програми</button>
@@ -118,26 +122,26 @@
         </div>
 
         <!-- Спеціальності -->
-        <div class="mobile-menu-group">
+        <div class="mobile-menu-group border-b border-slate-700/50">
             <button class="mobile-link w-full flex justify-between items-center text-left text-white text-lg font-medium py-2" onclick="toggleMobileSubmenu('mob-specialties')">
                 Спеціальності <svg class="w-5 h-5 transition-transform" id="icon-mob-specialties" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="mob-specialties" class="hidden flex-col pl-4 pt-2 space-y-3">
+            <div id="mob-specialties" class="hidden flex-col pl-4 pt-2 space-y-3 pb-2">
                 <button onclick="switchTab('spec1')" class="mobile-sub-link text-slate-300 hover:text-white block text-base leading-tight py-1">G6 "Інформаційно-вимірювальні технології"</button>
                 <button onclick="switchTab('spec2')" class="mobile-sub-link text-slate-300 hover:text-white block text-base leading-tight py-1">G5 "Електроніка, електронні комунікації..."</button>
             </div>
         </div>
 
-        <button onclick="switchTab('labs')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full">Навчальні лабораторії</button>
-        <button onclick="switchTab('science')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full">Наука</button>
-        <button onclick="switchTab('international')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full">Міжнародні зв'язки</button>
+        <button onclick="switchTab('labs')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full border-b border-slate-700/50">Навчальні лабораторії</button>
+        <button onclick="switchTab('science')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full border-b border-slate-700/50">Наука</button>
+        <button onclick="switchTab('international')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full border-b border-slate-700/50">Міжнародні зв'язки</button>
         
         <!-- Студенту -->
-        <div class="mobile-menu-group">
+        <div class="mobile-menu-group border-b border-slate-700/50">
             <button class="mobile-link w-full flex justify-between items-center text-left text-white text-lg font-medium py-2" onclick="toggleMobileSubmenu('mob-student')">
                 Студенту <svg class="w-5 h-5 transition-transform" id="icon-mob-student" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            <div id="mob-student" class="hidden flex-col pl-4 pt-2 space-y-3">
+            <div id="mob-student" class="hidden flex-col pl-4 pt-2 space-y-3 pb-2">
                 <button onclick="switchTab('student')" class="mobile-sub-link text-slate-300 hover:text-white block text-base">Бланки</button>
                 <button onclick="switchTab('disciplines')" class="mobile-sub-link text-slate-300 hover:text-white block text-base">Дисципліни</button>
                 <a href="https://tntu.edu.ua/?p=uk/schedule/" target="_blank" class="mobile-sub-link text-slate-300 hover:text-white block text-base">Розклад</a>
@@ -145,7 +149,7 @@
             </div>
         </div>
 
-        <button onclick="switchTab('entrant')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full">Абітурієнту</button>
+        <button onclick="switchTab('entrant')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full border-b border-slate-700/50">Абітурієнту</button>
         <button onclick="switchTab('home', 'contacts')" class="mobile-link text-left text-white text-lg font-medium py-2 block w-full">Контакти</button>
     </div>
 </div>
