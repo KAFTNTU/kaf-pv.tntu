@@ -1,8 +1,6 @@
-<!-- Цей контент буде завантажено у вкладку 'tab-staff' -->
-<div class="p-6"> <!-- Додано відступи -->
+<!-- вся ІНФОРМАЦІЯ про викладачів -->
+<div class="p-6"> 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- data-staff-id="palamar" - це ID для скрипта, щоб знайти дані у staff_data.js -->
-        <!-- src="image/palamar.png" - це шлях до фото -->
         <div class="text-center reveal staff-card" data-staff-id="palamar">
             <img class="mx-auto h-40 w-40 rounded-xl object-cover border-4 border-slate-700 shadow-lg" src="image/palamar.png" alt="Фото Паламар Михайло Іванович" onerror="this.src='https://placehold.co/160x160/1e293b/ffffff?text=Фото'; this.onerror=null;">
             <div class="mt-4">
@@ -33,6 +31,9 @@
         </div>
     </div>
     
+
+
+
     <!-- Прихований персонал -->
     <div id="hidden-staff" class="hidden mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="text-center reveal staff-card" data-staff-id="apostol">
@@ -107,13 +108,4 @@
         </div>
     </div>
 
-    <!-- Кнопка "Показати всіх" -->
-    <div class="mt-12 text-center">
-        <button id="toggle-staff-btn" class="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 font-semibold transition-colors duration-300">
-            <span id="toggle-staff-text">Показати всіх</span>
-            <svg id="toggle-staff-icon" class="w-5 h-5 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-        </button>
-    </div>
 </div>
