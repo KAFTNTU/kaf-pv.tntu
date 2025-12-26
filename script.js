@@ -136,7 +136,7 @@ window.toggleReadMore = function(btn, targetId) {
     }
 };
 
-// --- Модальні вікна ---
+// --- Модальні вікна (ОНОВЛЕНО) ---
 window.openModal = function(modalId) {
     const overlay = document.getElementById('modal-overlay');
     const modal = document.getElementById(modalId);
@@ -154,12 +154,15 @@ window.openModal = function(modalId) {
 
 window.closeAllModals = function() {
     const overlay = document.getElementById('modal-overlay');
-    const modals = document.querySelectorAll('#staff-detail-modal');
+    // Вибираємо всі модалки (Персонал + Новини)
+    const modals = document.querySelectorAll('#staff-detail-modal, #news-detail-modal');
+    
     modals.forEach(m => {
         m.classList.add('opacity-0', 'scale-95');
         m.classList.remove('scale-100');
         setTimeout(() => m.classList.add('hidden'), 300);
     });
+    
     if (overlay) {
         overlay.classList.add('opacity-0');
         setTimeout(() => {
@@ -178,16 +181,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     if(mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
     if(closeMobileBtn) closeMobileBtn.addEventListener('click', closeMobileMenu);
 
-    // Обробка карток персоналу
+    // Обробка кліків (делегування подій)
     document.body.addEventListener('click', function(e) {
-        const card = e.target.closest('.staff-card');
-        if (card) {
-            const staffId = card.dataset.staffId;
+        
+        // 1. КАРТКИ ПЕРСОНАЛУ
+        const staffCard = e.target.closest('.staff-card');
+        if (staffCard) {
+            const staffId = staffCard.dataset.staffId;
             if (typeof staffDetailsData !== 'undefined' && staffDetailsData[staffId]) {
                 const data = staffDetailsData[staffId];
                 document.getElementById('staff-detail-name').textContent = data.name;
                 document.getElementById('staff-detail-title').textContent = data.title;
-                document.getElementById('staff-detail-img').src = card.querySelector('img').src;
+                document.getElementById('staff-detail-img').src = staffCard.querySelector('img').src;
                 document.getElementById('staff-detail-details').innerHTML = data.details;
                 
                 const discContainer = document.getElementById('staff-detail-disciplines');
@@ -200,6 +205,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if(bioEl) bioEl.innerHTML = data.bio || '';
 
                 openModal('staff-detail-modal');
+            }
+            return; // Виходимо, щоб не перевіряти далі
+        }
+
+        // 2. КАРТКИ НОВИН (НОВЕ)
+        const newsCard = e.target.closest('.news-card');
+        if (newsCard) {
+            const newsId = newsCard.dataset.newsId;
+            // Перевіряємо наявність даних
+            if (typeof newsDetailsData !== 'undefined' && newsDetailsData[newsId]) {
+                const data = newsDetailsData[newsId];
+                
+                document.getElementById('news-modal-title').textContent = data.title;
+                document.getElementById('news-modal-date').textContent = data.date;
+                document.getElementById('news-modal-img').src = data.img;
+                document.getElementById('news-modal-content').innerHTML = data.content;
+                
+                openModal('news-detail-modal');
             }
         }
     });
