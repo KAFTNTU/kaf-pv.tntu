@@ -9,7 +9,7 @@ const newsDetailsData = {
     "news-001": {
         title: "Змагання безпілотних роботизованих апаратів на каф. ПВ — «РобоРалі»",
         date: "18.11.2025",
-        img: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=1200&auto=format&fit=crop",
+        img: "photo_news/machinki.png",
         content: `
             <div class="space-y-4 text-slate-300 text-sm leading-relaxed pr-2">
                 <p>
