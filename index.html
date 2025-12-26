@@ -16,6 +16,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Додаємо стилі для приховування скролбару -->
+    <style>
+        /* Приховати скролбар для Chrome, Safari and Opera */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        /* Приховати скролбар для IE, Edge and Firefox */
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
 </head>
 <body class="antialiased bg-slate-900 text-slate-300 flex flex-col min-h-screen">
 
@@ -167,7 +180,6 @@
 <main class="pt-16 min-h-screen relative">
     
     <div id="tab-home" class="tab-content" data-src="sections/home.html"></div>
-    <!-- НОВА ВКЛАДКА -->
     <div id="tab-news" class="tab-content hidden" data-src="sections/news.html"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
@@ -186,7 +198,6 @@
 
 <!-- === POPUPS (Staff Detail) === -->
 <div id="modal-overlay" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden transition-opacity duration-300 opacity-0" onclick="closeAllModals()"></div>
-
 <div id="staff-detail-modal" class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[60] w-full max-w-3xl p-4 hidden transition-all duration-300 scale-95 opacity-0">
     <div class="bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 overflow-hidden max-h-[80vh] flex flex-col neon-border-box">
         <div class="p-6 border-b border-slate-700 flex justify-between items-center">
@@ -221,11 +232,9 @@
     </div>
 </div>
 
-<!-- === POPUPS (NEWS Detail) НОВЕ === -->
-<div id="news-detail-modal" class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[60] w-full max-w-4xl p-4 hidden transition-all duration-300 scale-95 opacity-0">
+<div id="news-detail-modal" class="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[60] w-full max-w-5xl p-4 hidden transition-all duration-300 scale-95 opacity-0">
     <div class="bg-slate-900 rounded-2xl shadow-2xl border border-slate-700 overflow-hidden max-h-[90vh] flex flex-col neon-border-box">
-        <!-- Header -->
-        <div class="p-5 border-b border-slate-700 flex justify-between items-start bg-slate-800/50">
+        <div class="p-4 border-b border-slate-700 flex justify-between items-start bg-slate-800/50">
             <div class="pr-4">
                 <span id="news-modal-date" class="text-sky-400 text-sm font-mono block mb-1">DATA</span>
                 <h3 id="news-modal-title" class="text-xl md:text-2xl font-bold text-white leading-tight">Заголовок</h3>
@@ -234,24 +243,16 @@
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
-        
-        <!-- Content Scroll -->
-        <div class="overflow-y-auto p-0 custom-scroll">
-            <!-- Велике фото -->
+        <div class="overflow-y-auto overflow-x-hidden p-0 scrollbar-hide">
             <div class="w-full h-64 md:h-96 relative group">
-                <img id="news-modal-img" src="" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="News Cover">
+                <img id="news-modal-img" src="" class="w-full h-full object-cover transition duration-700" alt="News Cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
             </div>
             
-            <!-- Текст новини -->
             <div class="p-6 md:p-10 space-y-4 text-slate-300 leading-relaxed text-base md:text-lg" id="news-modal-content">
-                <!-- Сюди залетить HTML з JS -->
+                <!-- Content -->
             </div>
-        </div>
-        
-        <!-- Footer -->
-        <div class="p-4 border-t border-slate-700 bg-slate-800/30 flex justify-end">
-            <button onclick="closeAllModals()" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition font-medium">Закрити</button>
+            <div class="h-8"></div>
         </div>
     </div>
 </div>
@@ -268,9 +269,8 @@
 <button id="scrollToTopBtn" class="fixed bottom-6 right-6 bg-sky-500 text-white p-3 rounded-full shadow-lg hidden hover:bg-sky-600 transition z-40" onclick="window.scrollTo({top:0, behavior:'smooth'})">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
 </button>
-
 <script src="staff_data.js"></script>
-<script src="news_data.js"></script> <!-- ОСЬ ЦЬОГО НЕ ВИСТАЧАЛО -->
+<script src="news_data.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
