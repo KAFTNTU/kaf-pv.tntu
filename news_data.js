@@ -78,7 +78,7 @@ const newsDetailsData = {
         content: `
          <p class="mb-4 text-lg text-slate-300">
   <a
-    href="rules.pdf"
+    href="photo_news/rules.pdf"
     download
     class="text-red-500 font-bold hover:underline"> Правила</a> проведення змагань із перегонів автономних моделей. Сформовано основні вимоги до траси та моделей які приймають участь. Описано порядок проведення змагань, правила проведення, та мету самих замагань.</p>
          
