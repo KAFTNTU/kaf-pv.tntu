@@ -76,8 +76,11 @@ const newsDetailsData = {
         date: "20.10.2025",
         img: "photo_news/pravila.jpg",
         content: `
-         <li><a href="rules.pdf" target="_blank" class="text-slate-300 hover:text-sky-400 hover:underline block" text-center> >Правила< </a>
-            <p class="mb-4 text-lg">Правила проведення змагань із перегонів автономних моделей. Сформовано основні вимоги до траси та моделей які</p>
+         <p class="mb-4 text-lg text-slate-300">
+  <a
+    href="rules.pdf"
+    download
+    class="text-red-500 font-bold hover:underline"> Правила</a>проведення змагань із перегонів автономних моделей. Сформовано основні вимоги до траси та моделей які </p>
             <p class="mb-4">приймають участь. Описано порядок проведення змагань, правила проведення, та мету самих замагань.</p>
         `
     },
