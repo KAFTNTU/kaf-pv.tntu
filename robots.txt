@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kaftntu.github.io/kaf-pv.tntu/sitemap_index.xml
+Sitemap: https://kaftntu.github.io/kaf-pv-tntu/sitemap_index.xml
