@@ -242,7 +242,7 @@ const staffDetailsData = {
         `,
         links: [
             { name: "Особиста сторінка (Бібліотека)", url: "https://library.tntu.edu.ua/personaliji/a/s/strembickyj-myhajlo-oleksijovych/" },
-            { name: "Google Scholar", url: "https://scholar.google.com/citations?user=g0PzIhYAAAAJ&hl=uk" },
+            { name: "Google Scholar", url: "https://scholar.google.com/citations?user=CwUv5isAAAAJ&hl=uk" },
             { name: "ORCID", url: "https://orcid.org/0000-0002-5713-1672" },
             { name: "Scopus", url: "https://www.scopus.com/authid/detail.uri?authorId=56470780600" }
         ],
